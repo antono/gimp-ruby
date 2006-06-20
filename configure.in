@@ -1,0 +1,466 @@
+dnl Process this file with autoconf to produce a configure script.
+
+AC_PREREQ(2.54)
+
+dnl Name your plug-in here
+m4_define([plugin_name], [gimp-ruby])
+
+dnl These three define the plug-in version number
+m4_define([plugin_major_version], [0])
+m4_define([plugin_minor_version], [0])
+m4_define([plugin_micro_version], [3])
+
+m4_define([plugin_version],
+          [plugin_major_version.plugin_minor_version.plugin_micro_version])
+
+dnl required versions of other packages
+m4_define([glib_required_version], [2.4.5])
+m4_define([gtk_required_version], [2.4.4])
+m4_define([gimp_required_version], [2.2.0])
+
+AC_INIT([plugin_name], [plugin_version])
+
+AC_DEFINE(PLUGIN_NAME, PACKAGE_NAME, [Plug-In name])
+AC_DEFINE(PLUGIN_VERSION, PACKAGE_VERSION, [Plug-In version])
+
+AC_DEFINE(PLUGIN_MAJOR_VERSION, plugin_major_version, [Plug-In major version])
+AC_DEFINE(PLUGIN_MINOR_VERSION, plugin_minor_version, [Plug-In minor version])
+AC_DEFINE(PLUGIN_MICRO_VERSION, plugin_micro_version, [Plug-In micro version])
+
+AC_CONFIG_SRCDIR([ext/rbgimp.h])
+
+AM_INIT_AUTOMAKE(no-define)
+AM_CONFIG_HEADER(config.h)
+
+RUBYGIMP_UNSTABLE=rubygimp_unstable
+AC_SUBST(RUBYGIMP_UNSTABLE)
+
+
+dnl The symbol RUBYGIMP_UNSTABLE is defined above for substitution in
+dnl Makefiles and conditionally defined here as a preprocessor symbol
+dnl and automake conditional.
+if test "x$RUBYGIMP_UNSTABLE" = "xyes"; then
+  AC_DEFINE(RUBYGIMP_UNSTABLE,1,
+            [Define to 1 if this is an unstable version of RuG])
+fi
+AM_CONDITIONAL(RUBYGIMP_UNSTABLE, test "x$RUBYGIMP_UNSTABLE" = "xyes")
+
+
+GLIB_REQUIRED_VERSION=glib_required_version
+GTK_REQUIRED_VERSION=gtk_required_version
+GTKDOC_REQUIRED_VERSION=gtkdoc_required_version
+AC_SUBST(GLIB_REQUIRED_VERSION)
+AC_SUBST(GTK_REQUIRED_VERSION)
+AC_SUBST(GTKDOC_REQUIRED_VERSION)
+
+dnl i18n stuff
+GETTEXT_PACKAGE=plugin_name
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
+                                    [The gettext translation domain.])
+
+
+dnl Initialize libtool
+AC_PROG_CC
+AM_DISABLE_STATIC
+AC_LIBTOOL_WIN32_DLL
+AM_PROG_LIBTOOL
+
+AM_PROG_AS
+
+dnl Initialize maintainer mode
+AM_MAINTAINER_MODE
+
+
+###########################
+# Check target architecture
+###########################
+
+AC_MSG_CHECKING([for target architecture])
+case x"$target" in
+  xNONE | x)
+    target_or_host="$host" ;;
+  *)
+    target_or_host="$target" ;;
+esac
+AC_MSG_RESULT([$target_or_host])
+
+case "$target_or_host" in
+  i*86-*-*)
+    have_x86=yes
+    AC_DEFINE(ARCH_X86, 1, [Define to 1 if you are compiling for ix86.])
+    ;;
+  x86_64-*-*)
+    have_x86=yes
+    AC_DEFINE(ARCH_X86, 1, [Define to 1 if you are compiling for ix86.])
+    AC_DEFINE(ARCH_X86_64, 1, [Define to 1 if you are compiling for amd64.])
+    ;;
+  ppc-*-* | powerpc-*)
+    have_ppc=yes
+    AC_DEFINE(ARCH_PPC, 1, [Define to 1 if you are compiling for PowerPC.])
+    ;;
+  ppc64-*-* | powerpc64-*)
+    have_ppc=yes
+    AC_DEFINE(ARCH_PPC, 1, [Define to 1 if you are compiling for PowerPC.])
+    AC_DEFINE(ARCH_PPC64, 1, [Define to 1 if you are compiling for PowerPC64.])
+    ;;
+  *)
+    ;;
+esac
+
+
+#################
+# Check for Win32
+#################
+
+AC_MSG_CHECKING([for some Win32 platform])
+case "$target_or_host" in
+  *-*-mingw* | *-*-cygwin*)
+    platform_win32=yes
+    ;;
+  *)
+    platform_win32=no
+    ;;
+esac
+AC_MSG_RESULT([$platform_win32])
+AM_CONDITIONAL(PLATFORM_WIN32, test "$platform_win32" = "yes")
+
+AC_MSG_CHECKING([for native Win32])
+case "$target_or_host" in
+  *-*-mingw*)
+    os_win32=yes
+    PATHSEP=';'
+    ;;
+  *)
+    os_win32=no
+    PATHSEP=':'
+    ;;
+esac
+AC_MSG_RESULT([$os_win32])
+AC_SUBST(PATHSEP)
+AM_CONDITIONAL(OS_WIN32, test "$os_win32" = "yes")
+AM_CONDITIONAL(OS_UNIX, test "$os_win32" != "yes")
+
+if test "$os_win32" = "yes"; then
+  AC_CHECK_PROG(ms_librarian, lib.exe, yes, no)
+  AC_CHECK_TOOL(WINDRES, windres, :)
+else
+  WINDRES=":"
+fi
+
+AM_CONDITIONAL(MS_LIB_AVAILABLE, test x$ms_librarian = xyes)
+AM_CONDITIONAL(HAVE_WINDRES, test "x$WINDRES" != "x:")
+
+AC_SUBST(WINDRES)
+
+
+###############
+# Generic stuff
+###############
+
+dnl Checks for programs.
+AC_ISC_POSIX
+AM_PROG_CC_STDC
+AC_PROG_INSTALL
+AC_PROG_MAKE_SET
+
+dnl Large file support for the swap file
+AC_SYS_LARGEFILE
+
+AC_MSG_CHECKING([whether to turn on debugging])
+AC_ARG_ENABLE(debug,
+              [  --enable-debug          turn on debugging (default=no)],
+              if eval "test x$enable_debug = xyes"; then
+                DEBUGFLAG="-g"
+              fi)
+
+if test -n "$DEBUGFLAG"; then
+  AC_MSG_RESULT([yes])
+  CFLAGS="$DEBUGFLAG $CFLAGS"
+else
+  AC_MSG_RESULT([no])
+fi
+
+AC_MSG_CHECKING([whether to turn on profiling])
+AC_ARG_ENABLE(profile,
+              [  --enable-profile        turn on profiling (default=no)],
+              if eval "test x$enable_profile = xyes"; then
+                PROFFLAG="-pg"
+              fi)
+
+if test -n "$PROFFLAG"; then
+  AC_MSG_RESULT([yes])
+  CFLAGS="$PROFFLAG $CFLAGS"
+else
+  AC_MSG_RESULT([no])
+fi
+
+AC_ARG_ENABLE(ansi,
+              [  --enable-ansi           turn on strict ansi (default=no)],,
+              enable_ansi=no)
+
+changequote(,)dnl
+if eval "test x$GCC = xyes"; then
+  case " $CFLAGS " in
+  *[\ \	]-Wall[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wall" ;;
+  esac
+
+  if test "x$enable_ansi" = "xyes"; then
+    case " $CFLAGS " in
+    *[\ \	]-ansi[\ \	]*) ;;
+    *) CFLAGS="$CFLAGS -ansi" ;;
+    esac
+
+    case " $CFLAGS " in
+    *[\ \	]-pedantic[\ \	]*) ;;
+    *) CFLAGS="$CFLAGS -pedantic" ;;
+    esac
+  fi
+fi
+changequote([,])dnl
+
+# Ensure MSVC-compatible struct packing convention is used when
+# compiling for Win32 with gcc.
+# What flag to depends on gcc version: gcc3 uses "-mms-bitfields", while
+# gcc2 uses "-fnative-struct".
+if test x"$os_win32" = xyes; then
+  if test x"$GCC" = xyes; then
+    msnative_struct=''
+    AC_MSG_CHECKING([how to get MSVC-compatible struct packing])
+    if test -z "$ac_cv_prog_CC"; then
+      our_gcc="$CC"
+    else
+      our_gcc="$ac_cv_prog_CC"
+    fi
+    case `$our_gcc --version | sed -e 's,\..*,.,' -e q` in
+      2.)
+	if $our_gcc -v --help 2>/dev/null | grep fnative-struct >/dev/null; then
+	  msnative_struct='-fnative-struct'
+	fi
+	;;
+      *)
+	if $our_gcc -v --help 2>/dev/null | grep ms-bitfields >/dev/null; then
+	  msnative_struct='-mms-bitfields'
+	fi
+	;;
+    esac
+    if test x"$msnative_struct" = x ; then
+      AC_MSG_RESULT([no way])
+      AC_MSG_WARN([build will be incompatible with GTK+ DLLs])
+    else
+      CFLAGS="$CFLAGS $msnative_struct"
+      AC_MSG_RESULT([${msnative_struct}])
+    fi
+  fi
+fi
+
+# Honor aclocal flags
+ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
+
+
+AC_HEADER_DIRENT
+AC_HEADER_STDC
+AC_HEADER_SYS_WAIT
+AC_HEADER_TIME
+
+AC_CHECK_HEADERS(sys/param.h sys/time.h sys/times.h sys/wait.h unistd.h)
+
+AC_TYPE_PID_T
+AC_TYPE_SIGNAL
+AC_FUNC_VPRINTF
+
+AC_FUNC_ALLOCA
+
+
+######################
+# Internationalisation
+######################
+
+dnl Add the languages which your application supports here.
+ALL_LINGUAS="az bg ca cs da de el en_CA en_GB es et eu fi fr ga gl gu he hu hr id it ja ko lt mk ms nb ne nl pa pl pt pt_BR ro ru rw sk sr sr@Latn sv tr tt uk vi xh yi zh_CN zh_TW"
+
+AC_PROG_INTLTOOL
+AM_GLIB_GNU_GETTEXT
+
+
+###############################
+# Checks for required libraries
+###############################
+                                                                                
+AM_PATH_GLIB_2_0(glib_required_version, :,
+  AC_MSG_ERROR(Test for GLIB failed. See the file 'INSTALL' for help.),
+  gobject)
+
+PKG_CHECK_MODULES(GMODULE_NO_EXPORT, gmodule-no-export-2.0)
+
+AC_MSG_CHECKING([if GLib is version 2.11.0 or newer])
+if $PKG_CONFIG --atleast-version=2.11.0 glib-2.0; then
+  have_glib_2_11=yes
+else
+  have_glib_2_11=no
+fi
+AC_MSG_RESULT($have_glib_2_11)
+
+dnl Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
+gimp_save_LIBS=$LIBS
+LIBS="$LIBS $GLIB_LIBS"
+AC_CHECK_FUNCS(bind_textdomain_codeset)
+LIBS=$gimp_save_LIBS
+
+
+AC_PATH_XTRA
+
+AM_PATH_GTK_2_0(gtk_required_version, :,
+    AC_MSG_ERROR(Test for GTK+ failed. See the file 'INSTALL' for help.))
+
+AC_MSG_CHECKING([if GTK+ is version 2.9.0 or newer])
+if $PKG_CONFIG --atleast-version=2.9.0 gtk+-2.0; then
+  have_gtk_2_9=yes
+else
+  have_gtk_2_9=no
+fi
+AC_MSG_RESULT($have_gtk_2_9)
+
+PKG_CHECK_MODULES(GIMP, gimp-2.0 >= gimp_required_version gimpui-2.0 >= gimp_required_version)
+AC_SUBST(GIMP_CFLAGS)
+AC_SUBST(GIMP_LIBS)
+
+
+GIMP_DATADIR=`$PKG_CONFIG --variable=gimpdatadir gimp-2.0`
+GIMP_LIBDIR=`$PKG_CONFIG --variable=gimplibdir gimp-2.0`
+
+# GNU format message catalogs go into $datadir/locale,
+# standard location is $libdir/locale. DATADIRNAME set accordingly.
+
+GIMP_LOCALEDIR="$datadir/locale"
+if test "$DATADIRNAME" = "lib"; then
+   GIMP_LOCALEDIR="$libdir/locale"
+fi
+
+AC_SUBST(GIMP_DATADIR)
+AC_SUBST(GIMP_LIBDIR)
+AC_SUBST(GIMP_LOCALEDIR)
+
+
+########################
+# Define a symbol prefix
+########################
+
+AC_MSG_CHECKING([whether symbols are prefixed])
+
+case "$host_os" in
+  mingw*)
+    SYMPREFIX='_'
+    ;;
+  darwin* | rhapsody* | machten*)
+    SYMPREFIX='_'
+    ;;
+  *)
+    ;;
+esac
+
+if test -n "$SYMPREFIX"; then
+  AC_MSG_RESULT([yes, with a $SYMPREFIX])
+else
+  AC_MSG_RESULT(no)
+fi
+
+AC_SUBST(SYMPREFIX)
+
+
+################
+# Check for Ruby
+################
+
+m4_define([rugcheck_error], [
+*** Could not find $1.
+*** Please install $2.])
+
+dnl check for Ruby
+AM_CHECK_RUBY(1.8.4,,
+[AC_MSG_ERROR([rugcheck_error([Ruby 1.8.4 or better], [it])])])
+
+
+######################################
+# Checks for gtk-doc and docbook-tools
+######################################
+
+GTK_DOC_CHECK([1.0])
+
+dnl NOTE: We need to use a separate automake conditional for this
+dnl       to make this work with the tarballs.
+AM_CONDITIONAL(ENABLE_GTK_DOC, test x$enable_gtk_doc = xyes)
+
+
+#########################################
+# Allow to configure the gimp environment
+#########################################
+
+AC_ARG_ENABLE(default-binary, [  --enable-default-binary install this as the default gimp binary (default=gimp_stable)], , enable_default_binary=gimp_stable)
+AM_CONDITIONAL(DEFAULT_BINARY, test x$enable_default_binary = xyes)
+
+
+AC_ARG_ENABLE(gimp-console, [  --enable-gimp-console   build a console-only binary which does not link GTK+], , enable_gimp_console=yes)
+
+AM_CONDITIONAL(ENABLE_GIMP_CONSOLE, test x$enable_gimp_console != xno)
+
+
+dnl Possibly change default gimpdir from .gimp-major.minor
+gimpdir=.gimp-gimp_user_version
+AC_ARG_WITH(gimpdir, [  --with-gimpdir=DIR      change default gimpdir from .gimp-gimp_user_version to DIR],
+if eval "test x$with_gimpdir != x"; then
+  if eval "test x$with_gimpdir != xyes"; then
+    gimpdir=$with_gimpdir
+  fi
+fi)
+
+GIMP_DATADIR=`$PKG_CONFIG --variable=gimpdatadir gimp-2.0`
+GIMP_LIBDIR=`$PKG_CONFIG --variable=gimplibdir gimp-2.0`
+GIMP_PLUGINDIR="$GIMP_LIBDIR/plug-ins"
+
+# GNU format message catalogs go into $datadir/locale,
+# standard location is $libdir/locale. DATADIRNAME set accordingly.
+
+GIMP_LOCALEDIR="$datadir/locale"
+if test "$DATADIRNAME" = "lib"; then
+   GIMP_LOCALEDIR="$libdir/locale"
+fi
+
+AC_SUBST(GIMP_DATADIR)
+AC_SUBST(GIMP_LIBDIR)
+AC_SUBST(GIMP_PLUGINDIR)
+AC_SUBST(GIMP_LOCALEDIR)
+
+
+AC_CONFIG_FILES([
+Makefile
+ext/Makefile
+gimp-lib/Makefile
+plug-ins/Makefile
+po/Makefile.in
+])
+
+AC_OUTPUT
+
+dnl Print a summary of features enabled/disabled:
+AC_MSG_RESULT([
+Building $plugin_name with prefix=$prefix
+
+Ruby settings:
+  RUBY_BIN:         $RUBY_BIN
+  RUBY_CFLAGS:      $RUBY_CFLAGS
+  RUBY_LIBS:        $RUBY_LIBS
+  RUBY_DLEXT:       $RUBY_DLEXT
+  RUBY_LDSHARED:    $RUBY_LDSHARED
+  ruby_libdir:      $ruby_libdir
+  ruby_archdir:     $ruby_archdir
+  ruby_sitelibdir:  $ruby_sitelibdir
+  ruby_sitearchdir: $ruby_sitearchdir
+
+GIMP directories:
+  GIMP_DATADIR:   $GIMP_DATADIR
+  GIMP_LIBDIR:    $GIMP_LIBDIR
+  GIMP_PLUGINDIR: $GIMP_PLUGINDIR
+  GIMP_LOCALEDIR: $GIMP_LOCALEDIR
+]);

@@ -1,0 +1,9 @@
+The run callback does not free the return value array. (let the Ruby GC take care of this?)
+
+Signal handlers need to be backed up. (see how the old one did this)
+
+Seperate GimpBaseEnums from GimpEnums or continue using one monolithic constants file?
+
+Read up on GLib's object system before working with any GLib based stuff.
+
+Read up on Gtk before working on any UI stuff.

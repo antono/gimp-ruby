@@ -1,0 +1,7 @@
+gimp-ruby
+---------
+
+This is a Ruby based scripting plug-in for the GNU Image Manipulation
+Program. It was created by Scott Lembcke as one of the projects accepted
+in the Google Summer of Code program for 2006. The project was mentored
+by Kevin Cozens.

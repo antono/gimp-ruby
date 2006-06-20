@@ -1,0 +1,3 @@
+* entry point is gimp_main(), don't use MAIN()
+
+* gimp_main() needs the complete and original argument list (not ARGV)

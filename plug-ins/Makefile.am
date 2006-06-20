@@ -1,0 +1,19 @@
+## Process this file with automake to produce Makefile.in
+
+pluginexecdir = $(GIMP_PLUGINDIR)
+
+scripts =  \
+    hello.rb  \
+    sphere.rb
+
+test_scripts = 
+
+ 
+if RUBYGIMP_UNSTABLE
+pluginexec_SCRIPTS = $(scripts) $(test_scripts)
+else
+pluginexec_SCRIPTS = $(scripts)
+endif
+
+
+EXTRA_DIST = $(scripts) $(test_scripts)

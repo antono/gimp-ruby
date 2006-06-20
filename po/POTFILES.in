@@ -1,0 +1,18 @@
+# Files from the RuG distribution which have already been
+# marked to allow runtime translation of messages
+
+conversion.c
+ids.c
+rbgimp.c
+rbgimpcolorcmyk.c
+rbgimpcolorhsv.c
+rbgimpcolorrgb.c
+rbgimpcolorspace.c
+rbgimpconstants.c
+rbgimpmain.c
+rbgimpproceduraldb.c
+structures.c
+
+plug-ins/hello.rb
+plug-ins/sphere.rb
+
