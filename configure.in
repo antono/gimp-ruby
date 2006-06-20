@@ -41,7 +41,7 @@ dnl Makefiles and conditionally defined here as a preprocessor symbol
 dnl and automake conditional.
 if test "x$RUBYGIMP_UNSTABLE" = "xyes"; then
   AC_DEFINE(RUBYGIMP_UNSTABLE,1,
-            [Define to 1 if this is an unstable version of RuG])
+            [Define to 1 if this is an unstable version of gimp-ruby])
 fi
 AM_CONDITIONAL(RUBYGIMP_UNSTABLE, test "x$RUBYGIMP_UNSTABLE" = "xyes")
 
@@ -373,13 +373,13 @@ AC_SUBST(SYMPREFIX)
 # Check for Ruby
 ################
 
-m4_define([rugcheck_error], [
+m4_define([rg_check_error], [
 *** Could not find $1.
 *** Please install $2.])
 
 dnl check for Ruby
 AM_CHECK_RUBY(1.8.4,,
-[AC_MSG_ERROR([rugcheck_error([Ruby 1.8.4 or better], [it])])])
+[AC_MSG_ERROR([rg_check_error([Ruby 1.8.4 or better], [it])])])
 
 
 ######################################

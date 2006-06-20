@@ -23,7 +23,7 @@ LIBTOOL_REQUIRED_VERSION=1.4
 LIBTOOL_WIN32=1.5
 
 
-PROJECT="RuG"
+PROJECT="gimp-ruby"
 TEST_TYPE=-d
 FILE=plug-ins
 
@@ -318,4 +318,4 @@ if test $RC -ne 0; then
 fi
 
 echo
-echo "Now type 'make' to compile the $PROJECT."
+echo "Now type 'make' to compile the $PROJECT project."
