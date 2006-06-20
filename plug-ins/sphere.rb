@@ -26,9 +26,11 @@ def run(run_mode, radius = 100, light = 45, shadow = true, bg_color = Gimp::Rgb.
   width  = radius * 3.75
   height = radius * 2.5
 
+  PDB.gimp_context_push()
+  PDB.gimp_image_undo_disable(img)
+
   img = PDB.gimp_image_new(width, height, 0)
 
-  PDB.gimp_image_undo_disable(img)
   old_fg = Context.get_foreground
   old_bg = PDB.gimp_context_get_background
 
@@ -78,6 +80,7 @@ def run(run_mode, radius = 100, light = 45, shadow = true, bg_color = Gimp::Rgb.
     PDB.gimp_image_undo_enable(img)
   end
 
+  PDB.gimp_context_pop()
   PDB.gimp_display_new(img)
   
   return [Gimp::Param.IMAGE(img)]

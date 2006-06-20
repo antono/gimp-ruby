@@ -50,7 +50,7 @@ EXTRA_DIST = \
     intltool-merge.in   \
     intltool-update.in  \
     enumconvert.rb      \
-    notes.rtf           \
+    notes.txt           \
     todo.txt
 
 DISTCLEANFILES = \

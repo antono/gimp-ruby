@@ -382,17 +382,6 @@ AM_CHECK_RUBY(1.8.4,,
 [AC_MSG_ERROR([rg_check_error([Ruby 1.8.4 or better], [it])])])
 
 
-######################################
-# Checks for gtk-doc and docbook-tools
-######################################
-
-GTK_DOC_CHECK([1.0])
-
-dnl NOTE: We need to use a separate automake conditional for this
-dnl       to make this work with the tarballs.
-AM_CONDITIONAL(ENABLE_GTK_DOC, test x$enable_gtk_doc = xyes)
-
-
 #########################################
 # Allow to configure the gimp environment
 #########################################

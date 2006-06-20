@@ -1,6 +1,15 @@
 2006-06-20  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* autogen.sh
+	* configure.in: Removed gtk-doc check as its not currently needed.
+
+	* Makefile.am: Oops...The notes file is called notes.rtf.
+
+	* plug-ins/sphere.rb: Added calls to context-push/pop.
+
+2006-06-20  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* autogen.sh
 	* configure.in: It was an almost perfect import. Missed a few spots
 	where the old project name of RuG was still being used.
 
