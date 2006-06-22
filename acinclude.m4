@@ -65,7 +65,7 @@ dnl
   RUBY_LIBS="$RUBY_LIBS $LIBS"
   LIBS=`$RUBY -r rbconfig -e "puts Config::CONFIG[['DLDFLAGS']]"`
   RUBY_LIBS="$RUBY_LIBS $LIBS"
-  RUBY_DLEXT=`$RUBY -r rbconfig -e "puts Config::CONFIG[['DLEXT']]"`
+  RUBY_DLEXT=`$RUBY -r rbconfig -e "puts '.' + Config::CONFIG[['DLEXT']]"`
 
   CFLAGS="$save_CFLAGS"
   LIBS="$save_LIBS"

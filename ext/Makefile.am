@@ -27,7 +27,8 @@ gimpext_la_SOURCES = \
     rbgimpproceduraldb.c \
     structures.c
 
-gimpext_la_LDFLAGS = -module -avoid-version $(no_undefined)
+gimpext_la_LDFLAGS = -module -avoid-version -shrext $(RUBY_DLEXT) \
+    $(no_undefined)
 
 gimpext_la_LIBADD = \
     $(GIMP_LIBS) \

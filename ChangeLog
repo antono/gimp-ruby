@@ -1,5 +1,12 @@
 2006-06-22  Kevin Cozens  <kcozens@cvs.gnome.org>
 
+	* acinclude.m4: RUBY_DLEXT will now include a leading .
+
+	* ext/Makefile.am: Added -shrext to gimpext_la_LDFLAGS to ensure
+	proper extension for gimpext file. Fixes build on Mac OS X.
+
+2006-06-22  Kevin Cozens  <kcozens@cvs.gnome.org>
+
 	* ChangeLog: Wrong file name reference in changelog entry.
 
 	* MAINTAINERS: Updated information for Scott. Removed a URL that
