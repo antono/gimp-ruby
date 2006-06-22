@@ -1,9 +1,16 @@
+2006-06-22  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* ChangeLog: Wrong file name reference in changelog entry.
+
+	* MAINTAINERS: Updated information for Scott. Removed a URL that
+	doesn't apply to the gimp-ruby project.
+
 2006-06-20  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* autogen.sh
 	* configure.in: Removed gtk-doc check as its not currently needed.
 
-	* Makefile.am: Oops...The notes file is called notes.rtf.
+	* Makefile.am: Oops...the notes file is called notes.txt.
 
 	* plug-ins/sphere.rb: Added calls to context-push/pop.
 
