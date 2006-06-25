@@ -1,3 +1,36 @@
+2006-06-24  Scott Lembcke <lemb0029@gnome.org>
+
+	* ext/Makefile.am: Added ext/arraytypes.c.
+
+	* ext/arraytypes.c: Added ext/arraytypes.c which contains stubs to wrap
+     array pointers.
+
+	* ext/conversion.c: Added support for array conversion and ParamRegions,
+	 and changed the behavior of GimpParams2rb() to return an array of
+	 Gimp::Param structs.
+	
+	* ext/ids.c: Added additional ids for use with Gimp::ParamRegion structs.
+
+	* ext/rbgimp.c: Moved constant definitions to rbgimpconstants.c and added
+	 additional module functions.
+
+	* ext/rbgimpconstants.c: Enumerations are now defined using
+	 gimp_enums_get_names(). Added additional constants.
+
+	* ext/rbgimpmain.c: GimpParam arrays are now registered with the Ruby GC
+	 so that they are freed at exit. Fixed a couple of bugs pertaining to
+	 exception handling and return values.
+
+	* gimp-lib/gimp.rb.c: Changed code for definition of Gimp::Param and
+	 Gimp::ParamDef. Added type checking abilities to Gimp::Param and
+	 Gimp::ParamDef. Fixed bugs in the type checking and parameter handling of
+	 the PDB module.
+
+	* plug-ins/Makefile.am: Added coolmetal-logo.rb.
+
+	* plug-ins/coolmetal-logo.rb.c: Tried porting the old ruby plugin, still
+	 has some issues with the reflection.
+
 2006-06-22  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* acinclude.m4: RUBY_DLEXT will now include a leading .
@@ -31,3 +64,4 @@
 
 	* Created autoconf'ed version of the third tarball snapshot
 	received from Scott Lembcke on June 19 and imported it to CVS.
+

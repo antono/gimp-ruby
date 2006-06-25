@@ -1,92 +1,110 @@
 require 'gimpext'
-require 'gimp_oo.rb'
+#require 'gimp_oo.rb'
 require 'rubyfu.rb'
 
-module Gimp  
-  class ParamDef
-    def self.add_type(method_name)
-      class_eval """
-        def self.#{method_name}(name, desc)
-          ParamDef.new(Gimp::PDB_#{method_name}, name, desc)
-        end
-      """
+module Gimp
+  def message(*messages)
+    messages.each do|message|
+      PDB.gimp_message(message.to_s)
     end
-      
-    add_type 'INT32'
-    add_type 'INT16'
-    add_type 'INT8'
-    add_type 'FLOAT'
-    add_type 'STRING'
-    add_type 'INT32ARRAY'
-    add_type 'INT16ARRAY'
-    add_type 'INT8ARRAY'
-    add_type 'FLOATARRAY'
-    add_type 'STRINGARRAY'
-    add_type 'COLOR'
-    add_type 'REGION'
-    add_type 'DISPLAY'
-    add_type 'IMAGE'
-    add_type 'LAYER'
-    add_type 'CHANNEL'
-    add_type 'DRAWABLE'
-    add_type 'SELECTION'
-    add_type 'BOUNDARY'
-    add_type 'VECTORS'
-    add_type 'PARASITE'
-    add_type 'STATUS'
   end
   
-  class Param
-    def self.duck_type(method_name, respond)
-      class_eval """
-        def self.#{method_name}(data)
-          message = \"Cannot create a #{method_name} from a \#{data.class}\"
-          raise(ArgumentError, message) unless data.respond_to? #{respond}
-          Param.new(Gimp::PDB_#{method_name}, data)
-        end
-      """
+  module_function :message
+  
+  module ParamTypes
+    CheckType = {
+      :INT32 => :to_int,
+      :INT16 => :to_int,
+      :INT8 => :to_int,
+      :FLOAT => :to_f,
+      :STRING => :to_str,
+      :INT32ARRAY => :to_ary,
+      :INT16ARRAY => :to_ary,
+      :INT8ARRAY => :to_ary,
+      :FLOATARRAY => :to_ary,
+      :STRINGARRAY => :to_ary,
+      :COLOR => Gimp::Rgb,
+      :REGION => Gimp::ParamRegion,
+      :DISPLAY => :to_int,
+      :IMAGE => :to_int,
+      :LAYER => :to_int,
+      :CHANNEL => :to_int,
+      :DRAWABLE => :to_int,
+      :SELECTION => :to_int,
+      :BOUNDARY => :to_int,
+      :VECTORS => :to_int,
+  #    add_type 'PARASITE', NilClass
+      :STATUS => :to_int,
+    }
+    
+    INT2TYPE = Hash.new
+    EnumNames::PDBArgType.each do|key, value|
+      INT2TYPE[key] = value.gsub('PDB_', '').to_sym
     end
     
-    def self.add_type(method_name, klass)
-      class_eval """
-        def self.#{method_name}(data)
-          message = \"Cannot create a #{method_name} from a \#{data.class}\"
-          raise(ArgumentError, message) unless data.is_a? #{klass}
-          Param.new(Gimp::PDB_#{method_name}, data)
-        end
-      """
+    def self.check_type(sym, data)
+      check = CheckType[sym]
+      
+      good_type = case check
+      when Class: data.is_a? check
+      when Symbol: data.respond_to? check
+      end
+      
+      unless good_type
+        message = "#A #{sym} cannot be created from a #{data.class}"
+        raise(TypeError, message)
+      end
     end
     
-    duck_type 'INT32', ':to_int'
-    duck_type 'INT16', ':to_int'
-    duck_type 'INT8', ':to_int'
-    duck_type 'FLOAT', ':to_f'
-    duck_type 'STRING', ':to_str'
-    duck_type 'INT32ARRAY', ':to_ary'
-    duck_type 'INT16ARRAY', ':to_ary'
-    duck_type 'INT8ARRAY', ':to_ary'
-    duck_type 'FLOATARRAY', ':to_ary'
-    duck_type 'STRINGARRAY', ':to_ary'
-    add_type 'COLOR', Gimp::Rgb
-#    add_type 'REGION', NilClass
-    duck_type 'DISPLAY', ':to_int'
-    duck_type 'IMAGE', ':to_int'
-    duck_type 'LAYER', ':to_int'
-    duck_type 'CHANNEL', ':to_int'
-    duck_type 'DRAWABLE', ':to_int'
-    duck_type 'SELECTION', ':to_int'
-    duck_type 'BOUNDARY', ':to_int'
-    duck_type 'VECTORS', ':to_int'
-#    add_type 'PARASITE', NilClass
-    duck_type 'STATUS', ':to_int'
+    def self.check_method(sym, args, nargs)
+      return false unless CheckType.member? sym
+      
+      arglen = args.length
+      unless arglen == nargs
+        message = "Wrong number of arguments. (#{arglen} for #{nargs})"
+        raise(ArgumentError, message)
+      end
+      
+      return true
+    end
+  end
+  
+  class ParamDef
+    def self.method_missing(sym, *args)
+      super unless ParamTypes.check_method(sym, args, 2)
+      
+      name, desc = *args
+      return new(Gimp.const_get("PDB_#{sym}".to_sym), name, desc)
+    end
+    
+    def check(value)
+      name = EnumNames::PDBArgType[type]
+      sym = name.sub('PDB_', '').to_sym
+            
+      ParamTypes.check_type(sym, value)
+    end
+  end
+  
+  class Param    
+    def self.method_missing(sym, *args)
+      super unless ParamTypes.check_method(sym, args, 1)
+      
+      data = *args
+      ParamTypes.check_type(sym, data)
+      return new(Gimp.const_get("PDB_#{sym}".to_sym), data)
+    end
+    
+    def to_s
+      "GimpParam #{EnumNames::PDBArgType[type]}: #{data}"
+    end
   end
 end
 
 module PDB
-  class Execption
+  class PDBException < Exception
   end
 
-  class NoProcedure < Exception
+  class NoProcedure < PDBException
     def initialize(name)
       @name = name
     end
@@ -96,13 +114,14 @@ module PDB
     end
   end
   
-  class CallError < Exception
+  class CallError < PDBException
     def initialize(name, status)
-      @name, @status = name, status
+      @name = name
+      @status = Gimp::EnumNames::PDBStatusType[status]
     end
     
     def message
-      "#{@name} exited with status #{status}"
+      "#@name exited with status #@status"
     end
   end
   
@@ -142,6 +161,7 @@ module PDB
       end
       
       result = args.zip(paramdefs).collect do|arg, paramdef|
+        #TODO No type checking!
         Gimp::Param.new(paramdef.type, arg)
       end
     end
@@ -150,14 +170,10 @@ module PDB
       params = convert_args(args, @args)
       values = Gimp.run_procedure(@name, params)
       
-      status = values.shift
+      status = values.shift.data
       raise CallError.new(@name, status) unless status == Gimp::PDB_SUCCESS
       
-      case values.length
-      when 0: return nil
-      when 1: return values.first
-      else return values
-      end
+      return *values.collect{|param| param.data}
     end
     
     def to_s
@@ -181,12 +197,12 @@ module PDB
   
   module Access
     def self.method_missing(sym, *args)
-      begin
+      # begin
         Procedure.new(sym.to_s.gsub('_', '-')).call(*args)
-      rescue NoProcedure
-        warn $!.message
-        super
-      end
+      # rescue NoProcedure
+      #   warn $!.message
+      #   super
+      # end
     end
     
     def method_missing(sym, *args)

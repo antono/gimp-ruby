@@ -1,13 +1,23 @@
 //modules
 extern VALUE mGimp;
+
+
+//classes
 extern VALUE cGimpRGB;
 extern VALUE cGimpHSV;
 extern VALUE cGimpCMYK;
+extern VALUE cInt32ArrayStub;
+extern VALUE cInt16ArrayStub;
+extern VALUE cInt8ArrayStub;
+extern VALUE cFloatArrayStub;
+extern VALUE cStringArrayStub;
+
 
 //structures (structures.c)
 extern VALUE sGimpParamDef;
 extern VALUE sGimpParam;
 extern VALUE sGimpPlugInInfo;
+extern VALUE sGimpParamRegion;
 
 
 //Type conversion functions (conversion.c)
@@ -24,6 +34,9 @@ VALUE         GimpParamDefs2rb   (GimpParamDef *paramdefs,
 GimpParamDef  rb2GimpParamDef    (VALUE         param);
 GimpParamDef  *rb2GimpParamDefs  (VALUE         rbparamdefs,
                                   int          *count);
+
+VALUE           GimpParamRegion2rb (GimpParamRegion *region);
+GimpParamRegion rb2GimpParamRegion (VALUE region);
 
 VALUE    GimpRGB2rb     (GimpRGB *color);
 GimpRGB *rb2GimpRGBPtr  (VALUE    color);
@@ -48,11 +61,16 @@ extern ID id_quit_proc;
 extern ID id_query_proc;
 extern ID id_run_proc;
 extern ID id_call;
+extern ID id_x;
+extern ID id_y;
+extern ID id_width;
+extern ID id_height;
 
 
 //Init functions
 void Init_structures(void);
 void Init_ids(void);
+void Init_arraytypes(void);
 
 void Init_gimpconstants(void);
 void Init_gimpmain(void);

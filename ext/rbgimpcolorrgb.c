@@ -614,7 +614,7 @@ void Init_gimpcolorrgb(void)
   rb_define_alias(cGimpRGB, "*", "multiply");
 
   rb_define_method(cGimpRGB, "distance", rb_gimp_rgb_distance, 0);
-  rb_define_method(cGimpRGB, "rgba_distance", rb_gimp_rgb_distance, 0);
+  rb_define_method(cGimpRGB, "rgba_distance", rb_gimp_rgba_distance, 0);
 
   rb_define_method(cGimpRGB, "max", rb_gimp_rgb_max, 0);
   rb_define_method(cGimpRGB, "min", rb_gimp_rgb_min, 0);

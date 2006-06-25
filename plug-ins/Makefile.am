@@ -3,6 +3,7 @@
 pluginexecdir = $(GIMP_PLUGINDIR)
 
 scripts =  \
+	coolmetal-logo.rb \
     hello.rb  \
     sphere.rb
 

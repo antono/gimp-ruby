@@ -1,9 +1,17 @@
-The run callback does not free the return value array. (let the Ruby GC take care of this?)
+GimpParam arrays aren't freed right away, but only registered with the GC. This could be a problem for very long sessions.
 
-Signal handlers need to be backed up. (see how the old one did this)
+Track down the corrupted string issue that occurs in coolmetal-logo.rb.
 
-Seperate GimpBaseEnums from GimpEnums or continue using one monolithic constants file?
+Parasite argument types.
 
-Read up on GLib's object system before working with any GLib based stuff.
+Handle parameter definitions/defaults better in RubyFu.
+
+Finish OO Gimp types.
+
+Figure what other parts of the C API needs wrapping.
+
+The color code has turned out to be less than useful. Fix this.
+
+Signal handlers need to be backed up. (see how the old one did this. Is it still necessary?)
 
 Read up on Gtk before working on any UI stuff.

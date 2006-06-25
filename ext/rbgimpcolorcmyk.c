@@ -63,7 +63,7 @@ rb_gimp_cmyk_get_c (VALUE self)
 }
 
 static VALUE
-rb_gimp_CMYK_set_c (VALUE self,
+rb_gimp_cmyk_set_c (VALUE self,
                     VALUE value)
 {
   GimpCMYK *color = rb2GimpCMYKPtr(value);
@@ -91,7 +91,7 @@ rb_gimp_cmyk_get_m (VALUE self)
 }
 
 static VALUE
-rb_gimp_CMYK_set_m (VALUE self,
+rb_gimp_cmyk_set_m (VALUE self,
                     VALUE value)
 {
   GimpCMYK *color = rb2GimpCMYKPtr(value);
@@ -119,7 +119,7 @@ rb_gimp_cmyk_get_y (VALUE self)
 }
 
 static VALUE
-rb_gimp_CMYK_set_y (VALUE self,
+rb_gimp_cmyk_set_y (VALUE self,
                     VALUE value)
 {
   GimpCMYK *color = rb2GimpCMYKPtr(value);
@@ -147,7 +147,7 @@ rb_gimp_cmyk_get_k (VALUE self)
 }
 
 static VALUE
-rb_gimp_CMYK_set_k(VALUE self,
+rb_gimp_cmyk_set_k(VALUE self,
                    VALUE value)
 {
   GimpCMYK *color = rb2GimpCMYKPtr(value);
@@ -175,7 +175,7 @@ rb_gimp_cmyk_get_a (VALUE self)
 }
 
 static VALUE
-rb_gimp_CMYK_set_a (VALUE self,
+rb_gimp_cmyk_set_a (VALUE self,
                     VALUE value)
 {
   GimpCMYK *color = rb2GimpCMYKPtr(value);
@@ -301,8 +301,25 @@ void Init_gimpcolorcmyk(void)
   cGimpCMYK = rb_define_class_under(mGimp, "Cmyk", rb_cObject);
   rb_define_alloc_func(cGimpCMYK, rb_gimp_cmyk_alloc);
   rb_define_method(cGimpCMYK, "initialize", rb_gimp_cmyk_initialize, -1);
+  
+  rb_define_method(cGimpCMYK, "c",  rb_gimp_cmyk_get_c, 0);
+  rb_define_method(cGimpCMYK, "m",  rb_gimp_cmyk_get_m, 0);
+  rb_define_method(cGimpCMYK, "y",  rb_gimp_cmyk_get_y, 0);
+  rb_define_method(cGimpCMYK, "k",  rb_gimp_cmyk_get_k, 0);
+  rb_define_method(cGimpCMYK, "a",  rb_gimp_cmyk_get_a, 0);
+  
+  rb_define_method(cGimpCMYK, "c=",  rb_gimp_cmyk_set_c, 1);
+  rb_define_method(cGimpCMYK, "m=",  rb_gimp_cmyk_set_m, 1);
+  rb_define_method(cGimpCMYK, "y=",  rb_gimp_cmyk_set_y, 1);
+  rb_define_method(cGimpCMYK, "k=",  rb_gimp_cmyk_set_k, 1);
+  rb_define_method(cGimpCMYK, "a=",  rb_gimp_cmyk_set_a, 1);
 
   rb_define_method(cGimpCMYK, "set", rb_gimp_cmyk_set, 3);
   rb_define_method(cGimpCMYK, "cmyka_set", rb_gimp_cmyka_set, 4);
 
+  rb_define_method(cGimpCMYK, "get_uchar", rb_gimp_cmyk_get_uchar, 0);
+  rb_define_method(cGimpCMYK, "get_uchar", rb_gimp_cmyk_set_uchar, 4);
+  
+  rb_define_method(cGimpCMYK, "cmyka_get_uchar", rb_gimp_cmyka_get_uchar, 0);
+  rb_define_method(cGimpCMYK, "cmyka_set_uchar", rb_gimp_cmyka_set_uchar, 4);
 }

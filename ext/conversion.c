@@ -10,93 +10,129 @@
 VALUE
 GimpParam2rb (GimpParam param)
 {
-  switch(param.type)
+  GimpPDBArgType type = param.type;
+  volatile VALUE data;
+  
+  switch(type)
     {
     case GIMP_PDB_INT32:
-      return INT2NUM(param.data.d_int32);
-
+      data = INT2NUM(param.data.d_int32);
+      break;
+      
     case GIMP_PDB_INT16:
-      return INT2NUM(param.data.d_int16);
-
+      data = INT2NUM(param.data.d_int16);
+      break;
+      
     case GIMP_PDB_INT8:
-      return INT2NUM(param.data.d_int8);
-
+      data = INT2NUM(param.data.d_int8);
+      break;
+      
     case GIMP_PDB_FLOAT:
-      return rb_float_new(param.data.d_float);
-
+      data = rb_float_new(param.data.d_float);
+      break;
+      
     case GIMP_PDB_STRING:
-      return rb_str_new2(param.data.d_string);
+      data = rb_str_new2(param.data.d_string);
+      break;
 
     case GIMP_PDB_INT32ARRAY:
+      data = Data_Wrap_Struct(cInt32ArrayStub, NULL, NULL, param.data.d_int32array);
+      break;
+
     case GIMP_PDB_INT16ARRAY:
+      data = Data_Wrap_Struct(cInt16ArrayStub, NULL, NULL, param.data.d_int16array);
+      break;
+
     case GIMP_PDB_INT8ARRAY:
+      data = Data_Wrap_Struct(cInt8ArrayStub, NULL, NULL, param.data.d_int8array);
+      break;
+
     case GIMP_PDB_FLOATARRAY:
+      data = Data_Wrap_Struct(cFloatArrayStub, NULL, NULL, param.data.d_floatarray);
+      break;
+
     case GIMP_PDB_STRINGARRAY:
-      rb_warn("Array types are not implemented, sending nil");
-      return Qnil;
+      data = Data_Wrap_Struct(cStringArrayStub, NULL, NULL, param.data.d_stringarray);
+      break;
 
     case GIMP_PDB_COLOR:
-      return GimpRGB2rb(&param.data.d_color);
+      data = GimpRGB2rb(&param.data.d_color);
+      break;
 
     case GIMP_PDB_REGION:
-      rb_warn("Region type is not implemented, sending nil");
-      return Qnil;
+      data = GimpParamRegion2rb(&param.data.d_region);
+      break;
 
     case GIMP_PDB_DISPLAY:
-      return INT2NUM(param.data.d_display);
-
+      data = INT2NUM(param.data.d_display);
+      break;
+      
     case GIMP_PDB_IMAGE:
-      return INT2NUM(param.data.d_image);
-
+      data = INT2NUM(param.data.d_image);
+      break;
+      
     case GIMP_PDB_LAYER:
-      return INT2NUM(param.data.d_layer);
-
+      data = INT2NUM(param.data.d_layer);
+      break;
+      
 //    case GIMP_PDB_LAYER_MASK:
-//      return INT2NUM(param.data.d_layer_mask);
-
+//      data = INT2NUM(param.data.d_layer_mask);
+//      break;
+      
     case GIMP_PDB_CHANNEL:
-      return INT2NUM(param.data.d_channel);
-
+      data = INT2NUM(param.data.d_channel);
+      break;
+      
     case GIMP_PDB_DRAWABLE:
-      return INT2NUM(param.data.d_drawable);
-
+      data = INT2NUM(param.data.d_drawable);
+      break;
+      
     case GIMP_PDB_SELECTION:
-      return INT2NUM(param.data.d_selection);
-
+      data = INT2NUM(param.data.d_selection);
+      break;
+      
     case GIMP_PDB_BOUNDARY:
-      return INT2NUM(param.data.d_boundary);
-
+      data = INT2NUM(param.data.d_boundary);
+      break;
+      
     case GIMP_PDB_VECTORS:
-      return INT2NUM(param.data.d_vectors);
-
+      data = INT2NUM(param.data.d_vectors);
+      break;
+      
 //    case GIMP_PDB_UNIT:
-//      return INT2NUM(param.data.d_unit);
-
+//      data = INT2NUM(param.data.d_unit);
+//      break;
+      
     case GIMP_PDB_PARASITE:
       rb_warn("Parasite type is not implemented, sending nil");
-      return Qnil;
+      data = Qnil;
+      break;
 
 //    case GIMP_PDB_TATTOO:
-//      return INT2NUM(param.data.d_tattoo);
-
+//      data = INT2NUM(param.data.d_tattoo);
+//      break;
+      
     case GIMP_PDB_STATUS:
-      return INT2NUM(param.data.d_status);
-
+      data = INT2NUM(param.data.d_status);
+      break;
+    
     default:
       rb_bug("Parameter type %d does not exist.\n", param.type);
     }
+    
+    return rb_struct_new(sGimpParam, INT2NUM(type), data);
 }
 
 VALUE
 GimpParams2rb (const GimpParam *params,
                int             count)
-{
+{ 
   volatile VALUE ary = rb_ary_new();
 
   int i;
   for(i=0; i<count; i++)
     rb_ary_push(ary, GimpParam2rb(params[i]));
-
+  
   return ary;
 }
 
@@ -106,8 +142,54 @@ rbcopystr(VALUE rbstr)
   char *str = StringValuePtr(rbstr);
   gchar *result = g_malloc(strlen(str) + 1);
   strcpy(result, str);
-
+  
   return str;
+}
+
+static gpointer
+convert_array(GimpPDBArgType type,
+              VALUE          rbarr)
+{
+  rbarr = rb_check_array_type(rbarr);
+  int count = RARRAY(rbarr)->len;
+  VALUE *arr = RARRAY(rbarr)->ptr;
+  
+  int i;
+  gint32  *int32arr;
+  gint16  *int16arr;
+  gint8   *int8arr;
+  gdouble *floatarr;
+  gchar  **stringarr;
+
+  switch(type)
+    {
+    case GIMP_PDB_INT32ARRAY:
+      int32arr = g_new(gint32, count);
+      for(i=0; i<count; i++) int32arr[i] = (gint32)NUM2INT(arr[i]);
+      return int32arr;
+      
+    case GIMP_PDB_INT16ARRAY:
+      int16arr = g_new(gint16, count);
+      for(i=0; i<count; i++) int16arr[i] = (gint16)NUM2INT(arr[i]);
+      return int16arr;
+      
+    case GIMP_PDB_INT8ARRAY:
+      int8arr = g_new(gint8, count);
+      for(i=0; i<count; i++) int8arr[i] = (gint8)NUM2INT(arr[i]);
+      return int8arr;
+      
+    case GIMP_PDB_FLOATARRAY:
+      floatarr = g_new(gdouble, count);
+      for(i=0; i<count; i++) floatarr[i] = (gdouble)NUM2DBL(arr[i]);
+      return floatarr;
+      
+    case GIMP_PDB_STRINGARRAY:
+      stringarr = g_new(gchar *, count);
+      for(i=0; i<count; i++) stringarr[i] = rbcopystr(arr[i]);
+      return stringarr;
+    default:
+      rb_bug("Bad type value in convert_array()");
+    }
 }
 
 GimpParam
@@ -118,24 +200,24 @@ rb2GimpParam (VALUE rbparam)
 
   int type = NUM2INT(rb_struct_aref(rbparam, ID2SYM(id_type)));
   VALUE rbdata = rb_struct_aref(rbparam, ID2SYM(id_data));
-
+  
   GimpParam result;
   result.type = (GimpPDBArgType)type;
-
+  
   switch(type)
     {
     case GIMP_PDB_INT32:
       result.data.d_int32 = (gint32)NUM2INT(rbdata);
       break;
-
+      
     case GIMP_PDB_INT16:
       result.data.d_int16 = (gint16)NUM2INT(rbdata);
       break;
-
+      
     case GIMP_PDB_INT8:
       result.data.d_int8 = (gint8)NUM2INT(rbdata);
       break;
-
+      
     case GIMP_PDB_FLOAT:
       result.data.d_float = (gdouble)NUM2DBL(rbdata);
       break;
@@ -145,13 +227,23 @@ rb2GimpParam (VALUE rbparam)
       break;
 
     case GIMP_PDB_INT32ARRAY:
+      result.data.d_int32array = convert_array(type, rbdata);
+      break;
+
     case GIMP_PDB_INT16ARRAY:
+      result.data.d_int16array = convert_array(type, rbdata);
+      break;
+
     case GIMP_PDB_INT8ARRAY:
+      result.data.d_int8array = convert_array(type, rbdata);
+      break;
+
     case GIMP_PDB_FLOATARRAY:
+      result.data.d_floatarray = convert_array(type, rbdata);
+      break;
+
     case GIMP_PDB_STRINGARRAY:
-      //TODO
-      rb_warn("Array types are not implemented.");
-      rb_notimplement();
+      result.data.d_stringarray = convert_array(type, rbdata);
       break;
 
     case GIMP_PDB_COLOR:
@@ -159,9 +251,7 @@ rb2GimpParam (VALUE rbparam)
       break;
 
     case GIMP_PDB_REGION:
-      //TODO
-      rb_warn("Region type is not implemented.");
-      rb_notimplement();
+      result.data.d_region = rb2GimpParamRegion(rbdata);
       break;
 
     case GIMP_PDB_DISPLAY:
@@ -217,7 +307,7 @@ rb2GimpParam (VALUE rbparam)
       result.data.d_status = (GimpPDBStatusType)NUM2INT(rbdata);
       break;
     }
-
+  
   return result;
 }
 
@@ -228,13 +318,13 @@ rb2GimpParams (VALUE rbparams,
   rbparams = rb_check_array_type(rbparams);
   int num = RARRAY(rbparams)->len;
   VALUE *arr = RARRAY(rbparams)->ptr;
-
+  
   GimpParam *params = calloc(num, sizeof(GimpParam));
-
+  
   int i;
   for(i=0; i<num; i++)
     params[i] = rb2GimpParam(arr[i]);
-
+  
   *count = (gint)num;
   return params;
 }
@@ -245,7 +335,7 @@ GimpParamDef2rb (GimpParamDef paramdef)
   volatile VALUE type = INT2NUM(paramdef.type);
   volatile VALUE name = rb_str_new2(paramdef.name);
   volatile VALUE desc = rb_str_new2(paramdef.description);
-
+  
   return rb_struct_new(sGimpParamDef, type, name, desc, NULL);
 }
 
@@ -254,7 +344,7 @@ GimpParamDefs2rb(GimpParamDef *paramdefs,
                  int          count)
 {
   volatile VALUE rbparamdefs = rb_ary_new();
-
+  
   int i;
   for(i=0; i<count; i++)
     rb_ary_push(rbparamdefs, GimpParamDef2rb(paramdefs[i]));
@@ -265,20 +355,20 @@ GimpParamDefs2rb(GimpParamDef *paramdefs,
 GimpParamDef
 rb2GimpParamDef (VALUE param)
 {
-    if(!rb_obj_is_kind_of(param, sGimpParamDef))
-        rb_raise(rb_eArgError, "Parameters must be of type Gimp::ParamDef");
-
-    VALUE type = rb_struct_aref(param, ID2SYM(id_type));
-    VALUE name = rb_struct_aref(param, ID2SYM(id_name));
-    VALUE dscr = rb_struct_aref(param, ID2SYM(id_dscr));
-
-    GimpParamDef result;
-    result.type = NUM2INT(type);
-    result.name = StringValuePtr(name);
-    result.description = StringValuePtr(dscr);
-
-//  printf("%d %s %s\n", result.type, result.name, result.description);
-    return result;
+	if(!rb_obj_is_kind_of(param, sGimpParamDef))
+		rb_raise(rb_eArgError, "Parameters must be of type Gimp::ParamDef");
+	
+	VALUE type = rb_struct_aref(param, ID2SYM(id_type));
+	VALUE name = rb_struct_aref(param, ID2SYM(id_name));
+	VALUE dscr = rb_struct_aref(param, ID2SYM(id_dscr));
+	
+	GimpParamDef result;
+	result.type = NUM2INT(type);
+	result.name = StringValuePtr(name);
+	result.description = StringValuePtr(dscr);
+	
+//	printf("%d %s %s\n", result.type, result.name, result.description);
+	return result;
 }
 
 GimpParamDef *
@@ -292,21 +382,52 @@ rb2GimpParamDefs (VALUE rbparamdefs,
     }
   else
     {
-        Check_Type(rbparamdefs, T_ARRAY);
-
+    	Check_Type(rbparamdefs, T_ARRAY);
+  	
       int num = RARRAY(rbparamdefs)->len;
       VALUE *arr = RARRAY(rbparamdefs)->ptr;
-
+    
       GimpParamDef *gimpparamdefs = calloc(num, sizeof(GimpParamDef));
-
+    
       int i;
       for(i=0; i<num; i++)
         gimpparamdefs[i] = rb2GimpParamDef(arr[i]);
-
+      
       *count = (gint)num;
       return gimpparamdefs;
     }
 }
+
+VALUE
+GimpParamRegion2rb (GimpParamRegion *region)
+{
+  volatile VALUE x = INT2NUM(region->x);
+  volatile VALUE y = INT2NUM(region->y);
+  volatile VALUE w = INT2NUM(region->width);
+  volatile VALUE h = INT2NUM(region->height);
+  
+  return rb_struct_new(sGimpParamRegion, x, y, w, h, NULL);
+}
+
+GimpParamRegion
+rb2GimpParamRegion(VALUE region)
+{
+	if(!rb_obj_is_kind_of(region, sGimpParamRegion))
+		rb_raise(rb_eArgError, "Parameters must be of type Gimp::ParamRegion");
+	
+	VALUE x = rb_struct_aref(region, ID2SYM(id_x));
+	VALUE y = rb_struct_aref(region, ID2SYM(id_y));
+	VALUE width = rb_struct_aref(region, ID2SYM(id_width));
+	VALUE height = rb_struct_aref(region, ID2SYM(id_height));
+	
+	GimpParamRegion result;
+	result.x = NUM2INT(x);
+	result.y = NUM2INT(y);
+	result.width = NUM2INT(width);
+	result.height = NUM2INT(height);
+
+  return result;
+}  
 
 VALUE
 GimpRGB2rb (GimpRGB *color)
@@ -321,7 +442,7 @@ rb2GimpRGBPtr (VALUE color)
 {
   if(!rb_obj_is_kind_of(color, cGimpRGB))
    rb_raise(rb_eTypeError, "Object %s is not a Gimp::RGB", StringValuePtr(color));
-
+  
   GimpRGB *tmp;
   Data_Get_Struct(color, GimpRGB, tmp);
   return tmp;
@@ -346,7 +467,7 @@ rb2GimpHSVPtr (VALUE color)
 {
   if(!rb_obj_is_kind_of(color, cGimpHSV))
    rb_raise(rb_eTypeError, "Object %s is not a Gimp::HSV", StringValuePtr(color));
-
+  
   GimpHSV *tmp;
   Data_Get_Struct(color, GimpHSV, tmp);
   return tmp;

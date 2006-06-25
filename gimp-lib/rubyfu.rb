@@ -1,4 +1,10 @@
 module RubyFu
+  class CallError < Exception
+  end
+  
+  class ResultError < Exception
+  end
+
   class Procedure
     def initialize(*args, &func)
       @name, *rem = *args
@@ -35,13 +41,72 @@ module RubyFu
         @results
       )
       
-    	PDB.gimp_plugin_menu_register(@name, @menubasepath) if @menubasepath
+    	if @menubasepath
+    	  PDB.gimp_plugin_menu_register(@name, @menubasepath)
+    	end
     end
     
     def run(*args)
-      #TODO check args (exit with PDB_CALLING_ERROR)
-      values = @function.call(*args)
-      #TODO check return values and handle exceptions
+     params = @params ? @params : []
+     results = @results ? @results : []
+     
+     if params.length > 0 and params[0].name == 'run-mode'
+        runMode = args[0].data
+      else
+        runMode = Gimp::RUN_NONINTERACTIVE
+      end
+
+      args = args.zip(params).collect do|arg, param|
+        raise(CallError, "Bad argument") unless arg.type == param.type
+        next arg.data
+      end
+     
+      case runMode
+      when Gimp::RUN_INTERACTIVE
+        #use default values for now
+        #TODO (much later) create an input dialog.
+        warn "Interactive mode not implemented, sending default params."
+        values = @function.call(*args)
+      when Gimp::RUN_NONINTERACTIVE
+        nargs = args.length
+        nparams = params.length
+        unless nargs == nparams
+          raise(CallError, "Wrong number of arguments. (#{nargs} for #{nparams})")
+        end
+                
+        values = @function.call(*args)
+      when Gimp::RUN_WITH_LAST_VALS
+        #use default values for now
+        #TODO actually remember the last values
+        warn "Last value mode not implemented, sending default params."
+        values = @function.call(*args)
+      end
+      
+      if values == nil
+        values = []
+      else
+        *values = *values
+      end
+
+      #TODO check & convert return values and handle exceptions
+      nvalues = values.length
+      nresults = results.length
+      unless nvalues == nresults
+        #FIXME A more descriptive exception type would be good here.
+        message = "Wrong number of return values. (#{nvalues} for #{nresults})"
+        raise(ResultError, message)
+      end
+      
+      begin
+        values = values.zip(results).collect do|value, result|
+          result.check(value)
+          Gimp::Param.new(result.type, value)
+        end
+      rescue
+        #FIXME more informative handling would be good.
+        raise "return value type check failed?"
+      end
+      
       return values
     end
   end
@@ -90,7 +155,10 @@ module RubyFu
       values.unshift Param.STATUS(PDB_SUCCESS)
       
       return values
-    rescue
+    rescue CallError
+      PDB.gimp_message("A calling error has occured: #$!.message")
+      return [Param.STATUS(PDB_CALLING_ERROR)]
+    rescue Exception
       PDB.gimp_message "A #{$!.class} has occured: #{$!.message}\n#{$@.join("\n")}"
       return [Param.STATUS(PDB_EXECUTION_ERROR)]
     end
