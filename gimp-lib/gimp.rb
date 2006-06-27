@@ -189,6 +189,12 @@ module PDB
         "return_vals: #@return_vals",
       ].join("\n")
     end
+    
+    def to_proc
+      lambda do|*args|
+        self.call(*args)
+      end
+    end
   end
   
   def self.[](name)

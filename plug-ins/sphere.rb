@@ -17,12 +17,32 @@ Parameters:
 
 require "gimp"
 include Gimp
+include RubyFu
 
 #include PDB::Access
 
 include Math
 
-def run(run_mode, radius = 100, light = 45, shadow = true, bg_color = Gimp::Rgb.new(1.0, 1.0, 1.0), sphere_color = Gimp::Rgb.new(1.0, 0.0, 0.0))
+RubyFu.register(
+  "ruby_fu_sphere",
+  "Simple sphere with a drop shadow",
+  "Simple sphere with a drop shadow", 
+  "Spencer Kimball and Masahiro Sakai",
+  "Spencer Kimball",
+  "2001",
+  '<Toolbox>/Xtns/Languages/Ruby-Fu/Sphere',
+  "",
+  [
+    ParamDef.FLOAT('radius', 'Radius', 100),
+    ParamDef.FLOAT('lighting', 'Lighting Degrees', 45),
+    ParamDef.INT32('shadow', 'Shadow', 1),
+    ParamDef.COLOR('bg color', 'Background Color', Rgb.new(1.0, 1.0, 1.0)),
+    ParamDef.COLOR('color', 'Sphere Color', Rgb.new(1.0, 0.0, 0.0)),
+  ],
+  [ParamDef.IMAGE('image', 'Result Image')]
+) do |run_mode, radius, light, shadow, bg_color, sphere_color|
+  shadow = (shadow != 0)
+  
   width  = radius * 3.75
   height = radius * 2.5
 
@@ -83,29 +103,7 @@ def run(run_mode, radius = 100, light = 45, shadow = true, bg_color = Gimp::Rgb.
   PDB.gimp_context_pop()
   PDB.gimp_display_new(img)
   
-  return img
+  img
 end
 
-
-RubyFu.register(
-  "ruby_fu_sphere",
-  "Simple sphere with a drop shadow",
-  "Simple sphere with a drop shadow", 
-  "Spencer Kimball and Masahiro Sakai",
-  "Spencer Kimball",
-  "2001",
-  '<Toolbox>/Xtns/Languages/Ruby-Fu/Sphere',
-  "",
-  [
-    ParamDef.INT32('run-mode', 'Run mode'),
-    ParamDef.FLOAT('radius', 'Radius'),
-    ParamDef.FLOAT('lighting', 'Lighting Degrees'),
-    ParamDef.INT32('shadow', 'Shadow'),
-    ParamDef.COLOR('bg color', 'Background Color'),
-    ParamDef.COLOR('color', 'Sphere Color'),
-  ],
-  [ParamDef.IMAGE('image', 'Result Image')],
-  &method(:run)
-)
-
-RubyFu.main
+main

@@ -4,6 +4,24 @@ module RubyFu
   
   class ResultError < Exception
   end
+  
+  class ParamDef < Gimp::ParamDef
+    attr_reader :default
+    
+    def self.method_missing(sym, *args)
+      nargs = args.length
+      if nargs == 3
+        default = args.pop
+        pdef = super(sym, *args)
+        pdef.check(default)
+        pdef.instance_variable_set(:@default, default)
+        
+        return pdef
+      else
+        return super
+      end
+    end
+  end
 
   class Procedure
     def initialize(*args, &func)
@@ -15,7 +33,13 @@ module RubyFu
       menupath,*rem = *rem
       if menupath.empty?
         @menulabel = ""
+        @type = :internal
       else
+        @type = case menupath
+        when /<Image>/: :image
+        when /<Toolbox>/: :toolbox
+        end
+        
         @menubasepath = File.dirname menupath
         @menulabel = File.basename menupath
       end
@@ -23,10 +47,27 @@ module RubyFu
       @imagetypes, *rem = *rem
       @params, @results, *rem = *rem
       
+      @fullparams = preparams + @params
+      
       @function = func
     end
+    
+    def preparams
+      case @type
+      when :toolbox
+        [Gimp::ParamDef.INT32('run-mode', 'Run mode')]
+      when :images
+        [
+          Gimp::ParamDef.INT32('run-mode', 'Run mode'),
+          Gimp::ParamDef.IMAGE('image', 'Input image'),
+          Gimp::ParamDef.DRAWABLE('drawable', 'Input drawable'),
+        ]
+      else
+        []
+      end
+    end
         
-    def query
+    def query      
       Gimp.install_procedure(
         @name,
         @blurb,
@@ -37,8 +78,8 @@ module RubyFu
         @menulabel,
         @imagetypes,
         Gimp::PLUGIN,
-        @params,
-        @results
+        (@fullparams.empty? ? nil : @fullparams),
+        (@results.empty? ? nil : @results)
       )
       
     	if @menubasepath
@@ -46,40 +87,57 @@ module RubyFu
     	end
     end
     
+    def default_args
+      defArgs = @params.collect do|pdef|
+        pdef.default if pdef.respond_to? :default
+      end
+    end
+    
+    def run_interactive(args)
+      #use default values for now
+      #TODO (much later) create an input dialog.
+      warn "Interactive mode not implemented, sending default params."
+      args += default_args
+      
+      values = @function.call(*args)
+    end
+    
+    def run_noninteractive(args, params)
+      nargs = args.length
+      nparams = params.length
+      unless nargs == nparams
+        raise(CallError, "Wrong number of arguments. (#{nargs} for #{nparams})")
+      end
+              
+      values = @function.call(*args)
+    end
+    
+    def run_last_vals(args)
+      #use default values for now
+      #TODO actually remember the last values
+      warn "Last value mode not implemented, sending default params."
+      args += default_args
+      
+      values = @function.call(*args)
+    end
+    
     def run(*args)
-     params = @params ? @params : []
-     results = @results ? @results : []
-     
-     if params.length > 0 and params[0].name == 'run-mode'
+      #FIXME this could be improved
+      if @fullparams.length > 0 and @fullparams[0].name == 'run-mode'
         runMode = args[0].data
       else
         runMode = Gimp::RUN_NONINTERACTIVE
       end
-
-      args = args.zip(params).collect do|arg, param|
+      
+      args = args.zip(@fullparams).collect do|arg, param|
         raise(CallError, "Bad argument") unless arg.type == param.type
         next arg.data
       end
      
-      case runMode
-      when Gimp::RUN_INTERACTIVE
-        #use default values for now
-        #TODO (much later) create an input dialog.
-        warn "Interactive mode not implemented, sending default params."
-        values = @function.call(*args)
-      when Gimp::RUN_NONINTERACTIVE
-        nargs = args.length
-        nparams = params.length
-        unless nargs == nparams
-          raise(CallError, "Wrong number of arguments. (#{nargs} for #{nparams})")
-        end
-                
-        values = @function.call(*args)
-      when Gimp::RUN_WITH_LAST_VALS
-        #use default values for now
-        #TODO actually remember the last values
-        warn "Last value mode not implemented, sending default params."
-        values = @function.call(*args)
+      values = case runMode
+      when Gimp::RUN_INTERACTIVE:    run_interactive(args)
+      when Gimp::RUN_NONINTERACTIVE: run_noninteractive(args, @fullparams)
+      when Gimp::RUN_WITH_LAST_VALS: run_last_vals(args)
       end
       
       if values == nil
@@ -88,17 +146,15 @@ module RubyFu
         *values = *values
       end
 
-      #TODO check & convert return values and handle exceptions
       nvalues = values.length
-      nresults = results.length
+      nresults = @results.length
       unless nvalues == nresults
-        #FIXME A more descriptive exception type would be good here.
         message = "Wrong number of return values. (#{nvalues} for #{nresults})"
         raise(ResultError, message)
       end
       
       begin
-        values = values.zip(results).collect do|value, result|
+        values = values.zip(@results).collect do|value, result|
           result.check(value)
           Gimp::Param.new(result.type, value)
         end
@@ -135,8 +191,8 @@ module RubyFu
       String(date),
       String(menupath),
       String(imagetypes),
-      params,
-      results,
+      Array(params),
+      Array(results),
       &function
     )
     
@@ -152,15 +208,15 @@ module RubyFu
       proc = @@procedures[name]
       
       values = proc.run(*args)
-      values.unshift Param.STATUS(PDB_SUCCESS)
+      values.unshift Gimp::Param.STATUS(Gimp::PDB_SUCCESS)
       
       return values
     rescue CallError
       PDB.gimp_message("A calling error has occured: #$!.message")
-      return [Param.STATUS(PDB_CALLING_ERROR)]
+      return [Gimp::Param.STATUS(PDB_CALLING_ERROR)]
     rescue Exception
       PDB.gimp_message "A #{$!.class} has occured: #{$!.message}\n#{$@.join("\n")}"
-      return [Param.STATUS(PDB_EXECUTION_ERROR)]
+      return [Gimp::Param.STATUS(Gimp::PDB_EXECUTION_ERROR)]
     end
   end
   
@@ -171,7 +227,8 @@ module RubyFu
   	method(:run)
   )
   
-  def self.main
+  def main
     Gimp.main(PLUG_IN_INFO)
   end
+  module_function :main
 end

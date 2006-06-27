@@ -8,10 +8,10 @@ Handle parameter definitions/defaults better in RubyFu.
 
 Finish OO Gimp types.
 
-Figure what other parts of the C API needs wrapping.
+Make sure all the useful parts of the C API were wrapped.
 
-The color code has turned out to be less than useful. Fix this.
+The color code has turned out to be sub-par, lots of room for improvment. 
 
-Signal handlers need to be backed up. (see how the old one did this. Is it still necessary?)
+Signal handlers might need to be backed up. (see how the old one did this. Is it still necessary?)
 
 Read up on Gtk before working on any UI stuff.

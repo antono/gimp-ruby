@@ -2,6 +2,7 @@
 
 require "gimp"
 include Gimp
+include RubyFu
 
 include PDB::Access
 
@@ -133,9 +134,6 @@ RubyFu.register(
   "<Image>/Ruby-Fu/Alpha to Logo/Cool Metal...",
   "RGBA",
   [
-	  ParamDef.INT32('run-mode', 'Run mode'),
-    ParamDef.IMAGE("image", "Image"),
-    ParamDef.DRAWABLE("drawable", "Drawable"),
     ParamDef.INT32("effect_size", "Effect Size (pixels)"),
     ParamDef.COLOR("bg_color", "Background Color"),
     ParamDef.STRING("gradient",  "Gradient"),
@@ -145,7 +143,7 @@ RubyFu.register(
 )
 
 
-def ruby_fu_cool_metal_logo(run_mode, text = "Cool Metal", size = 100, font =  "-*-Crillee-*-r-*-*-24-*-*-*-p-*-*-*", bg_color = Gimp::Rgb.new(1.0, 1.0, 1.0), gradient = "Horizon 1")
+def ruby_fu_cool_metal_logo(run_mode, text, size, font, bg_color, gradient)
   # img = Gimp::Image::new(256, 256, RGB)
   img = gimp_image_new(600, 256, RGB)
   begin
@@ -179,12 +177,11 @@ RubyFu.register(
   "<Toolbox>/Xtns/Languages/Ruby-Fu/Cool Metal...",
   "",
   [
-    ParamDef.INT32('run-mode', 'Run-Mode'),
-    ParamDef.STRING("text", "Text"),
-    ParamDef.INT32("font_size", "Font Size (pixels)"),
-    ParamDef.STRING("font", "Font"),
-    ParamDef.COLOR("bg_color", "Background Color"),
-    ParamDef.STRING("gradient", "Gradient"),
+    ParamDef.STRING("text", "Text", 'Cool Metal'),
+    ParamDef.INT32("font_size", "Font Size (pixels)", 100),
+    ParamDef.STRING("font", "Font", "-*-Crillee-*-r-*-*-24-*-*-*-p-*-*-*"),
+    ParamDef.COLOR("bg_color", "Background Color", Rgb.new(1.0, 1.0, 1.0)),
+    ParamDef.STRING("gradient", "Gradient", "Horizon 1"),
   ],
   [
     ParamDef.IMAGE('image', 'Image'),

@@ -1,9 +1,7 @@
 #!/usr/bin/env ruby
 
-GC.disable
-
 require 'gimp'
-include Gimp
+#include RubyFu
 
 #include PDB::Access
 
@@ -17,10 +15,12 @@ RubyFu.register(
 	'<Toolbox>/Xtns/Languages/Ruby-Fu/Hello World!',
 	'',
 	[
-	  ParamDef.INT32('run-mode', 'Run mode'),
+	  RubyFu::ParamDef.STRING('stuff', 'test', 'test string'),
 	],
 	nil
-) do|run_mode|  
+) do|run_mode, stuff|
+  run_mode = Gimp::EnumNames::RunMode[run_mode]
+  Gimp.message "Run mode: #{run_mode}\nStuff: #{stuff.inspect}"
 	PDB.ruby_fu_hello2
 	nil
 end
