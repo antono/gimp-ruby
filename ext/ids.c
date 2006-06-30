@@ -29,8 +29,4 @@ Init_ids (void)
   id_query_proc = rb_intern("query_proc");
   id_run_proc = rb_intern("run_proc");
   id_call = rb_intern("call");
-  id_x = rb_intern("x");
-  id_y = rb_intern("y");
-  id_width = rb_intern("width");
-  id_height = rb_intern("height");
 }

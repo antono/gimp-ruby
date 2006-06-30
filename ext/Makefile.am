@@ -14,7 +14,6 @@ AM_CFLAGS = $(RUBY_CFLAGS) $(GIMP_CFLAGS)
 lib_LTLIBRARIES = gimpext.la
 
 gimpext_la_SOURCES = \
-	arraytypes.c         \
     conversion.c         \
     ids.c                \
     rbgimp.c             \

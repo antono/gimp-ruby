@@ -131,8 +131,6 @@ void Init_gimpext(void)
 		
 	Init_structures();
 	Init_ids();
-	Init_arraytypes();
-
 	
 	Init_gimpconstants();
 	Init_gimpmain();

@@ -20,11 +20,10 @@ module Gimp
       :STRING => :to_str,
       :INT32ARRAY => :to_ary,
       :INT16ARRAY => :to_ary,
-      :INT8ARRAY => :to_ary,
+      :INT8ARRAY => :to_str,
       :FLOATARRAY => :to_ary,
       :STRINGARRAY => :to_ary,
       :COLOR => Gimp::Rgb,
-      :REGION => Gimp::ParamRegion,
       :DISPLAY => :to_int,
       :IMAGE => :to_int,
       :LAYER => :to_int,
@@ -160,9 +159,14 @@ module PDB
         raise(ArgumentError, message)
       end
       
-      result = args.zip(paramdefs).collect do|arg, paramdef|
-        #TODO No type checking!
-        Gimp::Param.new(paramdef.type, arg)
+      begin
+        result = args.zip(paramdefs).collect do|arg, paramdef|
+          paramdef.check(arg)
+          Gimp::Param.new(paramdef.type, arg)
+        end
+      rescue TypeError
+        message = "Bad Argument: #{$!.message}"
+        raise(TypeError, message)
       end
     end
     

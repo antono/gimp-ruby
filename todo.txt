@@ -4,13 +4,17 @@ Track down the corrupted string issue that occurs in coolmetal-logo.rb.
 
 Parasite argument types.
 
-Handle parameter definitions/defaults better in RubyFu.
+Make sure GINT8 params are handled correctly as uints.
 
 Finish OO Gimp types.
 
 Make sure all the useful parts of the C API were wrapped.
 
-The color code has turned out to be sub-par, lots of room for improvment. 
+The color code has turned out to be sub-par, lots of room for improvment.
+
+Region parameters seem to have issues in GIMP. Should they just be removed?
+
+Remove // style comments.
 
 Signal handlers might need to be backed up. (see how the old one did this. Is it still necessary?)
 

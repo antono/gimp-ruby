@@ -158,9 +158,9 @@ module RubyFu
           result.check(value)
           Gimp::Param.new(result.type, value)
         end
-      rescue
-        #FIXME more informative handling would be good.
-        raise "return value type check failed?"
+      rescue TypeError
+        message = "Procedure return value type check failed: #{$!.message}"
+        raise(TypeError, message)
       end
       
       return values

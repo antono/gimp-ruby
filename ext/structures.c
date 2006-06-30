@@ -22,11 +22,4 @@ void Init_structures(void)
                                        "query_proc",
                                        "run_proc", NULL);
     rb_define_const(mGimp, "PlugInInfo", sGimpPlugInInfo);
-    
-    sGimpParamRegion = rb_struct_define("GimpParamRegion",
-                                        "x",
-                                        "y",
-                                        "width",
-                                        "height");
-    rb_define_const(mGimp, "ParamRegion", sGimpParamRegion);
 }

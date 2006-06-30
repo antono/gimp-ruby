@@ -241,6 +241,7 @@ rb_gimp_install_procedure (VALUE self,
 }
 
 //TODO temp proc functions
+// Are they needed?
 
 static VALUE
 rb_gimp_run_procedure (VALUE self,
@@ -261,8 +262,8 @@ rb_gimp_run_procedure (VALUE self,
   rbreturn_vals = GimpParams2rb(return_vals, n_return_vals);
   
   gimp_destroy_params(params, n_params);
-  gc_register_params(return_vals, n_return_vals);
-//  gimp_destroy_params(return_vals, n_return_vals);
+//  gc_register_params(return_vals, n_return_vals);
+  gimp_destroy_params(return_vals, n_return_vals);
   
   return rbreturn_vals;
 }

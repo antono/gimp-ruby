@@ -1,3 +1,19 @@
+2006-06-30  Scott Lembcke <lemb0029@gnome.org>
+	* ext/: Removed all references to array stubs. Arrays are now converted in
+	  place.
+	
+	* ext/conversion.c: Array conversion changed to be done in place, not
+	  usings stubs.
+	
+	* ext/conversion.c: int8arrays are now converted to Ruby strings. That way
+	  they are more usable as data.
+	
+	* ext/rbgimpmain.c: Changes is ext/conversion.c no longer requires the
+	  GimpParam arrays to be handled by the GC. They are now immediately
+	  destroyed.
+	
+	* ext/: Removed Gimp::ParamRegion structs.
+
 2006-06-27  Scott Lembcke <lemb0029@gnome.org>
 
 	* gimp-lib/gimp.rb: Added #to_proc to PDB::Procedure.
