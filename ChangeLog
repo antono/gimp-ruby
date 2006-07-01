@@ -1,3 +1,26 @@
+2006-07-01  Scott Lembcke <lemb0029@gnome.org>
+
+        * ext/ids.c: Added an id for 'flags'.
+        
+        * ext/structures.c: Added Gimp::Parasite.
+        
+        * ext/rbgimp.h: Added the new id and structure.
+        
+        * Added plug-ins/test.rb.
+
+        * gimp-lib/gimp.rb: Moved the PDB module to gimp-lib/pdb.rb. Added some
+          utility methods to the Gimp::Rgb class. Added Gimp.Color as a shortcut
+          for Gimp::Rgb.new. Added the Gimp::Shelf module for persistent
+          storage.
+
+        * ext/*: Removed // style comments.
+
+	* Deleted enumconvert.rb: Didn't realize that this was still lurking
+	  around. Should never have been submited to CVS in the first place.
+		
+	* ext/conversion.c: Removed an accidental debugging change for
+	  converting strings. Began adding functions for parasite conversion.
+
 2006-07-01  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* ChangeLog: Minor reformatting to stop long lines from wrapping.

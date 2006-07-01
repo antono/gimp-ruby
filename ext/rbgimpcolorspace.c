@@ -17,7 +17,7 @@ static VALUE
 rb_gimp_rgb_to_hsl (VALUE self,
                     VALUE rgb)
 {
-  //TODO
+  /*TODO*/
   rb_notimplement();
   return Qnil;
 }
@@ -49,7 +49,7 @@ static VALUE
 rb_gimp_hsl_to_rgb (VALUE self,
                     VALUE hsl)
 {
-  //TODO
+  /*TODO*/
   rb_notimplement();
   return Qnil;
 }
@@ -59,7 +59,7 @@ rb_gimp_cmyk_to_rgb (VALUE self,
                      VALUE cmyk)
 {
   GimpRGB rgb;
-  gimp_cmyk_to_rgb(rb2GimpCMYKPtr(cmyk), &rgb);//rb2CMYKPtr(cmyk), &rgb);
+  gimp_cmyk_to_rgb(rb2GimpCMYKPtr(cmyk), &rgb);
 
   return GimpRGB2rb(&rgb);
 }

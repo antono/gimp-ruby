@@ -1,4 +1,5 @@
 require 'gimpext'
+require 'pdb'
 #require 'gimp_oo.rb'
 require 'rubyfu.rb'
 
@@ -97,130 +98,55 @@ module Gimp
       "GimpParam #{EnumNames::PDBArgType[type]}: #{data}"
     end
   end
-end
-
-module PDB
-  class PDBException < Exception
-  end
-
-  class NoProcedure < PDBException
-    def initialize(name)
-      @name = name
-    end
-    
-    def message
-      "'#@name' is not in the PDB"
-    end
-  end
   
-  class CallError < PDBException
-    def initialize(name, status)
-      @name = name
-      @status = Gimp::EnumNames::PDBStatusType[status]
+  class Rgb
+    def _dump(level)
+      Marshal.dump([r, g, b, a])
     end
     
-    def message
-      "#@name exited with status #@status"
-    end
-  end
-  
-  class Procedure
-    attr_reader :name, :blurb, :help, :author, :copyright, :date
-    attr_reader :proc_type, :args, :return_vals
-    
-    @@cache = {}
-    
-    def self.new(name)
-      @@cache[name] = super unless @@cache.include? name
-      return @@cache[name]
+    def _load(str)
+      new(*Marshal.load(str))
     end
     
-    def initialize(name)
-      @name = name
+    def eql?(other)
+      return false unless other.is_a? Rgb
       
-      values = Gimp.procedural_db_proc_info(name)
-      raise(NoProcedure, name) unless values
-      
-      @blurb = values.shift
-      @help = values.shift
-      @author = values.shift
-      @copyright = values.shift
-      @date = values.shift
-      @proc_type = values.shift
-      @args = values.shift
-      @return_vals = values.shift
-    end
-    
-    def convert_args(args, paramdefs)
-      arglen = args.length
-      prmlen = paramdefs.length
-      unless arglen == prmlen
-        message = "Wrong number of parameters. #{arglen} for #{prmlen}"
-        raise(ArgumentError, message)
+      unless r == other.r
+             g == other.g
+             b == other.b
+             a == other.a
+        return false
       end
       
-      begin
-        result = args.zip(paramdefs).collect do|arg, paramdef|
-          paramdef.check(arg)
-          Gimp::Param.new(paramdef.type, arg)
-        end
-      rescue TypeError
-        message = "Bad Argument: #{$!.message}"
-        raise(TypeError, message)
-      end
+      return true
     end
     
-    def call(*args)
-      params = convert_args(args, @args)
-      values = Gimp.run_procedure(@name, params)
-      
-      status = values.shift.data
-      raise CallError.new(@name, status) unless status == Gimp::PDB_SUCCESS
-      
-      return *values.collect{|param| param.data}
-    end
+    alias_method :==, :eql?
     
     def to_s
-      [
-        "       name: #@name",
-        "      blurb: #@blurb",
-        "       help: #@help",
-        "     author: #@author",
-        "  copyright: #@copyright",
-        "       date: #@date",
-        "  proc_type: #@proc_type",
-        "       args: #@args",
-        "return_vals: #@return_vals",
-      ].join("\n")
+      "RGB<r=#{r}, g=#{g}, b=#{b}, a=#{a}>"
     end
-    
-    def to_proc
-      lambda do|*args|
-        self.call(*args)
+  end
+  
+  def Color(*args)
+    Rgb.new(*args)
+  end
+  
+  module Shelf
+    def self.[](key)
+      begin
+        bytes, data = PDB.gimp_procedural_db_get_data(key)
+        return Marshal.load(data)
+      rescue PDB::CallError
+        return nil
       end
     end
-  end
-  
-  def self.[](name)
-    Procedure.new(name)
-  end
-  
-  module Access
-    def self.method_missing(sym, *args)
-      # begin
-        Procedure.new(sym.to_s.gsub('_', '-')).call(*args)
-      # rescue NoProcedure
-      #   warn $!.message
-      #   super
-      # end
-    end
     
-    def method_missing(sym, *args)
-      Access.method_missing(sym, *args)
+    def self.[]=(key, obj)
+      puts 'setting'
+      data = Marshal.dump(obj)
+      bytes = data.length
+      PDB.gimp_procedural_db_set_data(key, bytes, data)
     end
-  end
-  
-  def self.method_missing(sym, *args)
-    Access.method_missing(sym, *args)
   end
 end

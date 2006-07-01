@@ -103,7 +103,7 @@ GimpParam2rb (const GimpParam *params,
       break;
       
     case GIMP_PDB_STRING:
-      data = rb_str_new2("the");//param->data.d_string);
+      data = rb_str_new2(param->data.d_string);
       break;
 
     case GIMP_PDB_INT32ARRAY:
@@ -121,9 +121,9 @@ GimpParam2rb (const GimpParam *params,
       data = GimpRGB2rb(&param->data.d_color);
       break;
 
-//    case GIMP_PDB_REGION:
-//      data = GimpParamRegion2rb(&param->data.d_region);
-//      break;
+/*    case GIMP_PDB_REGION:
+      data = GimpParamRegion2rb(&param->data.d_region);
+      break;*/
 
     case GIMP_PDB_DISPLAY:
       data = INT2NUM(param->data.d_display);
@@ -137,9 +137,9 @@ GimpParam2rb (const GimpParam *params,
       data = INT2NUM(param->data.d_layer);
       break;
       
-//    case GIMP_PDB_LAYER_MASK:
-//      data = INT2NUM(param.data.d_layer_mask);
-//      break;
+/*    case GIMP_PDB_LAYER_MASK:
+      data = INT2NUM(param.data.d_layer_mask);
+      break;*/
       
     case GIMP_PDB_CHANNEL:
       data = INT2NUM(param->data.d_channel);
@@ -161,18 +161,18 @@ GimpParam2rb (const GimpParam *params,
       data = INT2NUM(param->data.d_vectors);
       break;
       
-//    case GIMP_PDB_UNIT:
-//      data = INT2NUM(param.data.d_unit);
-//      break;
+/*    case GIMP_PDB_UNIT:
+      data = INT2NUM(param.data.d_unit);
+      break;*/
       
     case GIMP_PDB_PARASITE:
       rb_warn("Parasite type is not implemented, sending nil");
       data = Qnil;
       break;
 
-//    case GIMP_PDB_TATTOO:
-//      data = INT2NUM(param.data.d_tattoo);
-//      break;
+/*   case GIMP_PDB_TATTOO:
+     data = INT2NUM(param.data.d_tattoo);
+     break;*/
       
     case GIMP_PDB_STATUS:
       data = INT2NUM(param->data.d_status);
@@ -239,7 +239,7 @@ rb2gimp_array(GimpPDBArgType type,
     }
 }
 
-static gint8 *
+static guint8 *
 str2gint8(VALUE rb_str)
 {
   Check_Type(rb_str, T_STRING);
@@ -322,9 +322,9 @@ rb2GimpParam (VALUE rbparam)
       result.data.d_layer = (gint32)NUM2INT(rbdata);
       break;
 
-//    case GIMP_PDB_LAYER_MASK:
-//      result.data.d_layer_mask = (gint32)NUM2INT(rbdata);
-//      break;
+/*   case GIMP_PDB_LAYER_MASK:
+     result.data.d_layer_mask = (gint32)NUM2INT(rbdata);
+     break;*/
 
     case GIMP_PDB_CHANNEL:
       result.data.d_channel = (gint32)NUM2INT(rbdata);
@@ -346,18 +346,18 @@ rb2GimpParam (VALUE rbparam)
       result.data.d_vectors = (gint32)NUM2INT(rbdata);
       break;
 
-//    case GIMP_PDB_UNIT:
-//      result.data.d_unit = (gint32)NUM2INT(rbdata);
-//      break;
+/*   case GIMP_PDB_UNIT:
+     result.data.d_unit = (gint32)NUM2INT(rbdata);
+     break;*/
 
     case GIMP_PDB_PARASITE:
       rb_warn("Parasite type is not implemented.");
       rb_notimplement();
       break;
 
-//    case GIMP_PDB_TATTOO:
-//      result.data.d_tattoo = (gint32)NUM2INT(rbdata);
-//      break;
+/*   case GIMP_PDB_TATTOO:
+     result.data.d_tattoo = (gint32)NUM2INT(rbdata);
+     break;*/
 
     case GIMP_PDB_STATUS:
       result.data.d_status = (GimpPDBStatusType)NUM2INT(rbdata);
@@ -423,7 +423,7 @@ rb2GimpParamDef (VALUE param)
 	result.name = StringValuePtr(name);
 	result.description = StringValuePtr(dscr);
 	
-//	printf("%d %s %s\n", result.type, result.name, result.description); //PRINTF
+/*	printf("%d %s %s\n", result.type, result.name, result.description); //PRINTF*/
 	return result;
 }
 
@@ -530,3 +530,31 @@ rb2GimpCMYK (VALUE color)
 {
   return *rb2GimpCMYKPtr(color);
 }
+
+VALUE
+GimpParasite2rb(GimpParasite leech)
+{
+  volatile VALUE name = rb_str_new2(leech.name);
+  volatile VALUE flags = UINT2NUM(leech.flags);
+  volatile VALUE data = rb_str_new(leech.data, leech.size);
+  
+  return rb_struct_new(sGimpParasite, name, flags, data, NULL);
+}
+
+GimpParasite
+rb2GimpParasite(VALUE leech)
+{
+  GimpParasite result;
+  
+  
+  VALUE rbname = rb_struct_aref(leech, id_name);
+  result.name = g_strdup(StringValuePtr(rbname));
+  
+  result.flags = NUM2UINT(rb_struct_aref(leech, id_flags));
+  /*result.size = */
+  
+  /*TODO finish me*/
+  
+  return result;
+}
+  

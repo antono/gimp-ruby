@@ -7,6 +7,7 @@ VALUE sGimpParamDef;
 VALUE sGimpParam;
 VALUE sGimpPlugInInfo;
 VALUE sGimpParamRegion;
+VALUE sGimpParasite;
 
 void Init_structures(void)
 {
@@ -22,4 +23,10 @@ void Init_structures(void)
                                        "query_proc",
                                        "run_proc", NULL);
     rb_define_const(mGimp, "PlugInInfo", sGimpPlugInInfo);
+    
+    sGimpParasite = rb_struct_define("GimpParasite",
+                                     "name",
+                                     "flags",
+                                     "data", NULL);
+    rb_define_const(mGimp, "Parasite", sGimpParasite);
 }

@@ -49,7 +49,6 @@ EXTRA_DIST = \
     intltool-extract.in \
     intltool-merge.in   \
     intltool-update.in  \
-    enumconvert.rb      \
     notes.txt           \
     todo.txt
 

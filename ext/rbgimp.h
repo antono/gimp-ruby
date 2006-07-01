@@ -1,20 +1,21 @@
-//modules
+/* modules */
 extern VALUE mGimp;
 
 
-//classes
+/* classes */
 extern VALUE cGimpRGB;
 extern VALUE cGimpHSV;
 extern VALUE cGimpCMYK;
 
 
-//structures (structures.c)
+/* structures (structures.c) */
 extern VALUE sGimpParamDef;
 extern VALUE sGimpParam;
 extern VALUE sGimpPlugInInfo;
+extern VALUE sGimpParasite;
 
 
-//Type conversion functions (conversion.c)
+/* Type conversion functions (conversion.c) */
 VALUE       GimpParam2rb   (const GimpParam *param,
                             int              index);
 VALUE       GimpParams2rb  (const GimpParam *params,
@@ -43,7 +44,7 @@ GimpCMYK *rb2GimpCMYKPtr  (VALUE           color);
 GimpCMYK  rb2GimpCMYK     (VALUE           color);
 
 
-//ids (ids.c)
+/* ids (ids.c) */
 extern ID id_type;
 extern ID id_name;
 extern ID id_dscr;
@@ -53,9 +54,10 @@ extern ID id_quit_proc;
 extern ID id_query_proc;
 extern ID id_run_proc;
 extern ID id_call;
+extern ID id_flags;
 
 
-//Init functions
+/* Init functions */
 void Init_structures(void);
 void Init_ids(void);
 

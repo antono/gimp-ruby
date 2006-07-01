@@ -12,10 +12,7 @@ ID id_quit_proc;
 ID id_query_proc;
 ID id_run_proc;
 ID id_call;
-ID id_x;
-ID id_y;
-ID id_width;
-ID id_height;
+ID id_flags;
 
 void
 Init_ids (void)
@@ -29,4 +26,5 @@ Init_ids (void)
   id_query_proc = rb_intern("query_proc");
   id_run_proc = rb_intern("run_proc");
   id_call = rb_intern("call");
+  id_flags = rb_intern("flags");
 }

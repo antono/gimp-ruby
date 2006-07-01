@@ -16,7 +16,6 @@ typedef struct {
 static void
 params_wrapper_free (ParamsWrapper *ptr)
 {
-//  printf("freeing params.\n");
   gimp_destroy_params(ptr->array, ptr->count);
 }
 
@@ -153,7 +152,7 @@ run_callback (const gchar      *name,
   if(err)
     handle_exception("An exception has occured while running the run callback");
   
-  //FIXME rb2GimpParams can raise exceptions
+  /*FIXME rb2GimpParams can raise exceptions*/
   *return_vals = rb2GimpParams(rbreturn_vals, n_return_vals);
   gc_register_params(*return_vals, *n_return_vals);
 }
@@ -174,7 +173,7 @@ rb_gimp_main (VALUE self,
 	plug_in_callbacks[2] = rb_struct_aref(plug_in_info, ID2SYM(id_query_proc));
 	plug_in_callbacks[3] = rb_struct_aref(plug_in_info, ID2SYM(id_run_proc));
 
-	//build argv
+	/*build argv*/
 	VALUE *arr = RARRAY(rb_argv)->ptr;
 	gint argc = RARRAY(rb_argv)->len;
 	gchar *argv[argc + 1];
@@ -186,7 +185,7 @@ rb_gimp_main (VALUE self,
 	for(i=0; i<argc; i++)
 		argv[i + 1] = StringValuePtr(arr[i]);
 	
-	//call gimp_main
+	/*call gimp_main*/
 	gint rstatus = gimp_main(&PLUG_IN_INFO, argc + 1, argv);
 	return INT2NUM(rstatus);
 }
@@ -234,14 +233,14 @@ rb_gimp_install_procedure (VALUE self,
 	                       paramdefs,
 	                       returndefs);
 	
-	free(paramdefs);
-	free(returndefs);
+	free(paramdefs); /*FIXME: should be using gimp_destroy_paramdefs here.*/
+	free(returndefs); /*make sure that I'm not giving away Ruby ptrs in my paramdefs*/
 	
 	return Qnil;
 }
 
-//TODO temp proc functions
-// Are they needed?
+/*TODO temp proc functions
+Are they needed?*/
 
 static VALUE
 rb_gimp_run_procedure (VALUE self,
@@ -262,7 +261,6 @@ rb_gimp_run_procedure (VALUE self,
   rbreturn_vals = GimpParams2rb(return_vals, n_return_vals);
   
   gimp_destroy_params(params, n_params);
-//  gc_register_params(return_vals, n_return_vals);
   gimp_destroy_params(return_vals, n_return_vals);
   
   return rbreturn_vals;

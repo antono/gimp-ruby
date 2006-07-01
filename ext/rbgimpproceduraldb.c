@@ -3,8 +3,9 @@
 
 #include "rbgimp.h"
 
-//TODO a lot of these function might as well be used from the pdb.
-// figure out which ones.
+/*TODO a lot of these function might as well be used from the pdb.
+ figure out which ones.*/
+ 
 static VALUE
 rb_gimp_procedural_db_temp_name (VALUE  self)
 {
@@ -73,7 +74,7 @@ static VALUE
 rb_gimp_procedural_db_get_data (VALUE  self,
                                 VALUE  identifier)
 {
-  //TODO
+  /*TODO*/
   rb_notimplement();
   return Qnil;
 }
@@ -83,7 +84,7 @@ VALUE rb_gimp_procedural_db_set_data(VALUE  self,
                                      VALUE  identifier,
                                      VALUE  data)
 {
-  //TODO
+  /*TODO*/
   rb_notimplement();
   return Qnil;
 }

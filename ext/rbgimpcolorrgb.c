@@ -561,10 +561,10 @@ rb_GIMP_RGB_INTENSITY (VALUE self,
   return rb_float_new(result);
 }
 
-//GIMP_TYPE_RGB
-//GIMP_TYPE_PARAM_RGB
-//gimp_param_spec_rgb
-//GIMP_VALUE_HOLDS_RGB
+/*GIMP_TYPE_RGB
+GIMP_TYPE_PARAM_RGB
+gimp_param_spec_rgb
+GIMP_VALUE_HOLDS_RGB*/
 
 void Init_gimpcolorrgb(void)
 {
