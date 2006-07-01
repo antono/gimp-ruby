@@ -16,7 +16,7 @@ m4_define([plugin_version],
 dnl required versions of other packages
 m4_define([glib_required_version], [2.4.5])
 m4_define([gtk_required_version], [2.4.4])
-m4_define([gimp_required_version], [2.2.0])
+m4_define([gimp_required_version], [2.3.0])
 
 AC_INIT([plugin_name], [plugin_version])
 

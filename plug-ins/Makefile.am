@@ -3,11 +3,11 @@
 pluginexecdir = $(GIMP_PLUGINDIR)
 
 scripts =  \
-	coolmetal-logo.rb \
-    hello.rb  \
+    coolmetal-logo.rb \
     sphere.rb
 
-test_scripts = 
+test_scripts =  \
+    hello.rb
 
  
 if RUBYGIMP_UNSTABLE
