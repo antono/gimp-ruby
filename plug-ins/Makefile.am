@@ -7,8 +7,7 @@ scripts =  \
     sphere.rb
 
 test_scripts = \
-    hello.rb \
-    test.rb
+    hello.rb
 
  
 if GIMPRUBY_UNSTABLE
