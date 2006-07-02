@@ -32,18 +32,18 @@ AC_CONFIG_SRCDIR([ext/rbgimp.h])
 AM_INIT_AUTOMAKE(no-define)
 AM_CONFIG_HEADER(config.h)
 
-RUBYGIMP_UNSTABLE=rubygimp_unstable
-AC_SUBST(RUBYGIMP_UNSTABLE)
+GIMPRUBY_UNSTABLE=yes
+AC_SUBST(GIMPRUBY_UNSTABLE)
 
 
-dnl The symbol RUBYGIMP_UNSTABLE is defined above for substitution in
+dnl The symbol GIMPRUBY_UNSTABLE is defined above for substitution in
 dnl Makefiles and conditionally defined here as a preprocessor symbol
 dnl and automake conditional.
-if test "x$RUBYGIMP_UNSTABLE" = "xyes"; then
-  AC_DEFINE(RUBYGIMP_UNSTABLE,1,
+if test "x$GIMPRUBY_UNSTABLE" = "xyes"; then
+  AC_DEFINE(GIMPRUBY_UNSTABLE,1,
             [Define to 1 if this is an unstable version of gimp-ruby])
 fi
-AM_CONDITIONAL(RUBYGIMP_UNSTABLE, test "x$RUBYGIMP_UNSTABLE" = "xyes")
+AM_CONDITIONAL(GIMPRUBY_UNSTABLE, test "x$GIMPRUBY_UNSTABLE" = "xyes")
 
 
 GLIB_REQUIRED_VERSION=glib_required_version
