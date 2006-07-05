@@ -43,6 +43,9 @@ VALUE     GimpCMYK2rb     (const GimpCMYK *color);
 GimpCMYK *rb2GimpCMYKPtr  (VALUE           color);
 GimpCMYK  rb2GimpCMYK     (VALUE           color);
 
+VALUE        GimpParasite2rb (GimpParasite leech);
+GimpParasite rb2GimpParasite (VALUE        leech);
+
 
 /* ids (ids.c) */
 extern ID id_type;

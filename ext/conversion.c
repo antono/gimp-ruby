@@ -166,8 +166,7 @@ GimpParam2rb (const GimpParam *params,
       break;*/
       
     case GIMP_PDB_PARASITE:
-      rb_warn("Parasite type is not implemented, sending nil");
-      data = Qnil;
+      data = GimpParasite2rb(param->data.d_parasite);
       break;
 
 /*   case GIMP_PDB_TATTOO:
@@ -306,10 +305,6 @@ rb2GimpParam (VALUE rbparam)
       result.data.d_color = rb2GimpRGB(rbdata);
       break;
 
-/*    case GIMP_PDB_REGION:
-      result.data.d_region = rb2GimpParamRegion(rbdata);
-      break;*/
-
     case GIMP_PDB_DISPLAY:
       result.data.d_display = (gint32)NUM2INT(rbdata);
       break;
@@ -351,8 +346,7 @@ rb2GimpParam (VALUE rbparam)
      break;*/
 
     case GIMP_PDB_PARASITE:
-      rb_warn("Parasite type is not implemented.");
-      rb_notimplement();
+      result.data.d_parasite = rb2GimpParasite(rbdata);
       break;
 
 /*   case GIMP_PDB_TATTOO:
@@ -532,7 +526,7 @@ rb2GimpCMYK (VALUE color)
 }
 
 VALUE
-GimpParasite2rb(GimpParasite leech)
+GimpParasite2rb (GimpParasite leech)
 {
   volatile VALUE name = rb_str_new2(leech.name);
   volatile VALUE flags = UINT2NUM(leech.flags);
@@ -542,18 +536,21 @@ GimpParasite2rb(GimpParasite leech)
 }
 
 GimpParasite
-rb2GimpParasite(VALUE leech)
+rb2GimpParasite (VALUE leech)
 {
   GimpParasite result;
   
   
-  VALUE rbname = rb_struct_aref(leech, id_name);
+  VALUE rbname = rb_struct_aref(leech, ID2SYM(id_name));
   result.name = g_strdup(StringValuePtr(rbname));
   
-  result.flags = NUM2UINT(rb_struct_aref(leech, id_flags));
-  /*result.size = */
+  result.flags = NUM2UINT(rb_struct_aref(leech, ID2SYM(id_flags)));
+
+  VALUE rbdata = rb_struct_aref(leech, ID2SYM(id_data));
+  Check_Type(rbdata, T_STRING);
   
-  /*TODO finish me*/
+  result.size = RSTRING(rbdata)->len;
+  result.data = g_memdup(RSTRING(rbdata)->ptr, result.size);
   
   return result;
 }

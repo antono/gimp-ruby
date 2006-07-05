@@ -1,3 +1,9 @@
+2006-07-05  Scott Lembcke <lemb0029@gnome.org>
+
+        * ext/conversion.c: Finished conversion for parasite parameters.
+        
+        * gimp-lib/gimp.rb: Changed error checking to accept parasite types.
+        
 2006-07-01  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* configure.in

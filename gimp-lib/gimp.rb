@@ -33,7 +33,7 @@ module Gimp
       :SELECTION => :to_int,
       :BOUNDARY => :to_int,
       :VECTORS => :to_int,
-  #    add_type 'PARASITE', NilClass
+      :PARASITE => Gimp::Parasite,
       :STATUS => :to_int,
     }
     
