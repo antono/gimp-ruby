@@ -7,7 +7,6 @@ scripts =  \
     sphere.rb
 
 test_scripts = \
-    hello.rb   \
     test.rb
 
  

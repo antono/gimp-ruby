@@ -12,14 +12,17 @@ module PDB
     end
   end
   
-  class CallError < PDBException
-    def initialize(name, status)
-      @name = name
-      @status = Gimp::EnumNames::PDBStatusType[status]
+  class ExecutionError < PDBException
+    attr_reader :message
+    def initialize(proc_name)
+      @message = "#{proc_name} returned an execution error."
     end
-    
-    def message
-      "#@name exited with status #@status"
+  end
+  
+  class CallingError < PDBException
+    attr_reader :message
+    def initialize(proc_name)
+      @message = "#{proc_name} returned a calling error."
     end
   end
   
@@ -70,11 +73,15 @@ module PDB
     end
     
     def call(*args)
+      puts "PDB call: #@name" if PDB.verbose
+      
       params = convert_args(args, @args)
       values = Gimp.run_procedure(@name, params)
       
-      status = values.shift.data
-      raise CallError.new(@name, status) unless status == Gimp::PDB_SUCCESS
+      case values.shift.data
+      when Gimp::PDB_CALLING_ERROR: raise(CallingError, @name)
+      when Gimp::PDB_EXECUTION_ERROR: raise(ExecutionError, @name)
+      end
       
       return *values.collect{|param| param.data}
     end
@@ -100,8 +107,13 @@ module PDB
     end
   end
   
-  def self.[](name)
-    Procedure.new(name)
+  class << self
+    attr_accessor :verbose
+    @verbose = false
+    
+    def [](name)
+      Procedure.new(name)
+    end
   end
   
   module Access

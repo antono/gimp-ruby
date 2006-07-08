@@ -1,6 +1,5 @@
 require 'gimpext'
 require 'pdb'
-#require 'gimp_oo.rb'
 require 'rubyfu.rb'
 
 module Gimp
@@ -137,7 +136,7 @@ module Gimp
       begin
         bytes, data = PDB.gimp_procedural_db_get_data(key)
         return Marshal.load(data)
-      rescue PDB::CallError
+      rescue PDB::ExecutionError
         return nil
       end
     end

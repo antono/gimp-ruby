@@ -1,12 +1,10 @@
-Parasite argument types.
+Make sure all the useful parts of the C API were wrapped. 
 
-Finish OO Gimp types.
-
-Make sure all the useful parts of the C API were wrapped.
+Weird crash occurs in the call test. Is this something that I'm doing?
 
 The color code has turned out to be sub-par, lots of room for improvment.
 
-Signal handlers might need to be backed up. (see how the old one did this. Is it still necessary?)
+Signal handlers might need to be backed up. (see how the old one did this. Is it still necessary? Seems not.)
 
 Read up on Gtk before working on any UI stuff.
 

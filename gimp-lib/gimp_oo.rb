@@ -1,205 +1,150 @@
-def module_template(base, methods)
-  mod = Module.new
-  methods.each do|name, args|
-    args = args.join(',')
-    mod.instance_eval """
-      def self.#{name.gsub('-', '_')}(#{args})
-        PDB['#{base}#{name}'].call(#{args})
-      end
-    """
-  end
-  
-  return mod
-end
-
-def class_template(base, methods)
-  klass = Class.new
-  
-  methods.each do|name, args|
-    args_a = args.join(',')
-    args_b = args.unshift('self').join(',')
-    
-    klass.instance_eval """
-      def #{name.gsub('-', '_')}(#{args_a})
-        PDB['#{base}#{name}'].call(#{args_b})
-      end
-    """
-  end
-  
-  klass.instance_eval """
-    def initialize(value)
-      @value = value
-    end
-    
-    def to_int
-      @value
-    end
-    
-    def to_str
-      @value
-    end
-  """
-  
-  return klass
-end
-
 module Gimp
-  Buffer = class_template('gimp-buffer-',
-    [
-      ['delete', []],
-      ['get-bytes', []],
-      ['get-height', []],
-      ['get-image-type', []],
-      ['get-width', []],
-      ['rename', ['new_name']],
-    ]
-  )
+  module GimpOO
+    module ProcList
+      module_function
+      def each_proc(prefix)
+        prefix_range = prefix.length..-1
+        get_proc_list(prefix).each do|proc_name|
+          sym = proc_name[prefix_range].gsub('-','_').to_sym
+          yield(sym, proc_name)
+        end
+      end
   
-  def Buffer.get_list(filter)
-    PDB['gimp-buffer-get-list'].call(filter)
-  end
+      def get_proc_list(prefix)
+        num, list =PDB['gimp-procedural-db-query'].call(prefix, *(['']*6))
+        return list
+      end
+    end
 
-  Context = module_template('gimp-context-',
-    [
-      ['get-background', []],
-      ['get-brush', []],
-      ['get-font', []],
-      ['get-foreground', []],
-      ['get-gradient', []],
-      ['get-opacity', []],
-      ['get-paint-method', []],
-      ['get-paint-mode', []],
-      ['get-palette', []],
-      ['get-pattern', []],
-      ['pop', []],
-      ['push', []],
-      ['set-background', ['bg']],
-      ['set-brush', ['brush']],
-      ['set-default-colors', []],
-      ['set-font', ['font']],
-      ['set-foreground', ['fg']],
-      ['set-gradient', ['gradient']],
-      ['set-opacity', ['opacity']],
-      ['set-paint-method', ['method']],
-      ['set-paint-mode', ['mode']],
-      ['set-palette', ['palette']],
-      ['set-pattern', ['pattern']],
-      ['swap-colors', []],
-    ]
-  )
+    class ClassTemplate
+      class << self
+        def add_constructor(name, proc_name)
+          class_eval """
+            def self.#{name}(*args)
+              create PDB['#{proc_name}'].call(*args)
+            end
+          """
+        end
+    
+        def add_method(name, proc_name)
+          class_eval """
+            def #{name}(*args)
+              PDB['#{proc_name}'].call(self, *args)
+            end
+          """
+        end
+    
+        def add_class_method(name, proc_name)
+          class_eval """
+            def self.#{name}(*args)
+              PDB['#{proc_name}'].call(*args)
+            end
+          """
+        end
+    
+        def add_methods(prefix, class_prefix)
+          ProcList.each_proc(prefix) do|sym, proc_name|
+            if proc_name =~ /new/
+              add_constructor(sym, proc_name)
+            else
+              add_method(sym, proc_name)
+            end
+          end
+      
+          if class_prefix
+            ProcList.each_proc(class_prefix) do|sym, proc_name|
+              add_class_method(sym, proc_name)
+            end
+          end
+        end
+    
+        def template(prefix, class_prefix)
+          klass = Class.new(self)
+          klass.add_methods(prefix, class_prefix)
+          
+          return klass
+        end
+    
+        alias_method :create, :new
+      end
   
-  #TODO
-  #PDB
-  #Progress
+      def initialize(value)
+        @self = value
+      end
+
+      def to_int
+        Integer(@self)
+      end
   
-  Channel = class_template('gimp-channel-',
-    [
-      ['combine-masks', ['other', 'op', 'offx', 'offy']],
-      ['copy', []],
-      ['get-color', []],
-      ['get-opacity', []],
-      ['get-show-masked', []],
-      ['set-color', ['color']],
-      ['set-opacity', ['opacity']],
-      ['set-show-masked', ['show']],
-    ]
-  )
-  
-  class Channel    
-    def self.new(image, w, h, name, opacity, color)
-      super PDB['gimp-channel-new'].call(image, w, h, name, opacity, color)
+      def to_str
+        String(@self)
+      end
+    end
+
+    module ModuleTemplate
+      def self.template(prefix)
+        mod = Module.new
+        ProcList.each_proc(prefix) do|sym, proc_name|
+          mod.module_eval """
+            def self.#{sym}(*args)
+              PDB['#{proc_name}'].call(*args)
+            end
+          """
+        end
+    
+        return mod
+      end
     end
     
-    def self.new_from_component(image, component, name)
-      #TODO FIXME
+    Gimp::Brush = ClassTemplate.template('gimp-brush-', 'gimp-brushes-')
+    Gimp::Channel = ClassTemplate.template('gimp-channel-', nil)
+    Gimp::Display = ClassTemplate.template('gimp-display-', nil)
+    Gimp::Gradient = ClassTemplate.template('gimp-gradient-', 'gimp-gradients-')
+    Gimp::Image = ClassTemplate.template('gimp-image-', nil)
+    Gimp::Layer = ClassTemplate.template('gimp-layer-', nil)
+    Gimp::Palette = ClassTemplate.template('gimp-palette-', 'gimp-palettes-')
+    Gimp::Vectors = ClassTemplate.template('gimp-vectors-', nil)
+
+    Gimp::Context = ModuleTemplate.template('gimp-context-')
+    Gimp::Edit = ModuleTemplate.template('gimp-edit-')
+    Gimp::Fonts = ModuleTemplate.template('gimp-fonts-')
+    Gimp::ProceduralDB = ModuleTemplate.template('gimp-procedural-db-')
+    Gimp::Progress = ModuleTemplate.template('gimp-progress-')
+    Gimp::Selection = ModuleTemplate.template('gimp-selection-')
+  end
+  
+  class Image
+    alias_method :old_undo_group_start, :undo_group_start
+    def undo_group
+      old_undo_group_start
+      if block_given?
+        yield
+        undo_group_end
+      end
+    end
+    
+    alias_method :old_undo_disable, :undo_disable
+    def undo_disable
+      old_undo_disable
+      if block_given?
+        yield
+        undo_enable
+      end
     end
   end
   
-  Display = class_template('gimp-display-',
-    [
-      ['delete', []],
-      ['get-window-handle', []],
-    ]
-  )
-  
-  class Display    
-    def self.new(image)
-      super PDB['gimp-display-new'].call(image)
-    end
-    
-    def self.flush
-      PDB['gimp-displays-flush'].call
-    end
-    
-    def self.reconnect(old_image, new_image)
-      PDB['gimp-displays-reconnect'].call(old_image, new_image)
+  module Context
+    class << self
+      alias_method :old_push, :push
+      def push
+        puts 'yo'
+        old_push
+        if block_given?
+          yield
+          pop
+        end
+      end
     end
   end
-  
-  Drawable = class_template('gimp-drawable-',
-    [
-      ['bpp', []],
-      ['bytes', []],
-      ['delete', []],
-      ['fill', ['fill_type']],
-      ['foreground-extract', ['mode', 'mask']],
-      ['get-image', []],
-      ['get-linked', []],
-      ['get-name', []],
-      ['get-pixel', ['x', 'y']],
-      ['get-tattoo', []],
-      ['get-visible', []],
-      ['has-alpha', []],
-      ['height', []],
-      ['image', []],
-      ['is-channel', []],
-      ['is-gray', []],
-      ['is-indexed', []],
-      ['is-layer', []],
-      ['is-layer-mask', []],
-      ['is-rgb', []],
-      ['mask-bounds', []],
-      ['mask-intersect', []],
-      ['merge-shadow', ['undo']],
-      ['offset', ['wrap', 'fill_type', 'x', 'y']],
-      ['offsets', []],
-      ['parasite-attach', ['parasite']],
-      ['parasite-detach', ['name']],
-      ['parasite-find', ['name']],
-      ['parasite-list', []],
-      ['set-linked', ['linked']],
-      ['set-name', ['name']],
-      ['set-pixel', ['x', 'y', 'num_channels', 'pixels']],
-      ['set-tattoo', ['tattoo']],
-      ['set-visible', ['visible']],
-      ['sub-thumbnail', ['x', 'y', 'w', 'h', 'dest_h']],
-      ['thumbnail', ['w', 'h']],
-      #TODO transform functions
-      ['type', []],
-      ['type_with_alpha', []],
-      ['update', ['x', 'y', 'w', 'h']],
-      ['width', []],
-    ]
-  )
-  
-  Image = class_template('gimp-image-',
-    [
-      ['add-channel', ['channel', 'pos']],
-      ['add-hguide', ['ypos']],
-      ['add-layer', ['layer', 'pos']],
-      ['add-layer-mask', ['layer', 'mask']],
-      ['add-vectors', ['vectors', 'pos']],
-      ['add-vguide', ['xpos']],
-      ['base-type', []],
-      ['clean-all', []],
-      ['crop', ['w', 'h', 'x', 'y']],
-      ['delete', []],
-      ['delete-guide', ['guide']],
-      ['duplicate', []],
-      ['find-next-guide', ['guide']],
-      ['flatten', []],
-      ['flip', ['flip_type']],
-      #TODO finish
-    ]
-  )
 end
+
