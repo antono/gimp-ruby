@@ -110,7 +110,8 @@ rb_gimp_get_progname(VALUE self)
   return rb_str_new2(name);
 }
 
-void Init_gimpext(void)
+void
+Init_gimpext (void)
 {
 	mGimp = rb_define_module("Gimp");
   rb_define_module_function(mGimp, "getpid",           rb_gimp_getpid,           0);

@@ -33,7 +33,7 @@ gimp_array2rb(const GimpParam *params,
   gchar   **stringarr;
   
   int i;
-  switch(param->type)
+  switch (param->type)
     {
     case GIMP_PDB_INT32ARRAY:
       int32arr = param->data.d_int32array;
@@ -67,8 +67,8 @@ gimp_array2rb(const GimpParam *params,
 }
 
 static VALUE
-int8array2str(const GimpParam *params,
-              int              index)
+int8array2str (const GimpParam *params,
+               int              index)
 {
   gint32 size = get_arr_size(params, index);
   char *ptr = (char *)params[index].data.d_int8array;
@@ -192,15 +192,15 @@ GimpParams2rb (const GimpParam *params,
   
 
   int i;
-  for(i=0; i<count; i++)
+  for (i=0; i<count; i++)
     rb_ary_push(ary, GimpParam2rb(params, i));
   
   return ary;
 }
 
 static gpointer
-rb2gimp_array(GimpPDBArgType type,
-              VALUE          rbarr)
+rb2gimp_array (GimpPDBArgType type,
+               VALUE          rbarr)
 {
   rbarr = rb_check_array_type(rbarr);
   int count = RARRAY(rbarr)->len;
@@ -212,7 +212,7 @@ rb2gimp_array(GimpPDBArgType type,
   gdouble *floatarr;
   gchar  **stringarr;
 
-  switch(type)
+  switch (type)
     {
     case GIMP_PDB_INT32ARRAY:
       int32arr = g_new(gint32, count);
@@ -239,7 +239,7 @@ rb2gimp_array(GimpPDBArgType type,
 }
 
 static guint8 *
-str2gint8(VALUE rb_str)
+str2gint8 (VALUE rb_str)
 {
   Check_Type(rb_str, T_STRING);
   struct RString *str = RSTRING(rb_str);
@@ -250,7 +250,7 @@ str2gint8(VALUE rb_str)
 GimpParam
 rb2GimpParam (VALUE rbparam)
 {
-  if(!rb_obj_is_kind_of(rbparam, sGimpParam))
+  if (!rb_obj_is_kind_of(rbparam, sGimpParam))
     rb_raise(rb_eTypeError, "Parameter is not a Gimp::Param");
 
   int type = NUM2INT(rb_struct_aref(rbparam, ID2SYM(id_type)));
@@ -259,7 +259,7 @@ rb2GimpParam (VALUE rbparam)
   GimpParam result;
   result.type = (GimpPDBArgType)type;
   
-  switch(type)
+  switch (type)
     {
     case GIMP_PDB_INT32:
       result.data.d_int32 = (gint32)NUM2INT(rbdata);
@@ -369,10 +369,10 @@ rb2GimpParams (VALUE rbparams,
   int num = RARRAY(rbparams)->len;
   VALUE *arr = RARRAY(rbparams)->ptr;
   
-  GimpParam *params = calloc(num, sizeof(GimpParam));
+  GimpParam *params = g_new(GimpParam, num);
   
   int i;
-  for(i=0; i<num; i++)
+  for (i=0; i<num; i++)
     params[i] = rb2GimpParam(arr[i]);
   
   *count = (gint)num;
@@ -390,13 +390,13 @@ GimpParamDef2rb (GimpParamDef paramdef)
 }
 
 VALUE
-GimpParamDefs2rb(GimpParamDef *paramdefs,
-                 int          count)
+GimpParamDefs2rb (GimpParamDef *paramdefs,
+                  int          count)
 {
   volatile VALUE rbparamdefs = rb_ary_new();
   
   int i;
-  for(i=0; i<count; i++)
+  for (i=0; i<count; i++)
     rb_ary_push(rbparamdefs, GimpParamDef2rb(paramdefs[i]));
 
   return rbparamdefs;
@@ -405,7 +405,7 @@ GimpParamDefs2rb(GimpParamDef *paramdefs,
 GimpParamDef
 rb2GimpParamDef (VALUE param)
 {
-	if(!rb_obj_is_kind_of(param, sGimpParamDef))
+	if (!rb_obj_is_kind_of(param, sGimpParamDef))
 		rb_raise(rb_eArgError, "Parameters must be of type Gimp::ParamDef");
 	
 	VALUE type = rb_struct_aref(param, ID2SYM(id_type));
@@ -425,7 +425,7 @@ GimpParamDef *
 rb2GimpParamDefs (VALUE rbparamdefs,
                   gint  *count)
 {
-  if(rbparamdefs == Qnil)
+  if (rbparamdefs == Qnil)
     {
       *count = 0;
       return NULL;
@@ -437,7 +437,7 @@ rb2GimpParamDefs (VALUE rbparamdefs,
       int num = RARRAY(rbparamdefs)->len;
       VALUE *arr = RARRAY(rbparamdefs)->ptr;
     
-      GimpParamDef *gimpparamdefs = calloc(num, sizeof(GimpParamDef));
+      GimpParamDef *gimpparamdefs = g_new(GimpParamDef, num);
     
       int i;
       for(i=0; i<num; i++)
@@ -453,7 +453,7 @@ rb2GimpParamDefs (VALUE rbparamdefs,
 VALUE
 GimpRGB2rb (const GimpRGB *color)
 {
-  GimpRGB *tmp = malloc(sizeof(GimpRGB));
+  GimpRGB *tmp = ALLOC(GimpRGB);
   *tmp = *color;
   return Data_Wrap_Struct(cGimpRGB, NULL, free, tmp);
 }
@@ -461,7 +461,7 @@ GimpRGB2rb (const GimpRGB *color)
 GimpRGB *
 rb2GimpRGBPtr (VALUE color)
 {
-  if(!rb_obj_is_kind_of(color, cGimpRGB))
+  if (!rb_obj_is_kind_of(color, cGimpRGB))
    rb_raise(rb_eTypeError, "Object %s is not a Gimp::RGB", StringValuePtr(color));
   
   GimpRGB *tmp;
@@ -486,7 +486,7 @@ GimpHSV2rb (const GimpHSV *color)
 GimpHSV *
 rb2GimpHSVPtr (VALUE color)
 {
-  if(!rb_obj_is_kind_of(color, cGimpHSV))
+  if (!rb_obj_is_kind_of(color, cGimpHSV))
    rb_raise(rb_eTypeError, "Object %s is not a Gimp::HSV", StringValuePtr(color));
   
   GimpHSV *tmp;
@@ -511,7 +511,7 @@ GimpCMYK2rb (const GimpCMYK *color)
 GimpCMYK *
 rb2GimpCMYKPtr (VALUE color)
 {
-  if(!rb_obj_is_kind_of(color, cGimpCMYK))
+  if (!rb_obj_is_kind_of(color, cGimpCMYK))
    rb_raise(rb_eTypeError, "Object %s is not a Gimp::CMYK", StringValuePtr(color));
 
   GimpCMYK *tmp;

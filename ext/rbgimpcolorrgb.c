@@ -348,8 +348,8 @@ rb_gimp_rgb_list_names (VALUE self)
   for(i=0; i<num; i++)
     rb_ary_push(rbcolors, GimpRGB2rb(&colors[i]));
 
-  free(names);
-  free(colors);
+  g_free(names);
+  g_free(colors);
 
   return rb_ary_new3(2, rbnames, rbcolors);
 }

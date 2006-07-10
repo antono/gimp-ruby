@@ -39,12 +39,9 @@ handle_exception (char *message)
   rbmessage = rb_eval_string("\"\nA #{$!.class} has occured: #{$!.message}\n#{$@.join(\"\n\")}\"");
   char *str = StringValuePtr(rbmessage);
   
-  int len = strlen(message) + strlen(str);
-  char result[len + 1];
-  
-  strcpy(result, message);
-  strcat(result, str);
+  gchar *result = g_strconcat(message, str, NULL);
   gimp_message(result);
+  g_free(result);
   
   gimp_quit();
 }
@@ -55,9 +52,9 @@ static VALUE
 init_protect (VALUE unused)
 {
 	VALUE cback = plug_in_callbacks[0];
-	if(cback == Qnil) return Qnil;
+	if (cback == Qnil) return Qnil;
 	
-  if(!rb_respond_to(cback, id_call))
+  if (!rb_respond_to(cback, id_call))
     rb_raise(rb_eTypeError, "The init callback does not respond to #call");
 
   rb_funcall(cback, id_call, 0);
@@ -70,7 +67,7 @@ init_callback (void)
   int err;
   rb_protect(init_protect, Qnil, &err);
   
-  if(err)
+  if (err)
     handle_exception("An exception has occurred while running the init callback.");
 }
 
@@ -78,9 +75,9 @@ static VALUE
 quit_protect (VALUE unused)
 {
 	VALUE cback = plug_in_callbacks[1];
-	if(cback == Qnil) return Qnil;
+	if (cback == Qnil) return Qnil;
 	
-  if(!rb_respond_to(cback, id_call))
+  if (!rb_respond_to(cback, id_call))
     rb_raise(rb_eTypeError, "The quit callback does not respond to #call");
 
   rb_funcall(cback, id_call, 0);
@@ -93,7 +90,7 @@ quit_callback (void)
   int err;
   rb_protect(quit_protect, Qnil, &err);
   
-  if(err)
+  if (err)
     handle_exception("An exception has occurred while running the quit callback.");
 }
 
@@ -101,7 +98,7 @@ static VALUE
 query_protect (VALUE unused)
 {
 	VALUE cback = plug_in_callbacks[2];
-  if(!rb_respond_to(cback, id_call))
+  if (!rb_respond_to(cback, id_call))
     rb_raise(rb_eTypeError, "The query callback does not respond to #call");
 
   rb_funcall(cback, id_call, 0);
@@ -114,7 +111,7 @@ query_callback (void)
   int err;
   rb_protect(query_protect, Qnil, &err);
   
-  if(err)
+  if (err)
     handle_exception("An exception has occurred while running the query callback");
 }
 
@@ -122,7 +119,7 @@ static VALUE
 run_protect (VALUE args)
 {
   VALUE cback = plug_in_callbacks[3];
-  if(rb_respond_to(cback, id_call))
+  if (rb_respond_to(cback, id_call))
     {
       volatile VALUE rbreturn_vals;
       rbreturn_vals = rb_apply(cback, id_call, args);
@@ -149,7 +146,7 @@ run_callback (const gchar      *name,
   volatile VALUE rbreturn_vals;
   rbreturn_vals = rb_protect(run_protect, args, &err);
   
-  if(err)
+  if (err)
     handle_exception("An exception has occured while running the run callback");
   
   /*FIXME rb2GimpParams can raise exceptions*/
@@ -182,7 +179,7 @@ rb_gimp_main (VALUE self,
 	argv[0] = StringValuePtr(name);
 
 	int i;
-	for(i=0; i<argc; i++)
+	for (i=0; i<argc; i++)
 		argv[i + 1] = StringValuePtr(arr[i]);
 	
 	/*call gimp_main*/
@@ -191,7 +188,7 @@ rb_gimp_main (VALUE self,
 }
 
 static VALUE
-rb_gimp_quit(VALUE self)
+rb_gimp_quit (VALUE self)
 {
   gimp_quit();
   return Qnil;
@@ -233,8 +230,8 @@ rb_gimp_install_procedure (VALUE self,
 	                       paramdefs,
 	                       returndefs);
 	
-	free(paramdefs); /*FIXME: should be using gimp_destroy_paramdefs here.*/
-	free(returndefs); /*make sure that I'm not giving away Ruby ptrs in my paramdefs*/
+	g_free(paramdefs);
+	g_free(returndefs);
 	
 	return Qnil;
 }
@@ -266,7 +263,8 @@ rb_gimp_run_procedure (VALUE self,
   return rbreturn_vals;
 }
 
-void Init_gimpmain(void)
+void
+Init_gimpmain (void)
 {
   gc_array = rb_ary_new();
   rb_gc_register_address(&gc_array);

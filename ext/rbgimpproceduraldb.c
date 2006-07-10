@@ -37,7 +37,7 @@ rb_gimp_procedural_db_proc_info (VALUE  self,
                                          &args,
                                          &return_vals);
 
-  if(success)
+  if (success)
     {
       volatile VALUE ary = rb_ary_new();
       if(blurb) rb_ary_push(ary, rb_str_new2(blurb));
@@ -123,7 +123,7 @@ rb_gimp_procedural_db_query (VALUE  self,
                                      &num_matches,
                                      &procedure_names);
 
-  if(success)
+  if (success)
     {
       volatile VALUE ary = rb_ary_new();
 
@@ -154,7 +154,7 @@ rb_gimp_procedural_db_proc_arg (VALUE  self,
                                         &arg_name,
                                         &arg_desc);
 
-  if(success)
+  if (success)
     {
       return rb_struct_new(sGimpParamDef,
                            INT2NUM(arg_type),
@@ -183,7 +183,7 @@ rb_gimp_procedural_db_proc_val (VALUE  self,
                                         &val_name,
                                         &val_desc);
 
-  if(success)
+  if (success)
     {
       return rb_struct_new(sGimpParamDef,
                            INT2NUM(val_type),

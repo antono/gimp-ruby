@@ -39,7 +39,8 @@ void register_enums(void)
     }
 }
 
-void Init_gimpconstants(void)
+void
+Init_gimpconstants (void)
 {
   register_enums();
   
