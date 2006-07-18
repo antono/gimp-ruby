@@ -442,8 +442,6 @@ rb2GimpParamDefs (VALUE rbparamdefs,
       int i;
       for(i=0; i<num; i++)
         gimpparamdefs[i] = rb2GimpParamDef(arr[i]);
-        
-      
       
       *count = (gint)num;
       return gimpparamdefs;

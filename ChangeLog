@@ -1,3 +1,17 @@
+2006-07-18  Scott Lembcke <lemb0029@gnome.org>
+
+        * ext/Makefile.am: Added ext/rbgimpdialog.c.
+        
+        * Added ext/rbgimpdialog.c.
+        
+        * ext/conversion.c: Removed some stray blank lines.
+        
+        * ext/rbgimp.c: Added a call to initialize the dialog code.
+        
+        * ext/rbgimp.h: Added the dialog init function prototype.
+        
+        * plug-ins/test.rb: Added a procedure to run the dialog.
+        
 2006-07-10  Scott Lembcke <lemb0029@gnome.org>
 
         * ext/*.c: Style fixes. Swapped stdlib functions for glib ones.

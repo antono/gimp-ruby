@@ -72,3 +72,5 @@ void Init_gimpcolorrgb(void);
 void Init_gimpcolorhsv(void);
 void Init_gimpcolorcmyk(void);
 void Init_gimpcolorspace(void);
+
+void Init_rubyfudialog(void);

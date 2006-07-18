@@ -240,7 +240,7 @@ end
 
 RubyFu.register(
   'ruby-fu-test-OO', #procedure name
-	'Test that the ', #blurb
+	'Test that the object functionality works', #blurb
 	nil, #help
 	nil, #author
 	nil, #copyright
@@ -266,6 +266,30 @@ RubyFu.register(
   Gimp.message "Successful!"
   
   img
+end
+
+RubyFu.register(
+  'ruby-fu-test-dialog', #procedure name
+	'runs dialog', #blurb
+	nil, #help
+	nil, #author
+	nil, #copyright
+	nil, #date
+	'<Toolbox>/Xtns/Languages/Ruby-Fu/Test/dialog', #menupath
+	nil, #image types
+	[], #params
+	[] #results
+) do|run_mode|
+  params = [
+    Gimp::ParamDef.STRING('a', 'a'),
+    Gimp::ParamDef.INT32('b', 'b'),
+  ]
+
+  result = RubyFu.dialog('billy', params)
+  
+  Gimp.message result.inspect
+
+  nil
 end
 
 RubyFu.main

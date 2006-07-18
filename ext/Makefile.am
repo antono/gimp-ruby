@@ -22,6 +22,7 @@ gimpext_la_SOURCES = \
     rbgimpcolorrgb.c     \
     rbgimpcolorspace.c   \
     rbgimpconstants.c    \
+    rbgimpdialog.c       \
     rbgimp.h             \
     rbgimpmain.c         \
     rbgimpproceduraldb.c \

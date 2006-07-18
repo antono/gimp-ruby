@@ -141,4 +141,5 @@ Init_gimpext (void)
   Init_gimpcolorhsv();
   Init_gimpcolorcmyk();
   Init_gimpcolorspace();
+  Init_rubyfudialog();
 }
