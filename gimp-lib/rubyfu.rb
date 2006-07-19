@@ -6,7 +6,7 @@ module RubyFu
   end
   
   class ParamDef < Gimp::ParamDef
-    attr_reader :default
+    attr_reader :default, :subtype
     
     def self.method_missing(sym, *args)
       nargs = args.length
@@ -20,6 +20,42 @@ module RubyFu
       else
         return super
       end
+    end
+    
+    def self.FONT(*args)
+      value = STRING(*args)
+      value.instance_variable_set(:@subtype, :font)
+      return value
+    end
+    
+    def self.FILE(*args)
+      value = STRING(*args)
+      value.instance_variable_set(:@subtype, :file)
+      return value
+    end
+    
+    def self.PALETTE(*args)
+      value = STRING(*args)
+      value.instance_variable_set(:@subtype, :palette)
+      return value
+    end
+    
+    def self.GRADIENT(*args)
+      value = STRING(*args)
+      value.instance_variable_set(:@subtype, :gradient)
+      return value
+    end
+    
+    def self.PATTERN(*args)
+      value = STRING(*args)
+      value.instance_variable_set(:@subtype, :pattern)
+      return value
+    end
+    
+    def self.BRUSH(*args)
+      value = STRING(*args)
+      value.instance_variable_set(:@subtype, :brush)
+      return value
     end
   end
 
@@ -94,10 +130,7 @@ module RubyFu
     end
     
     def run_interactive(args)
-      #use default values for now
-      #TODO (much later) create an input dialog.
-      warn "Interactive mode not implemented, sending default params."
-      args += default_args
+      args += RubyFu.dialog(@name, @params)
       
       values = @function.call(*args)
     end

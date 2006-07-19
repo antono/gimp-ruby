@@ -1,3 +1,13 @@
+2006-07-19  Scott Lembcke <lemb0029@gnome.org>
+
+        * ext/rbgimpdialog.c: More parameter types added.
+        
+        * gimp-lib/rubyfu.rb: Added RubyFu::ParamDef subtypes. Connected the
+          dialog code to run for interactive mode.
+        
+        * plug-ins/test.rb: Added more parameter types to the dialog test
+          procedure.
+          
 2006-07-19  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* ext/rbgimpdialog.c: Added missing declaration for mRubyFu.

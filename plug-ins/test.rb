@@ -277,17 +277,22 @@ RubyFu.register(
 	nil, #date
 	'<Toolbox>/Xtns/Languages/Ruby-Fu/Test/dialog', #menupath
 	nil, #image types
-	[], #params
+	[
+    RubyFu::ParamDef.INT32('INT32', '', 32),
+    RubyFu::ParamDef.INT16('INT16', '', 16),
+    RubyFu::ParamDef.INT8('INT8', '', 8),
+    RubyFu::ParamDef.FLOAT('FLOAT', '', 123.4),
+    RubyFu::ParamDef.STRING('STRING', '', 'string'),
+    RubyFu::ParamDef.COLOR('COLOR', '', Gimp::Rgb.new(1.0, 0.0, 0.0, 0.0)),
+    RubyFu::ParamDef.IMAGE('IMAGE', ''),
+    RubyFu::ParamDef.DRAWABLE('DRAWABLE', ''),
+    RubyFu::ParamDef.CHANNEL('CHANNEL', ''),
+    RubyFu::ParamDef.LAYER('LAYER', ''),
+  ], #params
 	[] #results
-) do|run_mode|
-  params = [
-    Gimp::ParamDef.STRING('a', 'a'),
-    Gimp::ParamDef.INT32('b', 'b'),
-  ]
-
-  result = RubyFu.dialog('billy', params)
+) do|run_mode, *params|
   
-  Gimp.message result.inspect
+  Gimp.message params.inspect
 
   nil
 end
