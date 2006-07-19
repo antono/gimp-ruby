@@ -288,6 +288,8 @@ RubyFu.register(
     RubyFu::ParamDef.DRAWABLE('DRAWABLE', ''),
     RubyFu::ParamDef.CHANNEL('CHANNEL', ''),
     RubyFu::ParamDef.LAYER('LAYER', ''),
+    RubyFu::ParamDef.FONT('FONT', ''),
+    RubyFu::ParamDef.FILE('FILE', ''),
   ], #params
 	[] #results
 ) do|run_mode, *params|

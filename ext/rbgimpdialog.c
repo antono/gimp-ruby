@@ -62,13 +62,28 @@ get_combo_box_int (GtkWidget *widget)
   return INT2NUM(value);
 }
 
-/*static VALUE
+static VALUE
 get_font_name (GtkWidget *widget)
 {
-  GimpFontSelectButton *button = GIMP_FONT_SELECT_BUTTON(widget);
-  gchar *str = gimp_font_select_button_get_font_name(button);
-  return rb_str_new2(str);
-}*/
+  gchar *str;
+  g_object_get(G_OBJECT(widget), "font-name", &str, NULL);
+  
+  volatile VALUE rbstr = rb_str_new2(str);
+  g_free(str);
+  
+  return rbstr;
+}
+
+static VALUE
+get_filename(GtkWidget *widget)
+{
+  gchar *str = gimp_file_entry_get_filename(GIMP_FILE_ENTRY(widget));
+  
+  volatile VALUE  rbstr = rb_str_new2(str);
+  g_free(str);
+  
+  return rbstr;
+}
 
 /*TODO remove this function*/
 static VALUE
@@ -154,11 +169,14 @@ handle_string_types (GimpPDBArgType type,
   ID subtypeid = SYM2ID(subtype);
   if (subtypeid == rb_intern("font"))
   {      
-/*    pair.widget = gimp_font_select_button_new('Ruby-Fu font selection', defstr);
-    pair.result = &get_font_name;*/
+    pair.widget = gimp_font_select_button_new("Ruby-Fu font selection", defstr);
+    pair.result = &get_font_name;
   }
   else if (subtypeid == rb_intern("file"))
   {
+    pair.widget = gimp_file_entry_new("Ruby-Fu file selection",
+                                      defstr, FALSE, TRUE);
+    pair.result = &get_filename;
   }
   else if (subtypeid == rb_intern("palette"))
   {
@@ -187,12 +205,12 @@ make_widget (VALUE param)
   switch (type)
     {
     case GIMP_PDB_INT32:
-      pair.widget = make_spinner(-2147483640, 2147483640, 1, deflt);
+      pair.widget = make_spinner(G_MININT32, G_MAXINT32, 1, deflt);
       pair.result = &get_spinner_int;
       break;
       
     case GIMP_PDB_INT16:
-      pair.widget = make_spinner(-32768, 32767, 1, deflt);
+      pair.widget = make_spinner(G_MININT16, G_MAXINT16, 1, deflt);
       pair.result = &get_spinner_int;
       break;
       
