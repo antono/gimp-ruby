@@ -4,6 +4,8 @@
 
 #include "rbgimp.h"
 
+VALUE mRubyFu;
+
 typedef struct
 {
   GtkWidget *widget;
@@ -42,9 +44,9 @@ ValuePair
 make_widget (VALUE param)
 {
   ValuePair pair;
-  
+
   GimpPDBArgType type = NUM2INT(rb_struct_aref(param, ID2SYM(id_type)));
-  
+
   switch(type)
     {
     case GIMP_PDB_STRING:
@@ -57,7 +59,7 @@ make_widget (VALUE param)
       pair.result = &get_text;
       break;
     }
-  
+
   return pair;
 }
 
@@ -69,33 +71,33 @@ make_table (VALUE       params,
   params = rb_check_array_type(params);
   int num = RARRAY(params)->len;
   VALUE *ary = RARRAY(params)->ptr;
-  
+
   ValuePair *pair_arr = g_new(ValuePair, num);
-  
+
   GtkWidget *table = gtk_table_new(num, 2, FALSE);
-  
+
   int i;
   for (i=0; i<num; i++)
     {
       VALUE param = ary[i];
       if (!rb_obj_is_kind_of(param, sGimpParamDef))
         rb_raise(rb_eArgError, "Parameters must be of type Gimp::ParamDef");
-      
+
       VALUE name = rb_struct_aref(param, ID2SYM(id_name));
       GtkWidget *label = gtk_label_new(StringValuePtr(name));
       gtk_table_attach(GTK_TABLE(table), label,
                        0, 1, i, i+1,
                        GTK_FILL|GTK_EXPAND, GTK_FILL, 0, 0);
-      
+
       ValuePair pair = make_widget(param);
       pair_arr[i] = pair;
       gtk_table_attach(GTK_TABLE(table), pair.widget,
                        1, 2, i, i+1,
                        GTK_FILL|GTK_EXPAND, GTK_FILL, 0, 0);
     }
-  
+
   gtk_widget_show_all(table);
-  
+
   *num_pairs = num;
   *pairs = pair_arr;
   return table;
@@ -107,13 +109,13 @@ collect_results (int        num_pairs,
 {
   volatile VALUE ary = rb_ary_new();
   int i;
-  
+
   for (i=0; i<num_pairs; i++)
     {
       ValuePair pair = pairs[i];
       rb_ary_push(ary, pair.result(pair.widget));
     }
-  
+
   return ary;
 }
 
@@ -124,24 +126,24 @@ show_dialog (VALUE self,
 {
   GtkWidget *dialog, *table;
   gchar *name = StringValuePtr(rbname);
-  
+
   int num_pairs;
   ValuePair *pairs;
 
   gtk_init(NULL, NULL);
-  
+
   dialog = gtk_dialog_new_with_buttons(name, NULL, 0,
                                        GTK_STOCK_OK, GTK_RESPONSE_ACCEPT,
                                        GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
                                        NULL);
-  
+
   table = make_table(params, &num_pairs, &pairs);
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), table, TRUE, TRUE, 0);
-  
-  
+
+
   if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT)
     return collect_results(num_pairs, pairs);
-  
+
   return Qnil;
 }
 

@@ -1,3 +1,7 @@
+2006-07-19  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* ext/rbgimpdialog.c: Added missing declaration for mRubyFu.
+
 2006-07-18  Scott Lembcke <lemb0029@gnome.org>
 
         * ext/Makefile.am: Added ext/rbgimpdialog.c.
