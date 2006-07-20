@@ -279,22 +279,49 @@ RubyFu.register(
 	nil, #image types
 	[
     RubyFu::ParamDef.INT32('INT32', '', 32),
+    RubyFu::ParamDef.TOGGLE('TOGGLE', '', 1),
     RubyFu::ParamDef.INT16('INT16', '', 16),
     RubyFu::ParamDef.INT8('INT8', '', 8),
     RubyFu::ParamDef.FLOAT('FLOAT', '', 123.4),
+    RubyFu::ParamDef.SPINNER('SPINNER', '', 6, (1.5..9.1), 0.01),
+    RubyFu::ParamDef.SLIDER('SLIDER', '', 6, (1.5..9.1), 0.01),
     RubyFu::ParamDef.STRING('STRING', '', 'string'),
     RubyFu::ParamDef.COLOR('COLOR', '', Gimp::Rgb.new(1.0, 0.0, 0.0, 0.0)),
-    RubyFu::ParamDef.IMAGE('IMAGE', ''),
-    RubyFu::ParamDef.DRAWABLE('DRAWABLE', ''),
-    RubyFu::ParamDef.CHANNEL('CHANNEL', ''),
-    RubyFu::ParamDef.LAYER('LAYER', ''),
-    RubyFu::ParamDef.FONT('FONT', ''),
-    RubyFu::ParamDef.FILE('FILE', ''),
   ], #params
 	[] #results
 ) do|run_mode, *params|
   
-  Gimp.message params.inspect
+  Gimp.message(params.join("\n"))
+
+  nil
+end
+
+RubyFu.register(
+  'ruby-fu-test-dialog2', #procedure name
+	'runs dialog', #blurb
+	nil, #help
+	nil, #author
+	nil, #copyright
+	nil, #date
+	'<Toolbox>/Xtns/Languages/Ruby-Fu/Test/more dialog', #menupath
+	nil, #image types
+	[
+    RubyFu::ParamDef.IMAGE('IMAGE', ''),
+    RubyFu::ParamDef.DRAWABLE('DRAWABLE', ''),
+    RubyFu::ParamDef.CHANNEL('CHANNEL', ''),
+    RubyFu::ParamDef.LAYER('LAYER', ''),
+    RubyFu::ParamDef.FONT('FONT', '', 'Monaco'),
+    RubyFu::ParamDef.FILE('FILE', '', '/usr/share/dict/words'),
+    RubyFu::ParamDef.DIR('DIR', '', '/usr/share/dict/'),
+    RubyFu::ParamDef.PALETTE('PALETTE', '', 'Lights'),
+    RubyFu::ParamDef.GRADIENT('GRADIENT', '', 'CD'),
+    RubyFu::ParamDef.PATTERN('PATTERN', '', 'Pine'),
+    RubyFu::ParamDef.BRUSH('BRUSH', '', 'Circle (11)'),
+  ], #params
+	[] #results
+) do|run_mode, *params|
+  
+  Gimp.message(params.join("\n"))
 
   nil
 end

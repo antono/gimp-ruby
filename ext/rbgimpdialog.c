@@ -10,35 +10,49 @@ VALUE mRubyFu;
 
 typedef struct
 {
-  GtkWidget *widget;
-  VALUE (*result)(GtkWidget *widget);
-} ValuePair;
+  gpointer ptr;
+  VALUE (*func)(gpointer ptr);
+} Result;
 
 static VALUE
-get_entry_text (GtkWidget *widget)
+get_entry_text (gpointer ptr)
 {
-  GtkEntry *entry = GTK_ENTRY(widget);
+  GtkEntry *entry = GTK_ENTRY(ptr);
   return rb_str_new2(gtk_entry_get_text(entry));
 }
 
 static VALUE
-get_spinner_int (GtkWidget *widget)
+get_spinner_int (gpointer ptr)
 {
-  GtkSpinButton *spinner = GTK_SPIN_BUTTON(widget);
+  GtkSpinButton *spinner = GTK_SPIN_BUTTON(ptr);
   return INT2NUM(gtk_spin_button_get_value_as_int(spinner));
 }
 
 static VALUE
-get_spinner_float (GtkWidget *widget)
+get_toggle_int (gpointer ptr)
 {
-  GtkSpinButton *spinner = GTK_SPIN_BUTTON(widget);
+  GtkToggleButton *toggle = GTK_TOGGLE_BUTTON(ptr);
+  return INT2NUM(gtk_toggle_button_get_active(toggle) ? 1 : 0);
+}
+
+static VALUE
+get_spinner_float (gpointer ptr)
+{
+  GtkSpinButton *spinner = GTK_SPIN_BUTTON(ptr);
   return rb_float_new(gtk_spin_button_get_value(spinner));
 }
 
 static VALUE
-get_color (GtkWidget *widget)
+get_slider_float (gpointer ptr)
 {
-  GimpColorButton *cbutton = GIMP_COLOR_BUTTON(widget);
+  GtkRange *range = GTK_RANGE(ptr);
+  return rb_float_new(gtk_range_get_value(range));
+}
+
+static VALUE
+get_color (gpointer ptr)
+{
+  GimpColorButton *cbutton = GIMP_COLOR_BUTTON(ptr);
   
   GimpRGB color;
   gimp_color_button_get_color(cbutton, &color);
@@ -48,25 +62,18 @@ get_color (GtkWidget *widget)
 }
 
 static VALUE
-get_bool (GtkWidget *widget)
-{
-  GtkToggleButton *toggle = GTK_TOGGLE_BUTTON(widget);
-  return INT2NUM(gtk_toggle_button_get_active(toggle) ? 1 : 0);
-}
-
-static VALUE
-get_combo_box_int (GtkWidget *widget)
+get_combo_box_int (gpointer ptr)
 {
   gint value;
-  gimp_int_combo_box_get_active(GIMP_INT_COMBO_BOX(widget), &value);
+  gimp_int_combo_box_get_active(GIMP_INT_COMBO_BOX(ptr), &value);
   return INT2NUM(value);
 }
 
 static VALUE
-get_font_name (GtkWidget *widget)
+get_font_name (gpointer ptr)
 {
   gchar *str;
-  g_object_get(G_OBJECT(widget), "font-name", &str, NULL);
+  g_object_get(G_OBJECT(ptr), "font-name", &str, NULL);
   
   volatile VALUE rbstr = rb_str_new2(str);
   g_free(str);
@@ -75,9 +82,9 @@ get_font_name (GtkWidget *widget)
 }
 
 static VALUE
-get_filename(GtkWidget *widget)
+get_filename(gpointer ptr)
 {
-  gchar *str = gimp_file_entry_get_filename(GIMP_FILE_ENTRY(widget));
+  gchar *str = gimp_file_entry_get_filename(GIMP_FILE_ENTRY(ptr));
   
   volatile VALUE  rbstr = rb_str_new2(str);
   g_free(str);
@@ -85,9 +92,78 @@ get_filename(GtkWidget *widget)
   return rbstr;
 }
 
+static VALUE
+get_string_from_pointer(gpointer ptr)
+{
+  gchar **str = ptr;
+  volatile VALUE rbstr;
+  
+  if (*str)
+   rbstr = rb_str_new2(*str);
+  else
+    rbstr = rb_str_new(NULL, 0);
+  
+  g_free(*str);
+  g_free(ptr);
+  
+  return rbstr;
+}
+
+static void
+palette_select (const gchar *name,
+                gboolean closing,
+                gpointer data)
+{
+  gchar **str = data;
+  g_free(*str);
+  *str = g_strdup(name);
+}
+
+static void
+gradient_select (const gchar *name,
+                 gint width,
+                 const gdouble *grad_data,
+                 gboolean dialog_closing,
+                 gpointer data)
+{
+  gchar **str = data;
+  g_free(*str);
+  *str = g_strdup(name);
+}
+
+static void
+pattern_select (const gchar *name,
+                gint width,
+                gint height,
+                gint bpp,
+                const guchar *mask_data,
+                gboolean dialog_closing,
+                gpointer data)
+{
+  gchar **str = data;
+  g_free(*str);
+  *str = g_strdup(name);
+}
+
+static void
+brush_select (const gchar *name,
+              gdouble opacity,
+              gint spacing,
+              GimpLayerModeEffects mode,
+              gint width,
+              gint height,
+              const guchar *mask_data,
+              gboolean dialog_closing,
+              gpointer data)
+{
+  gchar **str = data;
+  g_free(*str);
+  *str = g_strdup(name);
+}
+
 /*TODO remove this function*/
 static VALUE
-nothing(GtkWidget *widget)
+nothing (gpointer ptr)
 {
   return Qnil;
 }
@@ -108,7 +184,7 @@ make_spinner (gdouble min,
 }
 
 static GtkWidget *
-make_color_button (VALUE deflt)
+make_color_button (VALUE deflt, Result *result)
 {
   GtkWidget *cbutton;
   GimpRGB *color = g_new(GimpRGB, 1);
@@ -118,9 +194,14 @@ make_color_button (VALUE deflt)
   else
     *color = rb2GimpRGB(deflt);
   
-  cbutton = gimp_color_button_new("Ruby-Fu color selection", 60, 15, color,
+  cbutton = gimp_color_button_new("Ruby-Fu", 60, 15, color,
                                   GIMP_COLOR_AREA_FLAT);
   gimp_color_button_set_update(GIMP_COLOR_BUTTON(cbutton), TRUE);
+  
+  g_free(color);
+  
+  result->ptr = cbutton;
+  result->func = &get_color;
   return cbutton;
 }
 
@@ -146,12 +227,23 @@ make_int_combo_box (GimpPDBArgType type)
     }  
 }
 
-static ValuePair
-handle_string_types (GimpPDBArgType type,
-                     VALUE deflt,
-                     VALUE param)
+static gchar **
+wrap_string(gchar *str)
 {
-  ValuePair pair;
+  gchar **ptr = g_new(gchar*, 1);
+  *ptr = g_strdup(str);
+
+  return ptr;
+}
+
+static GtkWidget *
+handle_string_types (VALUE param,
+                     VALUE deflt,
+                     Result *result)
+{
+  GtkWidget *widget;
+  gpointer data;
+  
   char *defstr;
   if (deflt == Qnil)
     defstr = "";
@@ -160,44 +252,193 @@ handle_string_types (GimpPDBArgType type,
   
   VALUE subtype = rb_iv_get(param, "@subtype");
   if (subtype == Qnil)
-  {
-      pair.widget = gtk_entry_new();
-      gtk_entry_set_text(GTK_ENTRY(pair.widget), defstr);
-      pair.result = &get_entry_text;
-  }
+    {
+      widget = gtk_entry_new();
+      gtk_entry_set_text(GTK_ENTRY(widget), defstr);
+      
+      result->ptr = widget;
+      result->func = &get_entry_text;
+      return widget;
+    }
   
   ID subtypeid = SYM2ID(subtype);
   if (subtypeid == rb_intern("font"))
-  {      
-    pair.widget = gimp_font_select_button_new("Ruby-Fu font selection", defstr);
-    pair.result = &get_font_name;
-  }
+    {
+      widget = gimp_font_select_button_new("Ruby-Fu", defstr);
+      
+      result->ptr = widget;
+      result->func = &get_font_name;
+    }
   else if (subtypeid == rb_intern("file"))
-  {
-    pair.widget = gimp_file_entry_new("Ruby-Fu file selection",
-                                      defstr, FALSE, TRUE);
-    pair.result = &get_filename;
-  }
+    {
+      widget = gimp_file_entry_new("Ruby-Fu", defstr, FALSE, TRUE);
+      
+      result->ptr = widget;
+      result->func = &get_filename;
+    }
+  else if (subtypeid == rb_intern("dir"))
+    {
+      widget = gimp_file_entry_new("Ruby-Fu", defstr, TRUE, TRUE);
+      
+      result->ptr = widget;
+      result->func = &get_filename;
+    }
   else if (subtypeid == rb_intern("palette"))
-  {
-  }
+    {
+      data = wrap_string(defstr);
+      widget = gimp_palette_select_widget_new("Ruby-Fu", defstr,
+                                              &palette_select, data);
+      
+      result->ptr = data;
+      result->func = &get_string_from_pointer;
+    }
   else if (subtypeid == rb_intern("gradient"))
-  {
-  }
+    {
+      data = wrap_string(defstr);
+      widget = gimp_gradient_select_widget_new("Ruby-Fu", defstr,
+                                               &gradient_select, data);
+      
+      result->ptr = data;
+      result->func = &get_string_from_pointer;
+    }
   else if (subtypeid == rb_intern("pattern"))
-  {
-  }
+    {
+      data = wrap_string(defstr);
+      widget = gimp_pattern_select_widget_new("Ruby-Fu", defstr,
+                                              &pattern_select, data);
+  
+      result->ptr = data;
+      result->func = &get_string_from_pointer;
+    }
   else if (subtypeid == rb_intern("brush"))
-  {
-  }
-    
-  return pair;
+    {
+      data = wrap_string(defstr);
+      widget = gimp_brush_select_widget_new("Ruby-Fu", defstr,
+                                            100, -1, GIMP_NORMAL_MODE,
+                                            &brush_select, data);
+      
+      result->ptr = data;
+      result->func = &get_string_from_pointer;
+    }
+  else
+    {
+      widget = NULL;
+      rb_raise(rb_eTypeError, "Bad RubyFu::ParamDef string subtype.");
+    }
+  
+  return widget;
 }
 
-static ValuePair
-make_widget (VALUE param)
+static void
+get_min_max_step(VALUE param,
+                 VALUE *min,
+                 VALUE *max,
+                 VALUE *step)
 {
-  ValuePair pair;
+  VALUE range = rb_iv_get(param, "@range");
+  
+  *step = rb_iv_get(param, "@step");
+  *min = rb_funcall(range, rb_intern("begin"), 0, NULL);
+  *max = rb_funcall(range, rb_intern("end"), 0, NULL);
+}
+
+static GtkWidget *
+handle_int_types (VALUE param,
+                  VALUE deflt,
+                  Result *result)
+{
+  GtkWidget *widget;
+  
+  gint defint;
+  if (deflt == Qnil)
+    defint = 0;
+  else
+    defint = NUM2INT(deflt);
+  
+  VALUE subtype = rb_iv_get(param, "@subtype");
+  if (subtype == Qnil)
+    {
+      widget = make_spinner(G_MININT32, G_MAXINT32, 1, deflt);
+      
+      result->ptr = widget;
+      result->func = &get_spinner_int;
+      return widget;
+    }
+  
+  ID subtypeid = SYM2ID(subtype);
+  if (subtypeid == rb_intern("toggle"))
+    {
+      widget = gtk_check_button_new();
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget), defint);
+      
+      result->ptr = widget;
+      result->func = &get_toggle_int;
+    }
+  else
+    {
+      widget = NULL;
+      rb_raise(rb_eTypeError, "Bad RubyFu::ParamDef int subtype.");
+    }
+
+  return widget;
+}
+
+static GtkWidget *
+handle_float_types (VALUE param,
+                    VALUE deflt,
+                    Result *result)
+{
+  GtkWidget *widget;
+  
+  VALUE subtype = rb_iv_get(param, "@subtype");
+  if (subtype == Qnil)
+    {
+      widget = make_spinner(-G_MAXDOUBLE, G_MAXDOUBLE, 0.001, deflt);
+      
+      result->ptr = widget;
+      result->func = &get_spinner_float;
+      return widget;
+    }
+  
+  ID subtypeid = SYM2ID(subtype);
+  if (subtypeid == rb_intern("spinner"))
+    {
+      VALUE min, max, step;
+      get_min_max_step(param, &min, &max, &step);
+            
+      widget = make_spinner(NUM2DBL(min), NUM2DBL(max), NUM2DBL(step), deflt);
+      
+      result->ptr = widget;
+      result->func = &get_spinner_float;
+    }
+  else if (subtypeid == rb_intern("slider"))
+    {
+      VALUE min, max, step;
+      get_min_max_step(param, &min, &max, &step);
+      
+      widget = gtk_hscale_new_with_range(NUM2DBL(min),
+                                         NUM2DBL(max),
+                                         NUM2DBL(step));
+      
+      gtk_range_set_value(GTK_RANGE(widget), NUM2DBL(deflt));
+      
+      result->ptr = widget;
+      result->func = &get_slider_float;
+    }
+  else
+    {
+      widget = gtk_label_new("poo");
+//      rb_raise(rb_eTypeError, "Bad RubyFu::ParamDef float subtype.");
+    }
+
+  return widget;
+}
+
+static GtkWidget *
+make_widget (VALUE param,
+             Result *result)
+{
+  GtkWidget *widget;
 
   GimpPDBArgType type = NUM2INT(rb_struct_aref(param, ID2SYM(id_type)));
   VALUE deflt = rb_iv_get(param, "@default");
@@ -205,66 +446,72 @@ make_widget (VALUE param)
   switch (type)
     {
     case GIMP_PDB_INT32:
-      pair.widget = make_spinner(G_MININT32, G_MAXINT32, 1, deflt);
-      pair.result = &get_spinner_int;
+      widget = handle_int_types(param, deflt, result);
       break;
       
     case GIMP_PDB_INT16:
-      pair.widget = make_spinner(G_MININT16, G_MAXINT16, 1, deflt);
-      pair.result = &get_spinner_int;
+      widget = make_spinner(G_MININT16, G_MAXINT16, 1, deflt);
+      
+      result->ptr = widget;
+      result->func = &get_spinner_int;
       break;
       
     case GIMP_PDB_INT8:
-      pair.widget = make_spinner(0, 255, 1, deflt);
-      pair.result = &get_spinner_int;
+      widget = make_spinner(0, 255, 1, deflt);
+      
+      result->ptr = widget;
+      result->func = &get_spinner_int;
       break;
       
     case GIMP_PDB_FLOAT:
-      pair.widget = make_spinner(-G_MAXDOUBLE, G_MAXDOUBLE, 0.1, deflt);
-      pair.result = &get_spinner_float;
+      widget = handle_float_types(param, deflt, result);
       break;
       
     case GIMP_PDB_STRING:
-      pair = handle_string_types(type, deflt, param);
+      widget = handle_string_types(param, deflt, result);
       break;
       
     case GIMP_PDB_COLOR:
-      pair.widget = make_color_button(deflt);
-      pair.result = &get_color;
+      widget = make_color_button(deflt, result);
       break;
       
     case GIMP_PDB_IMAGE:
     case GIMP_PDB_DRAWABLE:
     case GIMP_PDB_CHANNEL:    
     case GIMP_PDB_LAYER:
-      pair.widget = make_int_combo_box(type);
+      widget = make_int_combo_box(type);
+      
       if (deflt != Qnil)
-        gimp_int_combo_box_set_active(GIMP_INT_COMBO_BOX(pair.widget),
+        gimp_int_combo_box_set_active(GIMP_INT_COMBO_BOX(widget),
                                       NUM2INT(deflt));
-      pair.result = &get_combo_box_int;
+      
+      result->ptr = widget;
+      result->func = &get_combo_box_int;
       break;
       
     default:
-      pair.widget = gtk_label_new("Unimplemented");
-      pair.result = &nothing;
+      widget = gtk_label_new("Unimplemented");
+      
+      result->ptr = widget;
+      result->func = &nothing;
       break;
     }
 
-  return pair;
+  return widget;
 }
 
 static GtkWidget *
-make_table (VALUE       params,
-            int        *num_pairs,
-            ValuePair **pairs)
+make_table (VALUE    params,
+            int     *num_results,
+            Result **results)
 {
   params = rb_check_array_type(params);
   int num = RARRAY(params)->len;
   VALUE *ary = RARRAY(params)->ptr;
 
-  ValuePair *pair_arr = g_new(ValuePair, num);
+  Result *results_arr = g_new(Result, num);
 
-  GtkWidget *table = gtk_table_new(num, 2, FALSE);
+  GtkWidget *table = gtk_table_new(num+1, 2, FALSE);
 
   int i;
   for (i=0; i<num; i++)
@@ -275,35 +522,35 @@ make_table (VALUE       params,
 
       VALUE name = rb_struct_aref(param, ID2SYM(id_name));
       GtkWidget *label = gtk_label_new(StringValuePtr(name));
-      gtk_table_attach(GTK_TABLE(table), label,
-                       0, 1, i, i+1,
+      gtk_table_attach(GTK_TABLE(table), label, 0, 1, i, i+1,
                        GTK_FILL|GTK_EXPAND, GTK_FILL, 0, 0);
 
-      ValuePair pair = make_widget(param);
-      pair_arr[i] = pair;
-      gtk_table_attach(GTK_TABLE(table), pair.widget,
-                       1, 2, i, i+1,
+      GtkWidget *widget = make_widget(param, &results_arr[i]);
+      gtk_table_attach(GTK_TABLE(table), widget, 1, 2, i, i+1,
                        GTK_FILL|GTK_EXPAND, GTK_FILL, 0, 0);
     }
-
+  
+  gtk_table_attach(GTK_TABLE(table), gimp_progress_bar_new(),
+                   0, 2, num, num+1,
+                   GTK_FILL|GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show_all(table);
 
-  *num_pairs = num;
-  *pairs = pair_arr;
+  *num_results = num;
+  *results = results_arr;
   return table;
 }
 
 static VALUE
-collect_results (int        num_pairs,
-                 ValuePair *pairs)
+collect_results (int     num_results,
+                 Result *results)
 {
   volatile VALUE ary = rb_ary_new();
   int i;
 
-  for (i=0; i<num_pairs; i++)
+  for (i=0; i<num_results; i++)
     {
-      ValuePair pair = pairs[i];
-      rb_ary_push(ary, pair.result(pair.widget));
+      Result result = results[i];
+      rb_ary_push(ary, result.func(result.ptr));
     }
 
   return ary;
@@ -317,8 +564,8 @@ show_dialog (VALUE self,
   GtkWidget *dialog, *table;
   gchar *name = StringValuePtr(rbname);
 
-  int num_pairs;
-  ValuePair *pairs;
+  int num_results;
+  Result *results;
 
   gtk_init(NULL, NULL);
   gimp_ui_init ("ruby-fu", TRUE);
@@ -334,12 +581,12 @@ show_dialog (VALUE self,
                            NULL);
 
   
-  table = make_table(params, &num_pairs, &pairs);
+  table = make_table(params, &num_results, &results);
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), table, TRUE, TRUE, 0);
   
   
   if (gimp_dialog_run(GIMP_DIALOG(dialog)) == GTK_RESPONSE_OK)
-    return collect_results(num_pairs, pairs);
+    return collect_results(num_results, results);
 
   return Qnil;
 }

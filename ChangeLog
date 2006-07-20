@@ -1,3 +1,17 @@
+2006-07-20  Scott Lembcke <lemb0029@gnome.org>
+
+        * ext/rbgimpdialog.c: Even more parameter types added.
+        
+        * plug-ins/test.rb: Split the dialog test into two seperate procedures.
+          Added the new parameter types to the tests.
+          
+        * gimp-lib/gimp.rb: Made Gimp.Color a module function so that it's
+          available without including the Gimp module.
+        
+        * gimp-lib/gimp_oo.rb: Put ensure blocks on the paired procedures.
+        
+        * plug-ins/sphere.rb: Updated to use OO types and new parameter types.
+
 2006-07-19  Scott Lembcke <lemb0029@gnome.org>
 
         * ext/rbgimpdialog.c: More parameter types added.

@@ -130,6 +130,7 @@ module Gimp
   def Color(*args)
     Rgb.new(*args)
   end
+  module_function :Color
   
   module Shelf
     def self.[](key)

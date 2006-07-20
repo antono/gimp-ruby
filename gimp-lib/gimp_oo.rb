@@ -118,8 +118,11 @@ module Gimp
     def undo_group
       old_undo_group_start
       if block_given?
-        yield
-        undo_group_end
+        begin
+          yield
+        ensure
+          undo_group_end
+        end
       end
     end
     
@@ -127,24 +130,29 @@ module Gimp
     def undo_disable
       old_undo_disable
       if block_given?
-        yield
-        undo_enable
-      end
-    end
-  end
+        begin
+          yield
+        ensure
+          undo_enable
+        end
+      end #if
+    end #meth
+  end #class
   
   module Context
     class << self
       alias_method :old_push, :push
       def push
-        puts 'yo'
         old_push
         if block_given?
-          yield
-          pop
-        end
-      end
-    end
-  end
-end
+          begin
+            yield
+          ensure
+            pop
+          end
+        end #if
+      end #meth
+    end #class
+  end #module
+end #module
 

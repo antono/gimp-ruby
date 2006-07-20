@@ -33,75 +33,68 @@ RubyFu.register(
   '<Toolbox>/Xtns/Languages/Ruby-Fu/Sphere',
   "",
   [
-    ParamDef.FLOAT('radius', 'Radius', 100),
-    ParamDef.FLOAT('lighting', 'Lighting Degrees', 45),
-    ParamDef.INT32('shadow', 'Shadow', 1),
-    ParamDef.COLOR('bg color', 'Background Color', Rgb.new(1.0, 1.0, 1.0)),
-    ParamDef.COLOR('color', 'Sphere Color', Rgb.new(1.0, 0.0, 0.0)),
+    ParamDef.SPINNER('radius', 'Radius', 100, 0..1000, 1),
+    ParamDef.SLIDER('lighting', 'Lighting Degrees', 45, 0..360, 1),
+    ParamDef.TOGGLE('shadow', 'Shadow', 1),
+    ParamDef.COLOR('bg color', 'Background Color', Color(1.0, 1.0, 1.0)),
+    ParamDef.COLOR('color', 'Sphere Color', Color(1.0, 0.0, 0.0)),
   ],
   [ParamDef.IMAGE('image', 'Result Image')]
 ) do |run_mode, radius, light, shadow, bg_color, sphere_color|
-  shadow = (shadow != 0)
+  require 'gimp_oo'
+  
+  shadow = (shadow == 1)
   
   width  = radius * 3.75
   height = radius * 2.5
 
-  img = PDB.gimp_image_new(width, height, 0)
+  img = Image.new(width, height, 0)
 
-  PDB.gimp_context_push()
-  PDB.gimp_image_undo_disable(img)
-
-  old_fg = PDB.gimp_context_get_foreground
-  old_bg = PDB.gimp_context_get_background
-
-  begin
-    radians = light * PI / 180
-    cx = width / 2
-    cy = height / 2
-    light_x = cx + radius * 0.6 * cos(radians)
-    light_y = cy - radius * 0.6 * sin(radians)
-    light_end_x = cx + radius * cos(radians + PI)
-    light_end_y = cy - radius * sin(radians + PI)
-    offset = radius * 0.1
-
-    drawable = PDB.gimp_layer_new(img, width, height, RGB_IMAGE, "sphere Layer", 100, NORMAL_MODE)
-    PDB.gimp_image_add_layer(img, drawable, 0)
-    
-    PDB.gimp_context_set_foreground(sphere_color)
-    PDB.gimp_context_set_background(bg_color)
-    PDB.gimp_edit_fill(drawable, BACKGROUND_FILL)
-
-    PDB.gimp_context_set_background(Gimp::Rgb.new(0.1, 0.1, 0.1))
-
-    if shadow and ((45 <= light and light <= 75) or
-                   (105 <= light and light <= 135))
-      shadow_w = radius * 2.5 * cos(radians + PI)
-      shadow_h = radius * 0.5
-      shadow_x = cx
-      shadow_y = radius * 0.65 + cy
-      if shadow_w < 0
-        shadow_x = shadow_w + cx
-        shadow_w = - shadow_w
+  Context.push do
+    img.undo_disable do
+      radians = light * PI / 180
+      cx = width / 2
+      cy = height / 2
+      light_x = cx + radius * 0.6 * cos(radians)
+      light_y = cy - radius * 0.6 * sin(radians)
+      light_end_x = cx + radius * cos(radians + PI)
+      light_end_y = cy - radius * sin(radians + PI)
+      offset = radius * 0.1
+  
+      drawable = Layer.new(img, width, height, RGB_IMAGE, "sphere Layer", 100, NORMAL_MODE)
+      img.add_layer(drawable, 0)
+      
+      Context.set_foreground(sphere_color)
+      Context.set_background(bg_color)
+      Edit.fill(drawable, BACKGROUND_FILL)
+  
+      Context.set_background(Color(0.1, 0.1, 0.1))
+  
+      if shadow and ((45 <= light and light <= 75) or
+                     (105 <= light and light <= 135))
+        shadow_w = radius * 2.5 * cos(radians + PI)
+        shadow_h = radius * 0.5
+        shadow_x = cx
+        shadow_y = radius * 0.65 + cy
+        if shadow_w < 0
+          shadow_x = shadow_w + cx
+          shadow_w = - shadow_w
+        end
+        PDB.gimp_ellipse_select(img, shadow_x, shadow_y, shadow_w, shadow_h,
+          0, 1, 1, 7.5)
+        Edit.bucket_fill(drawable, 1, 3, 100, 0, 0, 0, 0)
       end
-      PDB.gimp_ellipse_select(img, shadow_x, shadow_y, shadow_w, shadow_h,
-			  0, 1, 1, 7.5)
-      PDB.gimp_edit_bucket_fill(drawable, 1, 3, 100, 0, 0, 0, 0)
+  
+      PDB.gimp_ellipse_select(img, cx - radius, cy - radius, radius * 2, radius * 2,
+        2, 1, 0, 0)
+      Edit.blend(drawable, 0, 0, 2, 100, offset,
+           0, 0, 0, 0, 0, 0, light_x, light_y,
+           light_end_x, light_end_y)
+      Selection.none(img)
     end
-
-    PDB.gimp_ellipse_select(img, cx - radius, cy - radius, radius * 2, radius * 2,
-			2, 1, 0, 0)
-    PDB.gimp_edit_blend(drawable, 0, 0, 2, 100, offset,
-	       0, 0, 0, 0, 0, 0, light_x, light_y,
-	       light_end_x, light_end_y)
-    PDB.gimp_selection_none(img)
-  ensure
-    PDB.gimp_context_set_background(old_bg)
-    PDB.gimp_context_set_foreground(old_fg)
-    PDB.gimp_image_undo_enable(img)
   end
-
-  PDB.gimp_context_pop()
-  PDB.gimp_display_new(img)
+  
+  Display.new(img)
   
   img
 end

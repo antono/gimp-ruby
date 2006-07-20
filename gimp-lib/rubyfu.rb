@@ -34,6 +34,12 @@ module RubyFu
       return value
     end
     
+    def self.DIR(*args)
+      value = STRING(*args)
+      value.instance_variable_set(:@subtype, :dir)
+      return value
+    end
+    
     def self.PALETTE(*args)
       value = STRING(*args)
       value.instance_variable_set(:@subtype, :palette)
@@ -57,6 +63,28 @@ module RubyFu
       value.instance_variable_set(:@subtype, :brush)
       return value
     end
+    
+    def self.TOGGLE(*args)
+      value = INT32(*args)
+      value.instance_variable_set(:@subtype, :toggle)
+      return value
+    end
+    
+    def self.SPINNER(name, desc, default, range, step)
+      value = FLOAT(name, desc, default)
+      value.instance_variable_set(:@subtype, :spinner)
+      value.instance_variable_set(:@range, range)
+      value.instance_variable_set(:@step, step)
+      return value
+    end      
+
+    def self.SLIDER(name, desc, default, range, step)
+      value = FLOAT(name, desc, default)
+      value.instance_variable_set(:@subtype, :slider)
+      value.instance_variable_set(:@range, range)
+      value.instance_variable_set(:@step, step)
+      return value
+    end      
   end
 
   class Procedure
