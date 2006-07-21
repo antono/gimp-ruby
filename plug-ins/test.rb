@@ -278,15 +278,15 @@ RubyFu.register(
 	'<Toolbox>/Xtns/Languages/Ruby-Fu/Test/dialog', #menupath
 	nil, #image types
 	[
-    RubyFu::ParamDef.INT32('INT32', '', 32),
-    RubyFu::ParamDef.TOGGLE('TOGGLE', '', 1),
-    RubyFu::ParamDef.INT16('INT16', '', 16),
-    RubyFu::ParamDef.INT8('INT8', '', 8),
-    RubyFu::ParamDef.FLOAT('FLOAT', '', 123.4),
-    RubyFu::ParamDef.SPINNER('SPINNER', '', 6, (1.5..9.1), 0.01),
-    RubyFu::ParamDef.SLIDER('SLIDER', '', 6, (1.5..9.1), 0.01),
-    RubyFu::ParamDef.STRING('STRING', '', 'string'),
-    RubyFu::ParamDef.COLOR('COLOR', '', Gimp::Rgb.new(1.0, 0.0, 0.0, 0.0)),
+    RubyFu::ParamDef.INT32('int32', 'INT32', 32),
+    RubyFu::ParamDef.TOGGLE('toggle', 'TOGGLE', 1),
+    RubyFu::ParamDef.INT16('int16', 'INT16', 16),
+    RubyFu::ParamDef.INT8('int8', 'INT8', 8),
+    RubyFu::ParamDef.FLOAT('float', 'FLOAT', 123.4),
+    RubyFu::ParamDef.SPINNER('spinner', 'SPINNER', 6, (1.5..9.1), 0.01),
+    RubyFu::ParamDef.SLIDER('slider', 'SLIDER', 6, (1.5..9.1), 0.01),
+    RubyFu::ParamDef.STRING('string', 'STRING', 'string'),
+    RubyFu::ParamDef.COLOR('color', 'COLOR', Gimp::Rgb.new(1.0, 0.0, 0.0, 0.0)),
   ], #params
 	[] #results
 ) do|run_mode, *params|
@@ -306,17 +306,17 @@ RubyFu.register(
 	'<Toolbox>/Xtns/Languages/Ruby-Fu/Test/more dialog', #menupath
 	nil, #image types
 	[
-    RubyFu::ParamDef.IMAGE('IMAGE', ''),
-    RubyFu::ParamDef.DRAWABLE('DRAWABLE', ''),
-    RubyFu::ParamDef.CHANNEL('CHANNEL', ''),
-    RubyFu::ParamDef.LAYER('LAYER', ''),
-    RubyFu::ParamDef.FONT('FONT', '', 'Monaco'),
-    RubyFu::ParamDef.FILE('FILE', '', '/usr/share/dict/words'),
-    RubyFu::ParamDef.DIR('DIR', '', '/usr/share/dict/'),
-    RubyFu::ParamDef.PALETTE('PALETTE', '', 'Lights'),
-    RubyFu::ParamDef.GRADIENT('GRADIENT', '', 'CD'),
-    RubyFu::ParamDef.PATTERN('PATTERN', '', 'Pine'),
-    RubyFu::ParamDef.BRUSH('BRUSH', '', 'Circle (11)'),
+    RubyFu::ParamDef.IMAGE('image', 'IMAGE'),
+    RubyFu::ParamDef.DRAWABLE('drawable', 'DRAWABLE'),
+    RubyFu::ParamDef.CHANNEL('channel', 'CHANNEL'),
+    RubyFu::ParamDef.LAYER('layer', 'LAYER'),
+    RubyFu::ParamDef.FONT('font', 'FONT', 'Monaco'),
+    RubyFu::ParamDef.FILE('file', 'FILE', '/usr/share/dict/words'),
+    RubyFu::ParamDef.DIR('dir', 'DIR', '/usr/share/dict/'),
+    RubyFu::ParamDef.PALETTE('palette','PALETTE', 'Lights'),
+    RubyFu::ParamDef.GRADIENT('gradient', 'GRADIENT', 'CD'),
+    RubyFu::ParamDef.PATTERN('pattern', 'PATTERN', 'Pine'),
+    RubyFu::ParamDef.BRUSH('brush', 'BRUSH', 'Circle (11)'),
   ], #params
 	[] #results
 ) do|run_mode, *params|

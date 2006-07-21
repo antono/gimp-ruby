@@ -512,6 +512,9 @@ make_table (VALUE    params,
   Result *results_arr = g_new(Result, num);
 
   GtkWidget *table = gtk_table_new(num+1, 2, FALSE);
+  gtk_container_set_border_width(GTK_CONTAINER(table), 12);
+  gtk_table_set_col_spacings(GTK_TABLE(table), 6);
+  gtk_table_set_row_spacings(GTK_TABLE(table), 6);
 
   int i;
   for (i=0; i<num; i++)
@@ -520,10 +523,11 @@ make_table (VALUE    params,
       if (!rb_obj_is_kind_of(param, sGimpParamDef))
         rb_raise(rb_eArgError, "Parameters must be of type Gimp::ParamDef");
 
-      VALUE name = rb_struct_aref(param, ID2SYM(id_name));
-      GtkWidget *label = gtk_label_new(StringValuePtr(name));
+      VALUE dscr = rb_struct_aref(param, ID2SYM(id_dscr));
+      GtkWidget *label = gtk_label_new(StringValuePtr(dscr));
+      gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
       gtk_table_attach(GTK_TABLE(table), label, 0, 1, i, i+1,
-                       GTK_FILL|GTK_EXPAND, GTK_FILL, 0, 0);
+                       GTK_FILL, GTK_FILL, 0, 0);
 
       GtkWidget *widget = make_widget(param, &results_arr[i]);
       gtk_table_attach(GTK_TABLE(table), widget, 1, 2, i, i+1,
@@ -580,13 +584,15 @@ show_dialog (VALUE self,
              
                            NULL);
 
+  gtk_container_set_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), 12);
   
   table = make_table(params, &num_results, &results);
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), table, TRUE, TRUE, 0);
   
-  
-  if (gimp_dialog_run(GIMP_DIALOG(dialog)) == GTK_RESPONSE_OK)
-    return collect_results(num_results, results);
+  gint response = gimp_dialog_run(GIMP_DIALOG(dialog));
+  volatile VALUE rbresults = collect_results(num_results, results);
+  if (response == GTK_RESPONSE_OK)
+    return rbresults;
 
   return Qnil;
 }

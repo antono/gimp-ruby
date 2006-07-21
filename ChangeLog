@@ -1,3 +1,13 @@
+2006-07-21  Scott Lembcke <lemb0029@gnome.org>
+
+        * ext/rbgimpdialog.c: Changed spacing, padding and alignment of the
+          widgets. Also fixed some memory leaks where the dialog was not
+          destroyed, and collect_results() was not getting called to free
+          parameter data.
+        
+        * plug-ins/test.rb: Filled in parameter descriptions for dialog
+          functions.
+          
 2006-07-20  Scott Lembcke <lemb0029@gnome.org>
 
         * ext/rbgimpdialog.c: Even more parameter types added.
