@@ -179,7 +179,7 @@ RubyFu.register(
   [
     ParamDef.STRING("text", "Text", 'Cool Metal'),
     ParamDef.INT32("font_size", "Font Size (pixels)", 100),
-    ParamDef.STRING("font", "Font", "-*-Crillee-*-r-*-*-24-*-*-*-p-*-*-*"),
+    ParamDef.FONT("font", "Font", "Crillee"),
     ParamDef.COLOR("bg_color", "Background Color", Rgb.new(1.0, 1.0, 1.0)),
     ParamDef.STRING("gradient", "Gradient", "Horizon 1"),
   ],

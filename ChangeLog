@@ -1,3 +1,11 @@
+2006-07-21  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* ext/rbgimp.h
+	* ext/conversion.c: Added newline at end of file to quiet compiler.
+
+	* plug-ins/coolmetal-logo.rb.c: Use ParamDef.FONT instead of
+	ParamDef.STRING to specify the default font to be used.
+
 2006-07-21  Scott Lembcke <lemb0029@gnome.org>
 
         * gimp-lib/rubyfu.rb: Removed some unnecesary code. Clicking 'cancel' in
