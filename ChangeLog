@@ -1,5 +1,18 @@
 2006-07-21  Scott Lembcke <lemb0029@gnome.org>
 
+        * gimp-lib/rubyfu.rb: Removed some unnecesary code. Clicking 'cancel' in
+          the dialog will now work correctly. Interactive procedures that take
+          no parameters don't trigger the dialog.
+          
+        * ext/rbgimpdialog.c: Added a enumeration popup widget. show_dialog()
+          now takes an extra parameter for the menu name. The procedure name
+          is used as the help_id, and the menu name is used in the dialog title.
+          Parameter names now have a ':' appended to their labels.
+          
+        * plug-ins/test.rb: Added the new parameter type.
+
+2006-07-21  Scott Lembcke <lemb0029@gnome.org>
+
         * ext/rbgimpdialog.c: Changed spacing, padding and alignment of the
           widgets. Also fixed some memory leaks where the dialog was not
           destroyed, and collect_results() was not getting called to free

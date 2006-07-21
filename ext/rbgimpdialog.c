@@ -329,19 +329,6 @@ handle_string_types (VALUE param,
   return widget;
 }
 
-static void
-get_min_max_step(VALUE param,
-                 VALUE *min,
-                 VALUE *max,
-                 VALUE *step)
-{
-  VALUE range = rb_iv_get(param, "@range");
-  
-  *step = rb_iv_get(param, "@step");
-  *min = rb_funcall(range, rb_intern("begin"), 0, NULL);
-  *max = rb_funcall(range, rb_intern("end"), 0, NULL);
-}
-
 static GtkWidget *
 handle_int_types (VALUE param,
                   VALUE deflt,
@@ -374,6 +361,17 @@ handle_int_types (VALUE param,
       result->ptr = widget;
       result->func = &get_toggle_int;
     }
+  else if (subtypeid == rb_intern("enum"))
+    {
+      VALUE enum_name = rb_iv_get(param, "@enum");
+      GType enum_type = g_type_from_name(StringValuePtr(enum_name));
+      widget = gimp_enum_combo_box_new(enum_type);
+      gimp_int_combo_box_set_active(GIMP_INT_COMBO_BOX(widget),
+                                    defint);
+      
+      result->ptr = widget;
+      result->func = &get_combo_box_int;
+    }
   else
     {
       widget = NULL;
@@ -381,6 +379,19 @@ handle_int_types (VALUE param,
     }
 
   return widget;
+}
+
+static void
+get_min_max_step(VALUE param,
+                 VALUE *min,
+                 VALUE *max,
+                 VALUE *step)
+{
+  VALUE range = rb_iv_get(param, "@range");
+  
+  *step = rb_iv_get(param, "@step");
+  *min = rb_funcall(range, rb_intern("begin"), 0, NULL);
+  *max = rb_funcall(range, rb_intern("end"), 0, NULL);
 }
 
 static GtkWidget *
@@ -428,7 +439,7 @@ handle_float_types (VALUE param,
   else
     {
       widget = gtk_label_new("poo");
-//      rb_raise(rb_eTypeError, "Bad RubyFu::ParamDef float subtype.");
+      rb_raise(rb_eTypeError, "Bad RubyFu::ParamDef float subtype.");
     }
 
   return widget;
@@ -523,8 +534,12 @@ make_table (VALUE    params,
       if (!rb_obj_is_kind_of(param, sGimpParamDef))
         rb_raise(rb_eArgError, "Parameters must be of type Gimp::ParamDef");
 
-      VALUE dscr = rb_struct_aref(param, ID2SYM(id_dscr));
-      GtkWidget *label = gtk_label_new(StringValuePtr(dscr));
+      VALUE rbdscr = rb_struct_aref(param, ID2SYM(id_dscr));
+      gchar *dscr = g_strdup_printf("%s:", StringValuePtr(rbdscr));
+      
+      GtkWidget *label = gtk_label_new(dscr);
+      g_free(dscr);
+      
       gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
       gtk_table_attach(GTK_TABLE(table), label, 0, 1, i, i+1,
                        GTK_FILL, GTK_FILL, 0, 0);
@@ -562,11 +577,13 @@ collect_results (int     num_results,
 
 static VALUE
 show_dialog (VALUE self,
-             VALUE rbname,
+             VALUE rbtitle,
+             VALUE rbprocname,
              VALUE params)
 {
   GtkWidget *dialog, *table;
-  gchar *name = StringValuePtr(rbname);
+  gchar *procname = StringValuePtr(rbprocname);
+  gchar *title = g_strdup_printf("Ruby Fu: %s", StringValuePtr(rbtitle));
 
   int num_results;
   Result *results;
@@ -574,15 +591,15 @@ show_dialog (VALUE self,
   gtk_init(NULL, NULL);
   gimp_ui_init ("ruby-fu", TRUE);
 
-  dialog = gimp_dialog_new(name, "ruby-fu",
-                           NULL, 0,
-                           gimp_standard_help_func, "FIXME",
+  dialog = gimp_dialog_new(title, "rubyfu", NULL, 0,
+                           gimp_standard_help_func, procname,
              
                            /*GIMP_STOCK_RESET, RESPONSE_RESET,*/
                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
              
                            NULL);
+  g_free(title);
 
   gtk_container_set_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), 12);
   
@@ -600,5 +617,5 @@ show_dialog (VALUE self,
 void Init_rubyfudialog(void)
 {
   VALUE mRubyFu = rb_define_module("RubyFu");
-  rb_define_module_function(mRubyFu, "dialog", show_dialog, 2);
+  rb_define_module_function(mRubyFu, "dialog", show_dialog, 3);
 }

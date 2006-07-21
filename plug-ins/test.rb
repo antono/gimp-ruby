@@ -223,11 +223,12 @@ RubyFu.register(
   print 'Calling with too many params ... '
   test_exception(ArgumentError){PDB.gimp_message(123, 123)}
   
-  ##THIS CRASHES HORRIBLY. NOT SURE IF IT'S MY FAULT OR NOT.
-  # printf 'Calling error ... '
-  # test_exception(PDB::CallingError) do
-  #   Gimp.run_procedure('ruby-fu-test-crash', [Gimp::Param.INT32(123)])
-  # end
+  #THIS CRASHES HORRIBLY. NOT SURE IF IT'S MY FAULT OR NOT.
+  #printf 'Calling error ... '
+  #test_exception(PDB::CallingError) do
+  #  #Gimp.run_procedure('ruby-fu-test-crash', [Gimp::Param.INT32(123)])
+  #  PDB.plug_in_script_fu_eval(Gimp::Interactive, '(ruby-fu-test-crash 123)')
+  #end
 
   printf 'Exucution error ... '
   test_exception(PDB::ExecutionError){PDB.ruby_fu_test_crash}
@@ -287,6 +288,7 @@ RubyFu.register(
     RubyFu::ParamDef.SLIDER('slider', 'SLIDER', 6, (1.5..9.1), 0.01),
     RubyFu::ParamDef.STRING('string', 'STRING', 'string'),
     RubyFu::ParamDef.COLOR('color', 'COLOR', Gimp::Rgb.new(1.0, 0.0, 0.0, 0.0)),
+    RubyFu::ParamDef.ENUM('enum', 'ENUM', 0, 'GimpBlendMode')
   ], #params
 	[] #results
 ) do|run_mode, *params|

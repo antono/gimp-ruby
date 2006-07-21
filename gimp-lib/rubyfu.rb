@@ -5,6 +5,9 @@ module RubyFu
   class ResultError < Exception
   end
   
+  class Cancel < Exception
+  end
+  
   class ParamDef < Gimp::ParamDef
     attr_reader :default, :subtype
     
@@ -85,6 +88,13 @@ module RubyFu
       value.instance_variable_set(:@step, step)
       return value
     end      
+
+    def self.ENUM(name, desc, default, enum)
+      value = INT32(name, desc, default)
+      value.instance_variable_set(:@subtype, :enum)
+      value.instance_variable_set(:@enum, enum)
+      return value
+    end      
   end
 
   class Procedure
@@ -158,19 +168,23 @@ module RubyFu
     end
     
     def run_interactive(args)
-      args += RubyFu.dialog(@name, @params)
+      return run_noninteractive(args) if @params.empty?
+    
+      interactive_args = RubyFu.dialog(@menulabel, @name, @params)
+      raise Cancel unless interactive_args
       
-      values = @function.call(*args)
+      args += interactive_args
+      return @function.call(*args)
     end
     
-    def run_noninteractive(args, params)
+    def run_noninteractive(args)
       nargs = args.length
-      nparams = params.length
+      nparams = @fullparams.length
       unless nargs == nparams
         raise(CallError, "Wrong number of arguments. (#{nargs} for #{nparams})")
       end
               
-      values = @function.call(*args)
+      return @function.call(*args)
     end
     
     def run_last_vals(args)
@@ -179,7 +193,7 @@ module RubyFu
       warn "Last value mode not implemented, sending default params."
       args += default_args
       
-      values = @function.call(*args)
+      return @function.call(*args)
     end
     
     def run(*args)
@@ -197,7 +211,7 @@ module RubyFu
      
       values = case runMode
       when Gimp::RUN_INTERACTIVE:    run_interactive(args)
-      when Gimp::RUN_NONINTERACTIVE: run_noninteractive(args, @fullparams)
+      when Gimp::RUN_NONINTERACTIVE: run_noninteractive(args)
       when Gimp::RUN_WITH_LAST_VALS: run_last_vals(args)
       end
       
@@ -274,7 +288,9 @@ module RubyFu
       return values
     rescue CallError
       PDB.gimp_message("A calling error has occured: #$!.message")
-      return [Gimp::Param.STATUS(PDB_CALLING_ERROR)]
+      return [Gimp::Param.STATUS(Gimp::PDB_CALLING_ERROR)]
+    rescue Cancel
+      return [Gimp::Param.STATUS(Gimp::PDB_CANCEL)]
     rescue Exception
       PDB.gimp_message "A #{$!.class} has occured: #{$!.message}\n#{$@.join("\n")}"
       return [Gimp::Param.STATUS(Gimp::PDB_EXECUTION_ERROR)]

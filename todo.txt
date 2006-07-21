@@ -6,7 +6,11 @@ The color code has turned out to be sub-par, lots of room for improvment.
 
 Signal handlers might need to be backed up. (see how the old one did this. Is it still necessary? Seems not.)
 
-Read up on Gtk before working on any UI stuff.
+Add a list type parameter.
+
+Add a reset button to the interactive dialog.
+
+Get widget resizing under control.
 
 Console mode.
 
