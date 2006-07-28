@@ -1,3 +1,11 @@
+2006-07-28  Scott Lembcke <lemb0029@gnome.org>
+
+        * gimp-lib/gimp_oo.rb: Added the Drawable class and made Layer and
+          Channel inherit from it.
+          
+        * gimp-lib/pdb.rb: Changed the PDBException to inherit from
+          RuntimeException.
+
 2006-07-21  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* ext/rbgimp.h

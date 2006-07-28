@@ -58,8 +58,8 @@ module Gimp
           end
         end
     
-        def template(prefix, class_prefix)
-          klass = Class.new(self)
+        def template(prefix, class_prefix, super_class = self)
+          klass = Class.new(super_class)
           klass.add_methods(prefix, class_prefix)
           
           return klass
@@ -96,12 +96,13 @@ module Gimp
       end
     end
     
+    Gimp::Drawable = ClassTemplate.template('gimp-drawable-', nil)
     Gimp::Brush = ClassTemplate.template('gimp-brush-', 'gimp-brushes-')
-    Gimp::Channel = ClassTemplate.template('gimp-channel-', nil)
-    Gimp::Display = ClassTemplate.template('gimp-display-', nil)
+    Gimp::Channel = ClassTemplate.template('gimp-channel-', nil, Gimp::Drawable)
+    Gimp::Display = ClassTemplate.template('gimp-display-', 'gimp-displays-')
     Gimp::Gradient = ClassTemplate.template('gimp-gradient-', 'gimp-gradients-')
     Gimp::Image = ClassTemplate.template('gimp-image-', nil)
-    Gimp::Layer = ClassTemplate.template('gimp-layer-', nil)
+    Gimp::Layer = ClassTemplate.template('gimp-layer-', nil, Gimp::Drawable)
     Gimp::Palette = ClassTemplate.template('gimp-palette-', 'gimp-palettes-')
     Gimp::Vectors = ClassTemplate.template('gimp-vectors-', nil)
 
@@ -114,6 +115,8 @@ module Gimp
   end
   
   class Image
+    add_class_method('list', 'gimp-image-list')
+  
     alias_method :old_undo_group_start, :undo_group_start
     def undo_group
       old_undo_group_start

@@ -1,5 +1,5 @@
 module PDB
-  class PDBException < Exception
+  class PDBException < RuntimeError
   end
 
   class NoProcedure < PDBException
