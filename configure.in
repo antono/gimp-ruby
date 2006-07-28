@@ -7,11 +7,16 @@ m4_define([plugin_name], [gimp-ruby])
 
 dnl These three define the plug-in version number
 m4_define([plugin_major_version], [0])
-m4_define([plugin_minor_version], [0])
+m4_define([plugin_minor_version], [1])
 m4_define([plugin_micro_version], [3])
 
 m4_define([plugin_version],
           [plugin_major_version.plugin_minor_version.plugin_micro_version])
+
+m4_define([gimp_ruby_unstable],
+          m4_if(m4_eval(plugin_minor_version % 2), [1], [yes], [no]))
+m4_define([gimp_ruby_stable],
+          m4_if(m4_eval(plugin_minor_version % 2), [0], [yes], [no]))
 
 dnl required versions of other packages
 m4_define([glib_required_version], [2.4.5])
@@ -32,7 +37,7 @@ AC_CONFIG_SRCDIR([ext/rbgimp.h])
 AM_INIT_AUTOMAKE(no-define)
 AM_CONFIG_HEADER(config.h)
 
-GIMPRUBY_UNSTABLE=yes
+GIMPRUBY_UNSTABLE=gimp_ruby_unstable
 AC_SUBST(GIMPRUBY_UNSTABLE)
 
 

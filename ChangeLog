@@ -1,3 +1,9 @@
+2006-07-28  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* configure.in: Changed minor version to an odd number (unstable
+	version). Added macros that use the minor version number to set
+	GIMPRUBY_UNSTABLE properly.
+
 2006-07-28  Scott Lembcke <lemb0029@gnome.org>
 
         * gimp-lib/gimp_oo.rb: Added the Drawable class and made Layer and
