@@ -4,7 +4,8 @@ pluginexecdir = $(GIMP_PLUGINDIR)
 
 scripts =  \
     coolmetal-logo.rb \
-    sphere.rb
+    sphere.rb         \
+    irbconsole.rb
 
 test_scripts = \
     test.rb
