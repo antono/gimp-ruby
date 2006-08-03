@@ -4,6 +4,14 @@
 #include <ruby.h>
 #include <libgimp/gimp.h>
 
+#undef PACKAGE_NAME
+#undef PACKAGE_STRING
+#undef PACKAGE_TARNAME
+#undef PACKAGE_VERSION
+
+#include <libintl.h>
+#include "../config.h"
+
 #include "rbgimp.h"
 
 static VALUE gc_array;
@@ -155,36 +163,36 @@ run_callback (const gchar      *name,
 }
 
 GimpPlugInInfo PLUG_IN_INFO = {
-	init_callback,
-	quit_callback,
-	query_callback,
-	run_callback
+  init_callback,
+  quit_callback,
+  query_callback,
+  run_callback
 };
 
 static VALUE
 rb_gimp_main (VALUE self,
              VALUE plug_in_info)
 {
-	plug_in_callbacks[0] = rb_struct_aref(plug_in_info, ID2SYM(id_init_proc));
-	plug_in_callbacks[1] = rb_struct_aref(plug_in_info, ID2SYM(id_quit_proc));
-	plug_in_callbacks[2] = rb_struct_aref(plug_in_info, ID2SYM(id_query_proc));
-	plug_in_callbacks[3] = rb_struct_aref(plug_in_info, ID2SYM(id_run_proc));
-
-	/*build argv*/
-	VALUE *arr = RARRAY(rb_argv)->ptr;
-	gint argc = RARRAY(rb_argv)->len;
-	gchar *argv[argc + 1];
-
-	VALUE name = rb_gv_get("$0");
-	argv[0] = StringValuePtr(name);
-
-	int i;
-	for (i=0; i<argc; i++)
-		argv[i + 1] = StringValuePtr(arr[i]);
-	
-	/*call gimp_main*/
-	gint rstatus = gimp_main(&PLUG_IN_INFO, argc + 1, argv);
-	return INT2NUM(rstatus);
+  plug_in_callbacks[0] = rb_struct_aref(plug_in_info, ID2SYM(id_init_proc));
+  plug_in_callbacks[1] = rb_struct_aref(plug_in_info, ID2SYM(id_quit_proc));
+  plug_in_callbacks[2] = rb_struct_aref(plug_in_info, ID2SYM(id_query_proc));
+  plug_in_callbacks[3] = rb_struct_aref(plug_in_info, ID2SYM(id_run_proc));
+  
+  /*build argv*/
+  VALUE *arr = RARRAY(rb_argv)->ptr;
+  gint argc = RARRAY(rb_argv)->len;
+  gchar *argv[argc + 1];
+  
+  VALUE name = rb_gv_get("$0");
+  argv[0] = StringValuePtr(name);
+  
+  int i;
+  for (i=0; i<argc; i++)
+          argv[i + 1] = StringValuePtr(arr[i]);
+  
+  /*call gimp_main*/
+  gint rstatus = gimp_main(&PLUG_IN_INFO, argc + 1, argv);
+  return INT2NUM(rstatus);
 }
 
 static VALUE
@@ -216,24 +224,24 @@ rb_gimp_install_procedure (VALUE self,
   GimpParamDef *returndefs;
   returndefs = rb2GimpParamDefs(return_vals, &n_return_vals);
 		
-	gimp_install_procedure((gchar *)StringValuePtr(name),
-	                       (gchar *)StringValuePtr(blurb),
-	                       (gchar *)StringValuePtr(help),
-	                       (gchar *)StringValuePtr(author),
-	                       (gchar *)StringValuePtr(copyright),
-	                       (gchar *)StringValuePtr(date),
-	                       (gchar *)StringValuePtr(menu_label),
-	                       (gchar *)StringValuePtr(image_types),
-	                       (GimpPDBProcType)NUM2INT(type),
-	                       n_params,
-	                       n_return_vals,
-	                       paramdefs,
-	                       returndefs);
-	
-	g_free(paramdefs);
-	g_free(returndefs);
-	
-	return Qnil;
+  gimp_install_procedure((gchar *)StringValuePtr(name),
+                         (gchar *)StringValuePtr(blurb),
+                         (gchar *)StringValuePtr(help),
+                         (gchar *)StringValuePtr(author),
+                         (gchar *)StringValuePtr(copyright),
+                         (gchar *)StringValuePtr(date),
+                         (gchar *)StringValuePtr(menu_label),
+                         (gchar *)StringValuePtr(image_types),
+                         (GimpPDBProcType)NUM2INT(type),
+                         n_params,
+                         n_return_vals,
+                         paramdefs,
+                         returndefs);
+  
+  g_free(paramdefs);
+  g_free(returndefs);
+  
+  return Qnil;
 }
 
 /*TODO temp proc functions
@@ -269,8 +277,16 @@ Init_gimpmain (void)
   gc_array = rb_ary_new();
   rb_gc_register_address(&gc_array);
   
-	rb_define_module_function(mGimp, "main", rb_gimp_main, 1);
-	rb_define_module_function(mGimp, "quit", rb_gimp_quit, 0);
-	rb_define_module_function(mGimp, "install_procedure", rb_gimp_install_procedure, 11);
-	rb_define_module_function(mGimp, "run_procedure", rb_gimp_run_procedure, 2);
+/*  setlocale(LC_ALL, "");
+  bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
+  textdomain(GETTEXT_PACKAGE); */
+  
+  bindtextdomain(GETTEXT_PACKAGE, gimp_locale_directory());
+  bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+  textdomain(GETTEXT_PACKAGE);
+  
+  rb_define_module_function(mGimp, "main", rb_gimp_main, 1);
+  rb_define_module_function(mGimp, "quit", rb_gimp_quit, 0);
+  rb_define_module_function(mGimp, "install_procedure", rb_gimp_install_procedure, 11);
+  rb_define_module_function(mGimp, "run_procedure", rb_gimp_run_procedure, 2);
 }

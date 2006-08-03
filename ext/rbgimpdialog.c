@@ -4,6 +4,8 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include <libintl.h>
+
 #include "rbgimp.h"
 
 VALUE mRubyFu;
@@ -535,7 +537,7 @@ make_table (VALUE    params,
         rb_raise(rb_eArgError, "Parameters must be of type Gimp::ParamDef");
 
       VALUE rbdscr = rb_struct_aref(param, ID2SYM(id_dscr));
-      gchar *dscr = g_strdup_printf("%s:", StringValuePtr(rbdscr));
+      gchar *dscr = g_strdup_printf("%s:", gettext(StringValuePtr(rbdscr)));
       
       GtkWidget *label = gtk_label_new(dscr);
       g_free(dscr);
@@ -583,7 +585,7 @@ show_dialog (VALUE self,
 {
   GtkWidget *dialog, *table;
   gchar *procname = StringValuePtr(rbprocname);
-  gchar *title = g_strdup_printf("Ruby Fu: %s", StringValuePtr(rbtitle));
+  gchar *title = g_strdup_printf("Ruby Fu: %s", gettext(StringValuePtr(rbtitle)));
 
   int num_results;
   Result *results;

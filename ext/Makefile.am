@@ -9,7 +9,8 @@ endif
 
 libdir = $(GIMP_LIBDIR)/ruby
 
-AM_CFLAGS = $(RUBY_CFLAGS) $(GIMP_CFLAGS)
+AM_CFLAGS = $(RUBY_CFLAGS) $(GIMP_CFLAGS) \
+ -DLOCALEDIR=\""$(GIMP_LOCALEDIR)"\"
 
 lib_LTLIBRARIES = gimpext.la
 

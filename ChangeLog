@@ -1,3 +1,26 @@
+2006-08-03  Scott Lembcke <lemb0029@gnome.org>
+
+        * gimp-lib/gimp.rb: Now sets $KCODE to UTF8. Removed rubyfu.rb from list
+          of loaded modules.
+          
+        * gimp-lib/rubyfu.rb: Now loads gimp.rb as a dependency. Creates and END
+          block to automatically call RubyFu.main. Added conversion to object
+          types for procedure arguments.
+          
+        * gimp-lib/gimp_oo.rb: Added a Gimp::Param#transform method to convert
+          parameters to object types if possible.
+          
+        * gimp-lib/pdb.rb: Added a call to Gimp::Param#transform on return
+          values if possible.
+          
+        * plug-ins/*.rb: Updated to reflect changes in gimp-lib.
+        
+        * ext/Makefile.am: Added DLOCALEDIR to AM_CFLAGS.
+        
+        * ext/rbgimpdialog.c: Added gettext() calls.
+        
+        * ext/rbgimpmain.c: Added Gettext initialization calls.
+
 2006-07-28  Scott Lembcke <lemb0029@gnome.org>
 
         * Added plug-ins/irbconsole.rb.

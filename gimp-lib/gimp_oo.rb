@@ -21,7 +21,7 @@ module Gimp
         def add_constructor(name, proc_name)
           class_eval """
             def self.#{name}(*args)
-              create PDB['#{proc_name}'].call(*args)
+              PDB['#{proc_name}'].call(*args)
             end
           """
         end
@@ -159,3 +159,23 @@ module Gimp
   end #module
 end #module
 
+module Gimp
+  class Param
+    def transform
+      case type
+      when PDB_DISPLAY
+        Display.create(data)
+      when PDB_IMAGE
+        Image.create(data)
+      when PDB_LAYER
+        Layer.create(data)
+      when PDB_CHANNEL
+        Channel.create(data)
+      when PDB_VECTORS
+        Vectors.create(data)
+      else
+        self.data
+      end
+    end
+  end
+end

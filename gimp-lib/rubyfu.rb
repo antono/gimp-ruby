@@ -1,3 +1,5 @@
+require 'gimp.rb'
+
 module RubyFu
   class CallError < Exception
   end
@@ -204,9 +206,10 @@ module RubyFu
         runMode = Gimp::RUN_NONINTERACTIVE
       end
       
+      require 'gimp_oo.rb'
       args = args.zip(@fullparams).collect do|arg, param|
         raise(CallError, "Bad argument") unless arg.type == param.type
-        next arg.data
+        next arg.transform
       end
      
       values = case runMode
@@ -309,3 +312,7 @@ module RubyFu
   end
   module_function :main
 end
+
+END {
+  RubyFu.main
+}

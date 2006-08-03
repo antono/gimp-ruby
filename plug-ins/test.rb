@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'gimp'
+require 'rubyfu'
 
 RubyFu.register(
   'ruby-fu-test1', #procedure name
@@ -252,8 +252,6 @@ RubyFu.register(
 	[Gimp::ParamDef.IMAGE('image', 'Image')] #results
 ) do|run_mode|
   PDB.verbose = true
-  require 'gimp_oo'
-  
   #constructor call
   img = Gimp::Image.new(100, 100, Gimp::RGB)
   
@@ -327,5 +325,3 @@ RubyFu.register(
 
   nil
 end
-
-RubyFu.main

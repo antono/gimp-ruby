@@ -1,6 +1,7 @@
+$KCODE = "UTF8"
+
 require 'gimpext'
 require 'pdb'
-require 'rubyfu.rb'
 
 module Gimp
   def message(*messages)

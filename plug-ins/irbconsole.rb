@@ -1,4 +1,4 @@
-require 'gimp'
+require 'rubyfu'
 
 RubyFu.register(
   'ruby-fu-console', #procedure name
@@ -13,7 +13,6 @@ RubyFu.register(
   nil #results
 ) do
   require 'irb'
-  require 'gimp_oo'
   
   include Gimp
   include PDB::Access
@@ -35,5 +34,3 @@ RubyFu.register(
   
   nil
 end
-
-RubyFu.main

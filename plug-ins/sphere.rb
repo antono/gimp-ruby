@@ -15,7 +15,7 @@ Parameters:
  shadow: whather to create a shadow as well'
 =end
 
-require "gimp"
+require "rubyfu"
 include Gimp
 include RubyFu
 
@@ -41,8 +41,6 @@ RubyFu.register(
   ],
   [ParamDef.IMAGE('image', 'Result Image')]
 ) do |run_mode, radius, light, shadow, bg_color, sphere_color|
-  require 'gimp_oo'
-  
   shadow = (shadow == 1)
   
   width  = radius * 3.75
@@ -98,5 +96,3 @@ RubyFu.register(
   
   img
 end
-
-main

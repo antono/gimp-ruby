@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require "gimp"
+require "rubyfu"
 include Gimp
 include RubyFu
 
@@ -188,5 +188,3 @@ RubyFu.register(
   ],
   &method(:ruby_fu_cool_metal_logo)
 )
-
-RubyFu.main

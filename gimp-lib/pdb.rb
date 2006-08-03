@@ -83,7 +83,13 @@ module PDB
       when Gimp::PDB_EXECUTION_ERROR: raise(ExecutionError, @name)
       end
       
-      return *values.collect{|param| param.data}
+      return *values.collect do|param|
+        if param.respond_to? :transform
+          param.transform
+        else
+          param.data
+        end
+      end
     end
     
     def to_s
