@@ -23,9 +23,10 @@ rubyinterpdir = $(GIMP_LIBDIR)/interpreters
 rubyenvfile = $(rubyenvdir)/ruby.env
 rubyinterpfile = $(rubyinterpdir)/ruby.interp
 
-install-env-file:
+install-env-files:
 	$(mkinstalldirs) '$(DESTDIR)$(rubyenvdir)'
-	echo '$(path_separator) RUBYLIB=$${gimp_plug_in_dir}/ruby' > '$(DESTDIR)$(rubyenvfile)'
+	echo '$(path_separator) RUBYLIB=$${gimp_plug_in_dir}/$(rubybase)' > '$(DESTDIR)$(rubyenvfile)'
+	cp ext/ruby-fu-console '$(DESTDIR)$(rubydir)'
 
 install-interp-file:
 	$(mkinstalldirs) '$(DESTDIR)$(rubyinterpdir)'
@@ -33,7 +34,7 @@ install-interp-file:
 	echo '/usr/bin/ruby=$(RUBY_BIN)' >> '$(DESTDIR)$(rubyinterpfile)'
 	echo ':Ruby:E::rb::ruby:' >> '$(DESTDIR)$(rubyinterpfile)'
 
-install-data-local: install-env-file install-interp-file
+install-data-local: install-env-files install-interp-file
 
 uninstall-local:
 	rm -f '$(DESTDIR)$(rubyenvfile)' '$(DESTDIR)$(rubyinterpfile)'

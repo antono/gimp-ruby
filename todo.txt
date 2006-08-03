@@ -13,3 +13,24 @@ Add a reset button to the interactive dialog.
 Add more control to widget resizing for the dialog.
 
 gettext support for dialogs.
+
+Test gettext and UTF-8 support.
+
+Add check in build environment for irb.
+- If irb doesn't exist, don't build ruby-fu-console.c or install console
+  mode script.
+
+Add autoconf checks for gettext support.
+- Ruby gettext may be available as a gems package or a non-gems package.
+  The check for gettext should not expect either method of its existance.
+
+Enable the po sub-directory. Add extraction of translatable strings.
+
+Add an INSTALL file that explains the requirements and process to build and
+install gimp-ruby.
+
+Add a browse button to console mode.
+- This may require creation of a PDB browser that can return the framework
+  of a call to the selected PDB item in a Ruby compatible format.
+
+Add GPL comment blocks to appropriate files.

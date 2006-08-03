@@ -10,7 +10,7 @@ endif
 libdir = $(GIMP_LIBDIR)/ruby
 
 AM_CFLAGS = $(RUBY_CFLAGS) $(GIMP_CFLAGS) \
- -DLOCALEDIR=\""$(GIMP_LOCALEDIR)"\"
+    -DLOCALEDIR=\""$(GIMP_LOCALEDIR)"\"
 
 lib_LTLIBRARIES = gimpext.la
 
@@ -35,3 +35,10 @@ gimpext_la_LDFLAGS = -module -avoid-version -shrext $(RUBY_DLEXT) \
 gimpext_la_LIBADD = \
     $(GIMP_LIBS) \
     $(RUBY_LIBS)
+
+noinst_PROGRAMS = ruby-fu-console
+
+ruby_fu_console_SOURCES = ruby-fu-console.c
+
+ruby_fu_console_LDADD = \
+    $(GIMP_LIBS)

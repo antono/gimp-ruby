@@ -1,3 +1,13 @@
+2006-08-03  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* todo.txt: Added some additional items.
+
+	* Makefile.am
+	* ext/Makefile.am: Updated to build/install ruby-fu-console file
+	needed by irbconsole.rb file.
+
+	* ext/ruby-fu-console.c: Added support file needed by irbconsole.rb
+
 2006-08-03  Scott Lembcke <lemb0029@gnome.org>
 
         * gimp-lib/gimp.rb: Now sets $KCODE to UTF8. Removed rubyfu.rb from list
