@@ -1,5 +1,11 @@
 2006-08-03  Kevin Cozens  <kcozens@cvs.gnome.org>
 
+	* ext/.cvsignore: Added ignore of ruby-fu-console executable.
+
+	* po/.cvsignore: Added ignore of stamp-it.
+
+2006-08-03  Kevin Cozens  <kcozens@cvs.gnome.org>
+
 	* todo.txt: Added some additional items.
 
 	* Makefile.am
