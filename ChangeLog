@@ -1,5 +1,11 @@
 2006-08-04  Scott Lembcke <lemb0029@gnome.org>
 
+        * ext/rbgimp.c: Added a Gimp.gettext() method.
+        
+        * gimp-lib/gimp.rb: Added _() and N_() methods.
+
+2006-08-04  Scott Lembcke <lemb0029@gnome.org>
+
         * ext/ruby-fu-dialog.c: Added a '>>' prompt in front of the entry box.
           Changed default size for the console window.
         

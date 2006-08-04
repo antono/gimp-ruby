@@ -21,6 +21,16 @@ $KCODE = "UTF8"
 require 'gimpext'
 require 'pdb'
 
+def _(str)
+  puts 'bam'
+  Gimp.gettext(str)
+end
+
+def N_(str)
+  puts 'whap'
+  str
+end
+
 module Gimp
   def message(*messages)
     messages.each do|message|

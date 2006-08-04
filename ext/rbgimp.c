@@ -129,6 +129,13 @@ rb_gimp_get_progname(VALUE self)
   return rb_str_new2(name);
 }
 
+static VALUE
+rb_gimp_gettext(VALUE self, VALUE rbstr)
+{
+  char *str = gettext(StringValuePtr(rbstr));
+  return rb_str_new2(str);
+}
+
 void
 Init_gimpext (void)
 {
@@ -148,15 +155,17 @@ Init_gimpext (void)
   rb_define_module_function(mGimp, "display_name",     rb_gimp_display_name,     0);
   rb_define_module_function(mGimp, "monitor_number",   rb_gimp_monitor_number,   0);
   rb_define_module_function(mGimp, "get_progname",     rb_gimp_get_progname,     0);
-		
-	Init_structures();
-	Init_ids();
-	
-	Init_gimpconstants();
-	Init_gimpmain();
+  
+  rb_define_module_function(mGimp, "gettext", rb_gimp_gettext, 1);
+  
+  Init_structures();
+  Init_ids();
+
+  Init_gimpconstants();
+  Init_gimpmain();
   Init_gimpproceduraldb();
 
-	Init_gimpcolorrgb();
+  Init_gimpcolorrgb();
   Init_gimpcolorhsv();
   Init_gimpcolorcmyk();
   Init_gimpcolorspace();
