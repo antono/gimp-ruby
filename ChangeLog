@@ -1,3 +1,9 @@
+2006-08-04  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* po/POTFILES.in: Updated list of files
+
+	* po/README.tools: Added
+
 2006-08-03  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* ext/.cvsignore: Added ignore of ruby-fu-console executable.

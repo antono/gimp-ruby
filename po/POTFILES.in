@@ -1,18 +1,21 @@
-# Files from the RuG distribution which have already been
-# marked to allow runtime translation of messages
+# Files from the gimp-ruby distribution which have already
+# been marked to allow runtime translation of messages
 
-conversion.c
-ids.c
-rbgimp.c
-rbgimpcolorcmyk.c
-rbgimpcolorhsv.c
-rbgimpcolorrgb.c
-rbgimpcolorspace.c
-rbgimpconstants.c
-rbgimpmain.c
-rbgimpproceduraldb.c
-structures.c
+ext/conversion.c
+ext/ids.c
+ext/rbgimp.c
+ext/rbgimpcolorcmyk.c
+ext/rbgimpcolorhsv.c
+ext/rbgimpcolorrgb.c
+ext/rbgimpcolorspace.c
+ext/rbgimpconstants.c
+ext/rbgimpdialog.c
+ext/rbgimpmain.c
+ext/rbgimpproceduraldb.c
+ext/ruby-fu-console.c
+ext/structures.c
 
-plug-ins/hello.rb
+plug-ins/coolmetal-logo.rb
+plug-ins/irbconsole.rb
 plug-ins/sphere.rb
-
+plug-ins/test.rb
