@@ -1,5 +1,12 @@
 2006-08-04  Scott Lembcke <lemb0029@gnome.org>
 
+        * ext/ruby-fu-dialog.c: Added a '>>' prompt in front of the entry box.
+          Changed default size for the console window.
+        
+        * plug-ins/irbconsole.rb: Added a ruby version notification.
+
+2006-08-04  Scott Lembcke <lemb0029@gnome.org>
+
         * ext/rbgimpdialog.c: Added a list and multiline text widget. Some
           minor simplifications to other parts of the code.
           

@@ -37,8 +37,13 @@ RubyFu.register(
 
   console = File.join(ENV['RUBYLIB'], 'ruby-fu-console')
   $stdin = $stdout = open("|#{console}", 'w+')
+
+  puts "Interactive Gimp-Ruby Console"
+  puts "Ruby version #{RUBY_VERSION}"
+  puts
+
   ARGV.clear
-  
+
   IRB.setup(nil)
   irb = IRB::Irb.new(nil, IRB::StdioInputMethod.new)
   IRB.conf[:MAIN_CONTEXT] = irb.context

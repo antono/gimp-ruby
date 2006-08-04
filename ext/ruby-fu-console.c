@@ -16,11 +16,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor,Boston, MA
  * 02110-1301, USA.
  */
+ 
+#include <string.h>
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
 #define BUFFSIZE 1024
+
+#define WIDTH 480
+#define HEIGHT 400
 
 GtkTextBuffer *textBuffer;
 GtkAdjustment *scroll;
@@ -56,7 +61,7 @@ read_func (GIOChannel   *stream,
   GIOStatus status;
 
   while ((status = g_io_channel_read_chars(stream, str, BUFFSIZE, &bytes, &err)))
-    {
+    {    
       GtkTextIter iter;
       gtk_text_buffer_get_end_iter(textBuffer, &iter);
       gtk_text_buffer_insert(textBuffer, &iter, str, bytes);
@@ -107,6 +112,7 @@ int main(int argc, char **argv)
   /* make window */
   GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title(GTK_WINDOW(window), "Ruby Fu Console");
+  gtk_window_set_default_size(GTK_WINDOW(window), WIDTH, HEIGHT);
   g_signal_connect(window, "destroy", G_CALLBACK(window_destroy), NULL);
 
   /* make vbox */
@@ -134,14 +140,21 @@ int main(int argc, char **argv)
   gtk_text_view_set_editable(GTK_TEXT_VIEW(view), FALSE);
   gtk_text_view_set_left_margin(GTK_TEXT_VIEW(view), 6);
   gtk_text_view_set_right_margin(GTK_TEXT_VIEW(view), 6);
-  gtk_widget_set_size_request(view, 400, 300);
   gtk_container_add(GTK_CONTAINER(scrolled_window), view);
+
+  /* make hbox */
+  GtkWidget *hbox = gtk_hbox_new(FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
+  
+  /* make prompt */
+  GtkWidget *label = gtk_label_new(">> ");
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
 
   /* make text entry */
   GtkWidget *entry = gtk_entry_new();
   g_signal_connect(entry, "key-press-event",
                    G_CALLBACK(key_function), entry);
-  gtk_box_pack_start (GTK_BOX (vbox), entry, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
 
   /* open stdin */
   GError *err = NULL;
