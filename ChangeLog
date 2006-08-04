@@ -1,4 +1,13 @@
 2006-08-04  Scott Lembcke <lemb0029@gnome.org>
+
+        * ext/rbgimpdialog.c: Added a list and multiline text widget. Some
+          minor simplifications to other parts of the code.
+          
+        * gimp-lib/rubyfu.rb: Added new ParamDef types for new widgets.
+        
+        * plug-ins/test.rb: Added new widgets to the test dialogs.
+        
+2006-08-04  Scott Lembcke <lemb0029@gnome.org>
         
         * Added the GPL notification to all source files.
         

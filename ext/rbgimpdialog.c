@@ -43,6 +43,22 @@ get_entry_text (gpointer ptr)
 }
 
 static VALUE
+get_text_buffer_string (gpointer ptr)
+{
+  GtkTextBuffer *text_buffer = ptr;
+  GtkTextIter start, end;
+  
+  gtk_text_buffer_get_start_iter(text_buffer, &start);
+  gtk_text_buffer_get_end_iter(text_buffer, &end);
+  
+  gchar *str = gtk_text_buffer_get_text(text_buffer, &start, &end, TRUE);
+  VALUE rbstr = rb_str_new2(str);
+  g_free(str);
+  
+  return rbstr;
+}
+
+static VALUE
 get_spinner_int (gpointer ptr)
 {
   GtkSpinButton *spinner = GTK_SPIN_BUTTON(ptr);
@@ -89,6 +105,17 @@ get_combo_box_int (gpointer ptr)
   gimp_int_combo_box_get_active(GIMP_INT_COMBO_BOX(ptr), &value);
   return INT2NUM(value);
 }
+
+static VALUE
+get_combo_box_string (gpointer ptr)
+{
+  gchar *str = gtk_combo_box_get_active_text(GTK_COMBO_BOX(ptr));
+  VALUE rbstr = rb_str_new2(str);
+  g_free(str);
+  
+  return rbstr;
+}
+  
 
 static VALUE
 get_font_name (gpointer ptr)
@@ -245,7 +272,44 @@ make_int_combo_box (GimpPDBArgType type)
     
     default:
       return NULL;
-    }  
+    }
+}
+
+static GtkWidget *
+make_list_combo_box (VALUE list)
+{
+  GtkWidget *widget = gtk_combo_box_new_text();
+  GtkComboBox *cbox = GTK_COMBO_BOX(widget);
+  
+  list = rb_check_array_type(list);
+  int num = RARRAY(list)->len;
+  VALUE *ary = RARRAY(list)->ptr;
+  
+  int i;
+  for (i=0; i<num; i++)
+    gtk_combo_box_append_text(cbox, StringValuePtr(ary[i]));
+  
+  gtk_combo_box_set_active(cbox, 0);
+  
+  return widget;
+}
+
+static GtkWidget *
+make_text_box (gchar *deflt, gpointer *buffer)
+{
+  GtkWidget *scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+  gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_window),
+                                 GTK_POLICY_AUTOMATIC,
+                                 GTK_POLICY_AUTOMATIC);
+  
+  GtkTextBuffer *text_buffer = gtk_text_buffer_new(NULL);
+  gtk_text_buffer_set_text(text_buffer, deflt, -1);
+  *buffer = text_buffer;
+  
+  GtkWidget *text_view = gtk_text_view_new_with_buffer(text_buffer);
+  gtk_container_add(GTK_CONTAINER(scrolled_window), text_view);
+  
+  return scrolled_window;
 }
 
 static gchar **
@@ -265,7 +329,7 @@ handle_string_types (VALUE param,
   GtkWidget *widget;
   gpointer data;
   
-  char *defstr;
+  gchar *defstr;
   if (deflt == Qnil)
     defstr = "";
   else
@@ -283,7 +347,12 @@ handle_string_types (VALUE param,
     }
   
   ID subtypeid = SYM2ID(subtype);
-  if (subtypeid == rb_intern("font"))
+  if (subtypeid == rb_intern("text"))
+    {
+      widget = make_text_box(defstr, &result->ptr);
+      result->func = &get_text_buffer_string;
+    }
+  else if (subtypeid == rb_intern("font"))
     {
       widget = gimp_font_select_button_new("Ruby-Fu", defstr);
       
@@ -306,40 +375,44 @@ handle_string_types (VALUE param,
     }
   else if (subtypeid == rb_intern("palette"))
     {
-      data = wrap_string(defstr);
       widget = gimp_palette_select_widget_new("Ruby-Fu", defstr,
                                               &palette_select, data);
       
-      result->ptr = data;
+      result->ptr = wrap_string(defstr);
       result->func = &get_string_from_pointer;
     }
   else if (subtypeid == rb_intern("gradient"))
     {
-      data = wrap_string(defstr);
       widget = gimp_gradient_select_widget_new("Ruby-Fu", defstr,
                                                &gradient_select, data);
       
-      result->ptr = data;
-      result->func = &get_string_from_pointer;
+     result->ptr = wrap_string(defstr);
+     result->func = &get_string_from_pointer;
     }
   else if (subtypeid == rb_intern("pattern"))
     {
-      data = wrap_string(defstr);
       widget = gimp_pattern_select_widget_new("Ruby-Fu", defstr,
                                               &pattern_select, data);
   
-      result->ptr = data;
+      result->ptr = wrap_string(defstr);
       result->func = &get_string_from_pointer;
     }
   else if (subtypeid == rb_intern("brush"))
     {
-      data = wrap_string(defstr);
       widget = gimp_brush_select_widget_new("Ruby-Fu", defstr,
                                             100, -1, GIMP_NORMAL_MODE,
                                             &brush_select, data);
       
-      result->ptr = data;
+      result->ptr = wrap_string(defstr);
       result->func = &get_string_from_pointer;
+    }
+  else if (subtypeid == rb_intern("list"))
+    {
+      VALUE list = rb_iv_get(param, "@list");
+      widget = make_list_combo_box(list);
+      
+      result->ptr = widget;
+      result->func = &get_combo_box_string;
     }
   else
     {
@@ -459,7 +532,7 @@ handle_float_types (VALUE param,
     }
   else
     {
-      widget = gtk_label_new("poo");
+      widget = NULL;
       rb_raise(rb_eTypeError, "Bad RubyFu::ParamDef float subtype.");
     }
 
@@ -604,7 +677,8 @@ show_dialog (VALUE self,
 {
   GtkWidget *dialog, *table;
   gchar *procname = StringValuePtr(rbprocname);
-  gchar *title = g_strdup_printf("Ruby Fu: %s", gettext(StringValuePtr(rbtitle)));
+  gchar *title = g_strdup_printf("Ruby Fu: %s",
+                                 gettext(StringValuePtr(rbtitle)));
 
   int num_results;
   Result *results;

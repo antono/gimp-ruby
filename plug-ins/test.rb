@@ -303,6 +303,7 @@ RubyFu.register(
     RubyFu::ParamDef.SPINNER('spinner', 'SPINNER', 6, (1.5..9.1), 0.01),
     RubyFu::ParamDef.SLIDER('slider', 'SLIDER', 6, (1.5..9.1), 0.01),
     RubyFu::ParamDef.STRING('string', 'STRING', 'string'),
+    RubyFu::ParamDef.TEXT('text', 'TEXT', "multi\nline\nstring"),
     RubyFu::ParamDef.COLOR('color', 'COLOR', Gimp::Rgb.new(1.0, 0.0, 0.0, 0.0)),
     RubyFu::ParamDef.ENUM('enum', 'ENUM', 0, 'GimpBlendMode')
   ], #params
@@ -324,6 +325,7 @@ RubyFu.register(
 	'<Toolbox>/Xtns/Languages/Ruby-Fu/Test/more dialog', #menupath
 	nil, #image types
 	[
+    RubyFu::ParamDef.LIST('list', 'LIST', ['a', 'two', '3', 'IV']),
     RubyFu::ParamDef.IMAGE('image', 'IMAGE'),
     RubyFu::ParamDef.DRAWABLE('drawable', 'DRAWABLE'),
     RubyFu::ParamDef.CHANNEL('channel', 'CHANNEL'),

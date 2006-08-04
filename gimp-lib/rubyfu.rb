@@ -99,7 +99,7 @@ module RubyFu
       value.instance_variable_set(:@range, range)
       value.instance_variable_set(:@step, step)
       return value
-    end      
+    end
 
     def self.SLIDER(name, desc, default, range, step)
       value = FLOAT(name, desc, default)
@@ -107,14 +107,27 @@ module RubyFu
       value.instance_variable_set(:@range, range)
       value.instance_variable_set(:@step, step)
       return value
-    end      
+    end
 
     def self.ENUM(name, desc, default, enum)
       value = INT32(name, desc, default)
       value.instance_variable_set(:@subtype, :enum)
       value.instance_variable_set(:@enum, enum)
       return value
-    end      
+    end
+    
+    def self.LIST(name, desc, list)
+      value = STRING(name, desc, list[0])
+      value.instance_variable_set(:@subtype, :list)
+      value.instance_variable_set(:@list, list)
+      return value
+    end
+
+    def self.TEXT(*args)
+      value = STRING(*args)
+      value.instance_variable_set(:@subtype, :text)
+      return value
+    end
   end
 
   class Procedure
