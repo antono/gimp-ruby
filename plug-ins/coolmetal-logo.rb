@@ -152,9 +152,9 @@ RubyFu.register(
   "<Image>/Ruby-Fu/Alpha to Logo/Cool Metal...",
   "RGBA",
   [
-    ParamDef.INT32("effect_size", "Effect Size (pixels)"),
-    ParamDef.COLOR("bg_color", "Background Color"),
-    ParamDef.STRING("gradient",  "Gradient"),
+    ParamDef.INT32("effect_size", _("Effect Size (pixels)")),
+    ParamDef.COLOR("bg_color", _("Background Color")),
+    ParamDef.STRING("gradient",  _("Gradient")),
   ],
   nil,
   &method(:ruby_fu_cool_metal_logo_alpha)
@@ -195,11 +195,11 @@ RubyFu.register(
   "<Toolbox>/Xtns/Languages/Ruby-Fu/Cool Metal...",
   "",
   [
-    ParamDef.STRING("text", "Text", 'Cool Metal'),
-    ParamDef.INT32("font_size", "Font Size (pixels)", 100),
-    ParamDef.FONT("font", "Font", "Crillee"),
-    ParamDef.COLOR("bg_color", "Background Color", Rgb.new(1.0, 1.0, 1.0)),
-    ParamDef.STRING("gradient", "Gradient", "Horizon 1"),
+    ParamDef.STRING("text", _("Text"), 'Cool Metal'),
+    ParamDef.INT32("font_size", _("Font Size (pixels)"), 100),
+    ParamDef.FONT("font", _("Font"), "Crillee"),
+    ParamDef.COLOR("bg_color", _("Background Color"), Rgb.new(1.0, 1.0, 1.0)),
+    ParamDef.STRING("gradient", _("Gradient"), "Horizon 1"),
   ],
   [
     ParamDef.IMAGE('image', 'Image'),

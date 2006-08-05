@@ -15,6 +15,11 @@ ext/rbgimpproceduraldb.c
 ext/ruby-fu-console.c
 ext/structures.c
 
+gimp-lib/gimp_oo.rb
+gimp-lib/gimp.rb
+gimp-lib/pdb.rb
+gimp-lib/rubyfu.rb
+
 plug-ins/coolmetal-logo.rb
 plug-ins/irbconsole.rb
 plug-ins/sphere.rb

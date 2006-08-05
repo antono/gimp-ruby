@@ -3,8 +3,8 @@
 SUBDIRS = \
     ext      \
     gimp-lib \
-    plug-ins
-#    po
+    plug-ins \
+    po
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
@@ -23,10 +23,12 @@ rubyinterpdir = $(GIMP_LIBDIR)/interpreters
 rubyenvfile = $(rubyenvdir)/ruby.env
 rubyinterpfile = $(rubyinterpdir)/ruby.interp
 
+rubyconsolefile = ruby-fu-console
+
 install-env-files:
 	$(mkinstalldirs) '$(DESTDIR)$(rubyenvdir)'
 	echo '$(path_separator) RUBYLIB=$${gimp_plug_in_dir}/$(rubybase)' > '$(DESTDIR)$(rubyenvfile)'
-	cp ext/ruby-fu-console '$(DESTDIR)$(rubydir)'
+	cp 'ext/$(rubyconsolefile)' '$(DESTDIR)$(rubydir)'
 
 install-interp-file:
 	$(mkinstalldirs) '$(DESTDIR)$(rubyinterpdir)'
@@ -38,6 +40,8 @@ install-data-local: install-env-files install-interp-file
 
 uninstall-local:
 	rm -f '$(DESTDIR)$(rubyenvfile)' '$(DESTDIR)$(rubyinterpfile)'
+	rm -f '$(DESTDIR)$(rubydir)/$(rubyconsolefile)'
+	rmdir '$(DESTDIR)$(rubydir)'
 
 EXTRA_DIST = \
     AUTHORS             \
@@ -47,10 +51,10 @@ EXTRA_DIST = \
     NEWS                \
     README              \
     autogen.sh          \
-    intltool-extract.in \
-    intltool-merge.in   \
+    intltool-extract.in	\
+    intltool-merge.in  	\
     intltool-update.in  \
-    notes.txt           \
+    notes.txt          	\
     todo.txt
 
 DISTCLEANFILES = \

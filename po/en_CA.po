@@ -1,0 +1,59 @@
+# Canadian English translation for gimp-ruby
+# Copyright (C)  Scott Lembcke
+# This file is distributed under the same license as the gimp-ruby package.
+# Kevin Cozens <kcozens@cvs.gnome.org>, 2006.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-ruby\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-08-04 23:48-0400\n"
+"PO-Revision-Date: 2006-08-04 23:48-0400\n"
+"Last-Translator: Kevin Cozens <kcozens@cvs.gnome.org>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../plug-ins/coolmetal-logo.rb:155
+#, fuzzy
+msgid "Effect Size (pixels)"
+msgstr "Effect Size (pixels)"
+
+#: ../plug-ins/coolmetal-logo.rb:156 ../plug-ins/coolmetal-logo.rb:201
+#: ../plug-ins/sphere.rb:57
+msgid "Background Color"
+msgstr "Background Colour"
+
+#: ../plug-ins/coolmetal-logo.rb:157 ../plug-ins/coolmetal-logo.rb:202
+msgid "Gradient"
+msgstr "Gradient"
+
+#: ../plug-ins/coolmetal-logo.rb:198
+msgid "Text"
+msgstr "Text"
+
+#: ../plug-ins/coolmetal-logo.rb:199
+msgid "Font Size (pixels)"
+msgstr "Font Size (pixels)"
+
+#: ../plug-ins/coolmetal-logo.rb:200
+msgid "Font"
+msgstr "Font"
+
+#: ../plug-ins/sphere.rb:54
+msgid "Radius"
+msgstr "Radius"
+
+#: ../plug-ins/sphere.rb:55
+msgid "Lighting Degrees"
+msgstr "Lighting Degrees"
+
+#: ../plug-ins/sphere.rb:56
+msgid "Shadow"
+msgstr "Shadow"
+
+#: ../plug-ins/sphere.rb:58
+msgid "Sphere Color"
+msgstr "Sphere Colour"

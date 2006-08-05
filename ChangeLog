@@ -1,3 +1,23 @@
+2006-08-05  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* Makefile.am: Added po directory to the SUBDIRS list.
+
+	* configure.in: Changed list of supported languages to only en_CA
+	and en_GB until other translations are available.
+
+	* po/POTFILES.in: Added gimp-lib/*.rb files to the list of files
+	that might contain strings requiring translation.
+
+	* po/ChangeLog
+	* po/en_CA.po
+	* po/en_GB.po: Added
+
+	* plug-ins/coolmetal-logo.rb:
+	* plug-ins/sphere.rb: Marked some strings for translation.
+
+	* todo.txt: Removed some completed items. Reordered some items
+	and added a couple of new items.
+
 2006-08-04  Scott Lembcke <lemb0029@gnome.org>
 
         * ext/rbgimp.c: Added a Gimp.gettext() method.

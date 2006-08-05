@@ -51,11 +51,11 @@ RubyFu.register(
   '<Toolbox>/Xtns/Languages/Ruby-Fu/Sphere',
   "",
   [
-    ParamDef.SPINNER('radius', 'Radius', 100, 0..1000, 1),
-    ParamDef.SLIDER('lighting', 'Lighting Degrees', 45, 0..360, 1),
-    ParamDef.TOGGLE('shadow', 'Shadow', 1),
-    ParamDef.COLOR('bg color', 'Background Color', Color(1.0, 1.0, 1.0)),
-    ParamDef.COLOR('color', 'Sphere Color', Color(1.0, 0.0, 0.0)),
+    ParamDef.SPINNER('radius', _("Radius"), 100, 0..1000, 1),
+    ParamDef.SLIDER('lighting', _("Lighting Degrees"), 45, 0..360, 1),
+    ParamDef.TOGGLE('shadow', _("Shadow"), 1),
+    ParamDef.COLOR('bg color', _("Background Color"), Color(1.0, 1.0, 1.0)),
+    ParamDef.COLOR('color', _("Sphere Color"), Color(1.0, 0.0, 0.0)),
   ],
   [ParamDef.IMAGE('image', 'Result Image')]
 ) do |run_mode, radius, light, shadow, bg_color, sphere_color|

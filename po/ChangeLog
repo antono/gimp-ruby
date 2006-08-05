@@ -1,0 +1,6 @@
+2006-08-05  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* en_CA.po
+	* en_GB.po: Added these translation files.
+
+	* gettext is special and wants its own ChangeLog so here it is
