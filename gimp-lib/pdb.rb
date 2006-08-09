@@ -81,6 +81,7 @@ module PDB
       
       begin
         result = args.zip(paramdefs).collect do|arg, paramdef|
+          arg = bool2int_filter(arg)
           paramdef.check(arg)
           Gimp::Param.new(paramdef.type, arg)
         end

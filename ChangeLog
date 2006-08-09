@@ -1,3 +1,30 @@
+2006-08-08  Scott Lembcke <lemb0029@gnome.org>
+
+        * gimp-lib/gimp_oo.rb: Moved OO type class definitions to gimp.rb.
+        
+        * gimp-lib/gimp.rb: Added autoload handles for all OO classes. Added
+          Moved conversion of object types into the Gimp::Param class. Added
+          the bool2int_filter() method to convert bools into C style bools.
+        
+        * Added files for OO types. (gimp-lib/gimp_oo_*.rb)
+        
+        * gimp-lib/Makefile.am: Added OO type files.
+        
+        * gimp-lib/pdb.rb: Added a call to bool2int() when converting pdb
+          arguments. Now true/false can be used when calling procedures.
+          
+        * gimp-lib/rubyfu.rb: Fixed a bug when registering <Image> plugins.
+          Moved the call to open the dialog befor converting any parameter
+          types. Added support for running a procedure with the last values.
+          Added a call to bool2int_filter() so ruby-fu procedures can return
+          booleans.
+          
+        * plug-ins/: Added new example plugins: gloom.rb, helloworld.rb,
+          sunset.rb. Added runfile.rb/rerunfile.rb plugins to aid in plug-in
+          development. Added speed.rb plugin to the test scripts.
+          
+        * gimp-lib/Makefile.am: Added new plugins.
+
 2006-08-05  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* Makefile.am: Added po directory to the SUBDIRS list.

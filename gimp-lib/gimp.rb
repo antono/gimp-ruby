@@ -22,13 +22,19 @@ require 'gimpext'
 require 'pdb'
 
 def _(str)
-  puts 'bam'
   Gimp.gettext(str)
 end
 
 def N_(str)
-  puts 'whap'
   str
+end
+
+def bool2int_filter(value)
+  case value
+  when true: 1
+  when false: 0
+  else value
+  end
 end
 
 module Gimp
@@ -122,6 +128,23 @@ module Gimp
       return new(Gimp.const_get("PDB_#{sym}".to_sym), data)
     end
     
+    def transform
+      case type
+      when PDB_DISPLAY
+        Display.create(data)
+      when PDB_IMAGE
+        Image.create(data)
+      when PDB_LAYER
+        Layer.create(data)
+      when PDB_CHANNEL
+        Channel.create(data)
+      when PDB_VECTORS
+        Vectors.create(data)
+      else
+        self.data
+      end
+    end
+    
     def to_s
       "GimpParam #{EnumNames::PDBArgType[type]}: #{data}"
     end
@@ -178,4 +201,19 @@ module Gimp
       PDB.gimp_procedural_db_set_data(key, bytes, data)
     end
   end
+  
+  autoload(:Drawable,  'gimp_oo_drawable.rb')
+  autoload(:Brush,     'gimp_oo_brush.rb')
+  autoload(:Channel,   'gimp_oo_channel.rb')
+  autoload(:Display,   'gimp_oo_display.rb')
+  autoload(:Gradient,  'gimp_oo_gradient.rb')
+  autoload(:Image,     'gimp_oo_image.rb')
+  autoload(:Layer,     'gimp_oo_layer.rb')
+  autoload(:Palette,   'gimp_oo_palette.rb')
+  autoload(:Vectors,   'gimp_oo_vectors.rb')
+
+  autoload(:Context,  'gimp_oo_context.rb')
+  autoload(:Edit,      'gimp_oo_edit.rb')
+  autoload(:Progress,  'gimp_oo_progress.rb')
+  autoload(:Selection, 'gimp_oo_selection.rb')
 end

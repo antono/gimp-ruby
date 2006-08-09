@@ -1,3 +1,11 @@
+Automatically supply RUN_NONINTERACTIVE to PDB procedures with a 'run-mode'
+parameter. Adding it everytime is really annoying. With argument checking
+you'd need to make a low level Gimp.run_procedure call to call a procedure
+interactively anyway.
+
+Make a blacklist of deprecated procedures that shouldn't be added as methods
+to the objects types.
+
 Make sure all the useful parts of the C API were wrapped. 
 
 Weird crash occurs in the call test when testing the incoming arguments?
@@ -5,8 +13,6 @@ Weird crash occurs in the call test when testing the incoming arguments?
 The color code has turned out to be sub-par, lots of room for improvment.
 
 Figure out how the brush selection should really work.
-
-Add a list type parameter for the dialog.
 
 Add a reset button to the interactive dialog.
 
@@ -35,4 +41,3 @@ Add a browse button to console mode.
 
 Update plug-ins to use menu_register calls in addition to just register.
 What menus should gimp-ruby register that are (or will be) used in plug-ins?
-

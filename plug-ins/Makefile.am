@@ -5,10 +5,17 @@ pluginexecdir = $(GIMP_PLUGINDIR)
 scripts =  \
     coolmetal-logo.rb \
     sphere.rb         \
-    irbconsole.rb
+    irbconsole.rb     \
+    runfile.rb        \
+    rerunfile.rb      \
+    gloom.rb          \
+    sunset.rb         \
+    helloworld.rb
+    
 
 test_scripts = \
-    test.rb
+    test.rb    \
+    speed.rb
 
  
 if GIMPRUBY_UNSTABLE

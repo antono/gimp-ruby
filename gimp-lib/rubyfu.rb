@@ -163,7 +163,7 @@ module RubyFu
       case @type
       when :toolbox
         [Gimp::ParamDef.INT32('run-mode', 'Run mode')]
-      when :images
+      when :image
         [
           Gimp::ParamDef.INT32('run-mode', 'Run mode'),
           Gimp::ParamDef.IMAGE('image', 'Input image'),
@@ -200,17 +200,27 @@ module RubyFu
       end
     end
     
-    def run_interactive(args)
-      return run_noninteractive(args) if @params.empty?
-    
-      interactive_args = RubyFu.dialog(@menulabel, @name, @params)
-      raise Cancel unless interactive_args
+    def get_interactive_args
+      return [] if @params.empty?
       
-      args += interactive_args
-      return @function.call(*args)
+      args = RubyFu.dialog(@menulabel, @name, @params)
+      raise Cancel unless args
+      
+      Gimp::Shelf[@name + ':last_params'] = args
+      args
     end
     
-    def run_noninteractive(args)
+    def get_last_args
+      args = Gimp::Shelf[@name + ':last_params']
+      
+      if args
+        args
+      else
+        default_args
+      end
+    end
+    
+    def run_with_args(args)
       nargs = args.length
       nparams = @fullparams.length
       unless nargs == nparams
@@ -220,35 +230,26 @@ module RubyFu
       return @function.call(*args)
     end
     
-    def run_last_vals(args)
-      #use default values for now
-      #TODO actually remember the last values
-      warn "Last value mode not implemented, sending default params."
-      args += default_args
-      
-      return @function.call(*args)
-    end
-    
     def run(*args)
-      #FIXME this could be improved
       if @fullparams.length > 0 and @fullparams[0].name == 'run-mode'
         runMode = args[0].data
       else
         runMode = Gimp::RUN_NONINTERACTIVE
       end
       
-      require 'gimp_oo.rb'
+      extra_args = case runMode
+      when Gimp::RUN_INTERACTIVE: get_interactive_args
+      when Gimp::RUN_WITH_LAST_VALS: get_last_args
+      else []
+      end
+      
       args = args.zip(@fullparams).collect do|arg, param|
         raise(CallError, "Bad argument") unless arg.type == param.type
         next arg.transform
       end
-     
-      values = case runMode
-      when Gimp::RUN_INTERACTIVE:    run_interactive(args)
-      when Gimp::RUN_NONINTERACTIVE: run_noninteractive(args)
-      when Gimp::RUN_WITH_LAST_VALS: run_last_vals(args)
-      end
       
+      values = run_with_args(args + extra_args)
+            
       if values == nil
         values = []
       else
@@ -264,6 +265,7 @@ module RubyFu
       
       begin
         values = values.zip(@results).collect do|value, result|
+          value = bool2int_filter(value)
           result.check(value)
           Gimp::Param.new(result.type, value)
         end
@@ -278,7 +280,7 @@ module RubyFu
   
   @@procedures = {}
   
-  def self.register(
+  def register(
     name,
     blurb,
     help,
@@ -307,6 +309,7 @@ module RubyFu
     
     @@procedures[name] = proc
   end
+  module_function :register
   
   def self.query
     @@procedures.each_value{|proc| proc.query}
