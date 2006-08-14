@@ -19,5 +19,5 @@
 require 'gimp_oo.rb'
 
 module Gimp
-  Progress = GimpOO::ModuleTemplate.template('gimp-progress-')
+  Progress = GimpOO::ModuleTemplate.template('gimp-progress-', [])
 end

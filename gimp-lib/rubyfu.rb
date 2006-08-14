@@ -139,7 +139,7 @@ module RubyFu
       
       menupath,*rem = *rem
       if menupath.empty?
-        @menulabel = ""
+        @menulabel = @name
         @type = :internal
       else
         @type = case menupath
@@ -250,7 +250,7 @@ module RubyFu
       
       values = run_with_args(args + extra_args)
             
-      if values == nil
+      if values == nil or @results.empty?
         values = []
       else
         *values = *values
@@ -265,7 +265,7 @@ module RubyFu
       
       begin
         values = values.zip(@results).collect do|value, result|
-          value = bool2int_filter(value)
+          value = ruby2int_filter(value)
           result.check(value)
           Gimp::Param.new(result.type, value)
         end
@@ -335,16 +335,15 @@ module RubyFu
   end
   
   PLUG_IN_INFO = Gimp::PlugInInfo.new(
-  	nil,
-  	nil,
-  	method(:query),
-  	method(:run)
+    nil,
+    nil,
+    method(:query),
+    method(:run)
   )
   
-  def main
+  def self.main
     Gimp.main(PLUG_IN_INFO)
   end
-  module_function :main
 end
 
 END {

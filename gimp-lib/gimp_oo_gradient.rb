@@ -19,5 +19,16 @@
 require 'gimp_oo.rb'
 
 module Gimp
-  Gradient = GimpOO::ClassTemplate.template('gimp-gradient-', 'gimp-gradients-')
+  blacklist = [
+    'get_active',
+    'get_gradient',
+    'get_gradient_data',
+    'sample_custom',
+    'sample_uniform',
+    'set_active',
+    'set_gradient',
+  ]
+  
+  Gradient = GimpOO::ClassTemplate.template('gimp-gradient-', blacklist,
+                                            'gimp-gradients-', [])
 end

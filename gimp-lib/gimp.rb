@@ -29,10 +29,11 @@ def N_(str)
   str
 end
 
-def bool2int_filter(value)
+def ruby2int_filter(value)
   case value
   when true: 1
   when false: 0
+  when nil: -1
   else value
   end
 end
@@ -138,6 +139,8 @@ module Gimp
         Layer.create(data)
       when PDB_CHANNEL
         Channel.create(data)
+      when PDB_DRAWABLE:
+        Drawable.create(data)
       when PDB_VECTORS
         Vectors.create(data)
       else
@@ -151,14 +154,14 @@ module Gimp
   end
   
   class Rgb
-    def _dump(level)
-      Marshal.dump([r, g, b, a])
+    def marshal_dump
+      [r, g, b, a]
     end
     
-    def _load(str)
-      new(*Marshal.load(str))
+    def marshal_load(arr)
+      new(*arr)
     end
-    
+
     def eql?(other)
       return false unless other.is_a? Rgb
       
@@ -195,7 +198,6 @@ module Gimp
     end
     
     def self.[]=(key, obj)
-      puts 'setting'
       data = Marshal.dump(obj)
       bytes = data.length
       PDB.gimp_procedural_db_set_data(key, bytes, data)
@@ -212,7 +214,7 @@ module Gimp
   autoload(:Palette,   'gimp_oo_palette.rb')
   autoload(:Vectors,   'gimp_oo_vectors.rb')
 
-  autoload(:Context,  'gimp_oo_context.rb')
+  autoload(:Context,   'gimp_oo_context.rb')
   autoload(:Edit,      'gimp_oo_edit.rb')
   autoload(:Progress,  'gimp_oo_progress.rb')
   autoload(:Selection, 'gimp_oo_selection.rb')

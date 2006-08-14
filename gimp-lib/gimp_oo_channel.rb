@@ -19,5 +19,19 @@
 require 'gimp_oo.rb'
 
 module Gimp
-  Channel = GimpOO::ClassTemplate.template('gimp-channel-', nil, Gimp::Drawable)
+  blacklist = [
+    'delete',
+    'get_name',
+    'get_tattoo',
+    'get_visible',
+    'ops_duplicate',
+    'ops_offset',
+    'set_name',
+    'set_tattoo',
+    'set_visible',
+  ]
+  
+  Channel = GimpOO::ClassTemplate.template('gimp-channel-', blacklist,
+                                           nil, [],
+                                           Gimp::Drawable)
 end

@@ -19,7 +19,18 @@
 require 'gimp_oo.rb'
 
 module Gimp
-  Image = GimpOO::ClassTemplate.template('gimp-image-', nil)
+  blacklist = [
+    'active_drawable',
+    'add_layer_mask',
+    'floating_selection',
+    'get_cmap',
+    'remove_layer_mask',
+    'set_cmap',
+    'list',
+  ]
+  
+  Image = GimpOO::ClassTemplate.template('gimp-image-', blacklist,
+                                         nil, [])
   
   class Image
     add_class_method('list', 'gimp-image-list')

@@ -19,5 +19,19 @@
 require 'gimp_oo.rb'
 
 module Gimp
-  Brush = GimpOO::ClassTemplate.template('gimp-brush-', 'gimp-brushes-')
+  class_blacklist = [
+    'get_brush',
+    'get_brush_data',
+    'get_opacity',
+    'get_paint_mode',
+    'get_spacing',
+    'list',
+    'set_brush',
+    'set_opacity',
+    'set_paint_mode',
+    'set_spacing',
+  ]
+  
+  Brush = GimpOO::ClassTemplate.template('gimp-brush-', class_blacklist,
+                                         'gimp-brushes-', [])
 end

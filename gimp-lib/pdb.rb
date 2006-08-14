@@ -71,17 +71,17 @@ module PDB
       @return_vals = values.shift
     end
     
-    def convert_args(args, paramdefs)
+    def convert_args(args)
       arglen = args.length
-      prmlen = paramdefs.length
+      prmlen = @args.length
       unless arglen == prmlen
         message = "Wrong number of parameters. #{arglen} for #{prmlen}"
         raise(ArgumentError, message)
       end
       
       begin
-        result = args.zip(paramdefs).collect do|arg, paramdef|
-          arg = bool2int_filter(arg)
+        result = args.zip(@args).collect do|arg, paramdef|
+          arg = ruby2int_filter(arg)
           paramdef.check(arg)
           Gimp::Param.new(paramdef.type, arg)
         end
@@ -91,24 +91,27 @@ module PDB
       end
     end
     
-    def call(*args)
-      puts "PDB call: #@name" if PDB.verbose
-      
-      params = convert_args(args, @args)
-      values = Gimp.run_procedure(@name, params)
-      
+    def convert_return_values(values)
       case values.shift.data
       when Gimp::PDB_CALLING_ERROR: raise(CallingError, @name)
       when Gimp::PDB_EXECUTION_ERROR: raise(ExecutionError, @name)
       end
       
-      return *values.collect do|param|
-        if param.respond_to? :transform
-          param.transform
-        else
-          param.data
-        end
+      values.collect{|param| param.transform}
+    end
+    
+    def call(*args)
+      if @args[0] and @args[0].name == 'run-mode'
+        args.unshift(Gimp::RUN_NONINTERACTIVE)
       end
+      
+      if PDB.verbose
+        arg_str = args.collect{|arg| arg.inspect}.join(', ')
+        puts "PDB call: #@name(#{arg_str})"
+      end
+
+      params = convert_args(args)      
+      return *convert_return_values(Gimp.run_procedure(@name, params))
     end
     
     def to_s
@@ -138,6 +141,25 @@ module PDB
     
     def [](name)
       Procedure.new(name)
+    end
+    
+    def call_interactive(name, image = nil, drawable = nil)
+      proc = Procedure.new(name)
+      arg = proc.args[0]
+      
+      if arg and arg.name == 'run-mode'
+        arg1 = proc.args[1]
+        arg2 = proc.args[2]
+        args = [Gimp::Param.INT32(Gimp::RUN_INTERACTIVE)]
+        
+        if arg1 and arg2 and arg1.name == 'image' and arg2.name == 'drawable'
+          args += [Gimp::Param.IMAGE(image), Gimp::Param.DRAWABLE(drawable)]
+        end
+        
+        return *proc.convert_return_values(Gimp.run_procedure(name, args))
+      else
+        raise 'poop'
+      end
     end
   end
   

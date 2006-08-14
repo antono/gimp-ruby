@@ -19,5 +19,23 @@
 require 'gimp_oo.rb'
 
 module Gimp
-  Palette = GimpOO::ClassTemplate.template('gimp-palette-', 'gimp-palettes-')
+  blacklist = [
+    'get_background',
+    'get_foreground',
+    'refresh',
+    'set_background',
+    'set_foreground',
+    'set_default_colors',
+    'swap_colors',
+    
+  ]
+  
+  class_blacklist = [
+    'get_palette',
+    'get_palette_entry',
+    'set_palette',
+  ]
+  
+  Palette = GimpOO::ClassTemplate.template('gimp-palette-', blacklist,
+                                           'gimp-palettes-', class_blacklist)
 end

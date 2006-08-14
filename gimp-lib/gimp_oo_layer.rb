@@ -19,5 +19,20 @@
 require 'gimp_oo.rb'
 
 module Gimp
-  Layer = GimpOO::ClassTemplate.template('gimp-layer-', nil, Gimp::Drawable)
+  blacklist = [
+    'delete',
+    'get_linked',
+    'get_name',
+    'get_tattoo',
+    'get_visible',
+    'mask',
+    'set_linked',
+    'set_name',
+    'set_tattoo',
+    'set_visible',
+  ]
+  
+  Layer = GimpOO::ClassTemplate.template('gimp-layer-', blacklist,
+                                         nil, [],
+                                         Gimp::Drawable)
 end

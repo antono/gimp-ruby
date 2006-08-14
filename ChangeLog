@@ -1,3 +1,44 @@
+2006-08-14  Scott Lembcke <lemb0029@cvs.gnome.org>
+
+        * gimp-lib/gimp.rb: Renamed bool2int_filter() to ruby2int_filter() and
+          added support for nil values. Added Drawables to the
+          Param#transform() method. Changed the marshal functions for
+          Gimp::RGB to use #marshal_load() and #marshal_dump instead of the
+          old marshaling methods. Minor reformatting.
+          
+        * gimp-lib/gimp_oo.rb: Added the ability to blacklist certain methods
+          when creating classes to prevent deprecated procedures from becoming
+          methods or to avoid name collisions.
+          Removed GimpOO::ClassTemplate#add_constructor() as it's no longer
+          needed. 
+          
+        * gimp-lib/gimp_oo_*.rb: Added method blacklists for deprecated
+          methods.
+          
+        * gimp-lib/pdb.rb: Changed verbose mode to also display arguments to
+          PDB calls. Some refactoring of the PDB::Procedure class. Interactive
+          procedures are now automatically in non-interactive mode. Added a
+          PDB.call_interactive() method to call PDB procedures interactively.
+          
+        * gimp-lib/rubyfu.rb: Procedures with no menu now have their menu
+          label defined as their procedure name. Changed return value
+          validation to ignore accidental return values for procedures that
+          return no values. Minor reformatting.
+        
+        * deleted plug-ins/rerunfile.rb.
+        
+        * plug-ins/runfile.rb: Added the ruby-fu-rerunfile procedure from
+          rerunfile.rb.
+        
+        * removed plug-ins/helloworld.rb. This was intended as a tutorial
+          and shouldn't have been added in the first place.
+          
+        * plug-ins/Makefile.am: Removed helloworld.rb and rerunfile.rb.
+        
+        * plug-ins/*.rb: Added the GPL license to files that were missing it.
+          Minor reformatting and updates to reflect changes in
+          gimp-lib/pdb.rb.
+
 2006-08-08  Scott Lembcke <lemb0029@gnome.org>
 
         * gimp-lib/gimp_oo.rb: Moved OO type class definitions to gimp.rb.
@@ -97,12 +138,12 @@
 
 2006-08-03  Scott Lembcke <lemb0029@gnome.org>
 
-        * gimp-lib/gimp.rb: Now sets $KCODE to UTF8. Removed rubyfu.rb from list
-          of loaded modules.
+        * gimp-lib/gimp.rb: Now sets $KCODE to UTF8. Removed rubyfu.rb from
+          list of loaded modules.
           
-        * gimp-lib/rubyfu.rb: Now loads gimp.rb as a dependency. Creates and END
-          block to automatically call RubyFu.main. Added conversion to object
-          types for procedure arguments.
+        * gimp-lib/rubyfu.rb: Now loads gimp.rb as a dependency. Creates and 
+          END block to automatically call RubyFu.main. Added conversion to 
+          object types for procedure arguments.
           
         * gimp-lib/gimp_oo.rb: Added a Gimp::Param#transform method to convert
           parameters to object types if possible.
@@ -148,14 +189,14 @@
 
 2006-07-21  Scott Lembcke <lemb0029@gnome.org>
 
-        * gimp-lib/rubyfu.rb: Removed some unnecesary code. Clicking 'cancel' in
-          the dialog will now work correctly. Interactive procedures that take
-          no parameters don't trigger the dialog.
+        * gimp-lib/rubyfu.rb: Removed some unnecesary code. Clicking 'cancel' 
+          in the dialog will now work correctly. Interactive procedures that 
+          take no parameters don't trigger the dialog.
           
         * ext/rbgimpdialog.c: Added a enumeration popup widget. show_dialog()
           now takes an extra parameter for the menu name. The procedure name
-          is used as the help_id, and the menu name is used in the dialog title.
-          Parameter names now have a ':' appended to their labels.
+          is used as the help_id, and the menu name is used in the dialog 
+          title. Parameter names now have a ':' appended to their labels.
           
         * plug-ins/test.rb: Added the new parameter type.
 
@@ -266,10 +307,10 @@
 
 	* Added plug-ins/test.rb.
 
-	* gimp-lib/gimp.rb: Moved the PDB module to gimp-lib/pdb.rb. Added some
-	  utility methods to the Gimp::Rgb class. Added Gimp.Color as a shortcut
-	  for Gimp::Rgb.new. Added the Gimp::Shelf module for persistent
-	  storage.
+	* gimp-lib/gimp.rb: Moved the PDB module to gimp-lib/pdb.rb. Added 
+	  some utility methods to the Gimp::Rgb class. Added Gimp.Color as a 
+	  shortcut for Gimp::Rgb.new. Added the Gimp::Shelf module for 
+	  persistent storage.
 
 	* ext/*: Removed // style comments.
 
@@ -290,8 +331,8 @@
 
 2006-06-30  Scott Lembcke <lemb0029@gnome.org>
 
-	* ext/: Removed all references to array stubs. Arrays are now converted
-	  in place.
+	* ext/: Removed all references to array stubs. Arrays are now 
+	  converted in place.
 	
 	* ext/conversion.c: Array conversion changed to be done in place, not
 	  usings stubs.
@@ -313,18 +354,19 @@
 	  parameters. Also, required parameters were changed to be added
 	  automatically.
 	
-	* plug-ins/*: Minor changes to reflect the changes applied to rubyfu.rb.
+	* plug-ins/*: Minor changes to reflect the changes applied to 
+	  rubyfu.rb.
 	
 2006-06-24  Scott Lembcke <lemb0029@gnome.org>
 
 	* ext/Makefile.am: Added ext/arraytypes.c.
 
-	* ext/arraytypes.c: Added ext/arraytypes.c which contains stubs to wrap
-	  array pointers.
+	* ext/arraytypes.c: Added ext/arraytypes.c which contains stubs to 
+	  wrap array pointers.
 
-	* ext/conversion.c: Added support for array conversion and ParamRegions,
-	  and changed the behavior of GimpParams2rb() to return an array of
-	  Gimp::Param structs.
+	* ext/conversion.c: Added support for array conversion and 
+	  ParamRegions, and changed the behavior of GimpParams2rb() to return 
+	  an array of Gimp::Param structs.
 	
 	* ext/ids.c: Added additional ids for use with Gimp::ParamRegion
 	  structs.

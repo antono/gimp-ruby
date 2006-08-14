@@ -68,10 +68,9 @@ def apply_cool_metal_logo_effect(img, logo_layer, size, bg_color, gradient)
     	       0, 0, 0, 0, 0, 0, 0, 0, height + 5)
     gimp_rect_select(img, 0, height / 2 - feather, img_width, feather * 2,
     		     CHANNEL_OP_REPLACE, 0, 0)
-    plug_in_gauss_iir(RUN_NONINTERACTIVE,
-    		      img, logo_layer, smear, 1, 1)
+    plug_in_gauss_iir(img, logo_layer, smear, 1, 1)
     gimp_selection_none(img)
-    plug_in_ripple(RUN_NONINTERACTIVE, img, logo_layer,
+    plug_in_ripple(img, logo_layer,
     		   period, amplitude, 1, 0, 1, 1, 0)
     # logo_layer.translate(5, 5)
     gimp_layer_translate(logo_layer, 5, 5)
@@ -82,15 +81,14 @@ def apply_cool_metal_logo_effect(img, logo_layer, size, bg_color, gradient)
     channel = gimp_selection_save(img)
     gimp_selection_shrink(img, shrink)
     gimp_selection_invert(img)
-    plug_in_gauss_rle(RUN_NONINTERACTIVE,
-    		      img, channel, feather, 1, 1)
+    plug_in_gauss_rle(img, channel, feather, 1, 1)
     gimp_selection_layer_alpha(logo_layer)
     gimp_selection_invert(img)
     gimp_context_set_background(Gimp::Rgb.new(0.0, 0.0, 0.0))
     gimp_edit_fill(channel, BACKGROUND_FILL)
     gimp_selection_none(img)
       
-    plug_in_bump_map(RUN_NONINTERACTIVE, img, logo_layer, channel,
+    plug_in_bump_map(img, logo_layer, channel,
     		     135, 45, depth, 0, 0, 0, 0, 0, 0, 0)
     
     gimp_selection_layer_alpha(logo_layer)
@@ -103,8 +101,7 @@ def apply_cool_metal_logo_effect(img, logo_layer, size, bg_color, gradient)
     		     0, 0)
     # fs.anchor
     gimp_floating_sel_anchor(fs)
-    plug_in_gauss_rle(RUN_NONINTERACTIVE,
-    		      img, shadow_layer, smear, 1, 1)
+    plug_in_gauss_rle(img, shadow_layer, smear, 1, 1)
         
     # gimp_rect_select(img, 5, 5, width, height, CHANNEL_OP_REPLACE, 0, 0)
     gimp_edit_copy(logo_layer)

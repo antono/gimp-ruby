@@ -23,8 +23,8 @@ module Gimp
       def each_proc(prefix)
         prefix_range = prefix.length..-1
         get_proc_list(prefix).each do|proc_name|
-          sym = proc_name[prefix_range].gsub('-','_').to_sym
-          yield(sym, proc_name)
+          method_name = proc_name[prefix_range].gsub('-','_')
+          yield(method_name, proc_name)
         end
       end
   
@@ -36,49 +36,48 @@ module Gimp
 
     class ClassTemplate
       class << self
-        def add_constructor(name, proc_name)
+        def add_method(method_name, proc_name)
           class_eval """
-            def self.#{name}(*args)
-              PDB['#{proc_name}'].call(*args)
-            end
-          """
-        end
-    
-        def add_method(name, proc_name)
-          class_eval """
-            def #{name}(*args)
+            def #{method_name}(*args)
               PDB['#{proc_name}'].call(self, *args)
             end
           """
         end
     
-        def add_class_method(name, proc_name)
+        def add_class_method(method_name, proc_name)
           class_eval """
-            def self.#{name}(*args)
+            def self.#{method_name}(*args)
               PDB['#{proc_name}'].call(*args)
             end
           """
         end
     
-        def add_methods(prefix, class_prefix)
-          ProcList.each_proc(prefix) do|sym, proc_name|
+        def add_methods(prefix, blacklist,
+                        class_prefix, class_blacklist)
+          ProcList.each_proc(prefix) do|method_name, proc_name|
+            next if blacklist.include? method_name
+            
             if proc_name =~ /new/
-              add_constructor(sym, proc_name)
+              add_class_method(method_name, proc_name)
             else
-              add_method(sym, proc_name)
+              add_method(method_name, proc_name)
             end
           end
       
           if class_prefix
-            ProcList.each_proc(class_prefix) do|sym, proc_name|
-              add_class_method(sym, proc_name)
+            ProcList.each_proc(class_prefix) do|method_name, proc_name|
+              next if class_blacklist.include? method_name
+              add_class_method(method_name, proc_name)
             end
           end
         end
     
-        def template(prefix, class_prefix, super_class = self)
+        def template(prefix, blacklist,
+                     class_prefix, class_blacklist,
+                     super_class = self)
           klass = Class.new(super_class)
-          klass.add_methods(prefix, class_prefix)
+          klass.add_methods(prefix, blacklist,
+                            class_prefix, class_blacklist)
           
           return klass
         end
@@ -100,11 +99,12 @@ module Gimp
     end
 
     module ModuleTemplate
-      def self.template(prefix)
+      def self.template(prefix, blacklist)
         mod = Module.new
-        ProcList.each_proc(prefix) do|sym, proc_name|
+        ProcList.each_proc(prefix) do|method_name, proc_name|
+          next if blacklist.include? method_name
           mod.module_eval """
-            def self.#{sym}(*args)
+            def self.#{method_name}(*args)
               PDB['#{proc_name}'].call(*args)
             end
           """

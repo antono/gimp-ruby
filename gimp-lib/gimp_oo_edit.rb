@@ -19,5 +19,5 @@
 require 'gimp_oo.rb'
 
 module Gimp
-  Edit = GimpOO::ModuleTemplate.template('gimp-edit-')
+  Edit = GimpOO::ModuleTemplate.template('gimp-edit-', [])
 end

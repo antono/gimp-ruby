@@ -7,10 +7,8 @@ scripts =  \
     sphere.rb         \
     irbconsole.rb     \
     runfile.rb        \
-    rerunfile.rb      \
     gloom.rb          \
-    sunset.rb         \
-    helloworld.rb
+    sunset.rb
     
 
 test_scripts = \

@@ -19,7 +19,7 @@
 require 'gimp_oo.rb'
 
 module Gimp
-  Context = GimpOO::ModuleTemplate.template('gimp-context-')
+  Context = GimpOO::ModuleTemplate.template('gimp-context-', [])
   
   module Context
     class << self

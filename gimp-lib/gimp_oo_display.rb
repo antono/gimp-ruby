@@ -19,5 +19,6 @@
 require 'gimp_oo.rb'
 
 module Gimp
-  Display = GimpOO::ClassTemplate.template('gimp-display-', 'gimp-displays-')
+  Display = GimpOO::ClassTemplate.template('gimp-display-', [],
+                                           'gimp-displays-', [])
 end

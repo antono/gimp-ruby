@@ -19,5 +19,12 @@
 require 'gimp_oo.rb'
 
 module Gimp
-  Drawable = GimpOO::ClassTemplate.template('gimp-drawable-', nil)
+  blacklist = [
+    'bytes',
+    'image',
+    'set_image',
+  ]
+  
+  Drawable = GimpOO::ClassTemplate.template('gimp-drawable-', blacklist,
+                                            nil, [])
 end

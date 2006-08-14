@@ -19,5 +19,9 @@
 require 'gimp_oo.rb'
 
 module Gimp
-  Selection = GimpOO::ModuleTemplate.template('gimp-selection-')
+  blacklist = [
+    'clear',
+  ]
+  
+  Selection = GimpOO::ModuleTemplate.template('gimp-selection-', blacklist)
 end

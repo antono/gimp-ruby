@@ -19,5 +19,5 @@
 require 'gimp_oo.rb'
 
 module Gimp
-  Vectors = GimpOO::ClassTemplate.template('gimp-vectors-', nil)
+  Vectors = GimpOO::ClassTemplate.template('gimp-vectors-', [], nil, [])
 end

@@ -1,11 +1,3 @@
-Automatically supply RUN_NONINTERACTIVE to PDB procedures with a 'run-mode'
-parameter. Adding it everytime is really annoying. With argument checking
-you'd need to make a low level Gimp.run_procedure call to call a procedure
-interactively anyway.
-
-Make a blacklist of deprecated procedures that shouldn't be added as methods
-to the objects types.
-
 Make sure all the useful parts of the C API were wrapped. 
 
 Weird crash occurs in the call test when testing the incoming arguments?
