@@ -35,16 +35,16 @@ RubyFu.register(
   "Spencer Kimball and Scott Lembcke",
   "Spencer Kimball",
   "1996",
-  _('Sphere'),
+  _("Sphere"),
   "",
   [
-    ParamDef.SPINNER('radius', _("Radius (pixels)"), 100, 0..1000, 1),
-    ParamDef.SLIDER('lighting', _("Lighting (degrees)"), 45, 0..360, 1),
-    ParamDef.TOGGLE('shadow', _("Shadow"), 1),
-    ParamDef.COLOR('bg color', _("Background Color"), Color(1.0, 1.0, 1.0)),
-    ParamDef.COLOR('color', _("Sphere Color"), Color(1.0, 0.0, 0.0)),
+    ParamDef.SPINNER("radius", _("Radius (pixels)"), 100, 0..1000, 1),
+    ParamDef.SLIDER("lighting", _("Lighting (degrees)"), 45, 0..360, 1),
+    ParamDef.TOGGLE("shadow", _("Shadow"), 1),
+    ParamDef.COLOR("bg color", _("Background Color"), Color(1.0, 1.0, 1.0)),
+    ParamDef.COLOR("color", _("Sphere Color"), Color(1.0, 0.0, 0.0)),
   ],
-  [ParamDef.IMAGE('image', 'Sphere Image')]
+  [ParamDef.IMAGE("image", _("Sphere Image"))]
 ) do |run_mode, radius, light, shadow, bg_color, sphere_color|
   shadow = (shadow == 1)
   

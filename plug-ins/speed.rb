@@ -20,7 +20,7 @@
 
 tim = Time.now
 
-require 'rubyfu'
+require "rubyfu"
 
 include Gimp
 include RubyFu
@@ -28,13 +28,13 @@ include RubyFu
 include PDB::Access
 
 register(
-  'ruby-fu-speed', #procedure name
+  "ruby-fu-speed", #procedure name
   nil, #blurb
   nil, #help
   nil, #author
   nil, #copyright
   nil, #date
-  'Speed', #menupath
+  "Speed", #menupath
   nil,
   nil, #params
   nil #results
@@ -44,4 +44,4 @@ register(
   nil
 end
 
-menu_register('ruby-fu-speed', '<Toolbox>/Xtns/Languages/Ruby-Fu/Test')
+menu_register("ruby-fu-speed", "<Toolbox>/Xtns/Languages/Ruby-Fu/Test")

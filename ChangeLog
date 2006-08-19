@@ -1,4 +1,11 @@
-2006-08-14  Scott Lembcke <slembcke@cvs.gnome.org>
+2006-08-19  Scott Lembcke <slembcke@cvs.gnome.org>
+
+        * plug-ins/*.rb: Changed all single quotes to double quotes.
+        
+        * ext/rbgimpdialog.c: Added an exception when using non-dialog
+          friendly types.
+
+2006-08-19  Scott Lembcke <slembcke@cvs.gnome.org>
 
         * ChangeLog: Fixed my email address.
         

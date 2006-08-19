@@ -588,10 +588,7 @@ make_widget (VALUE param,
       break;
       
     default:
-      widget = gtk_label_new("Unimplemented");
-      
-      result->ptr = widget;
-      result->func = &nothing;
+      rb_raise(rb_eTypeError, "Unimplemented param type %d.", type);
       break;
     }
 

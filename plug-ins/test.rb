@@ -18,12 +18,12 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor,Boston, MA
 # 02110-1301, USA.
 
-require 'rubyfu'
+require "rubyfu"
 
-TestMenu = RubyFu.menu_branch_register(RubyFu::RubyFuMenu, 'Test')
+TestMenu = RubyFu.menu_branch_register(RubyFu::RubyFuMenu, "Test")
 
 RubyFu.register(
-  'ruby-fu-test1', #procedure name
+  "ruby-fu-test1", #procedure name
   nil, #blurb
   nil, #help
   nil, #author
@@ -38,7 +38,7 @@ RubyFu.register(
 end
 
 RubyFu.register(
-  'ruby-fu-test2', #procedure name
+  "ruby-fu-test2", #procedure name
   nil, #blurb
   nil, #help
   nil, #author
@@ -53,7 +53,7 @@ RubyFu.register(
 end
 
 RubyFu.register(
-  'ruby-fu-test-echo', #procedure name
+  "ruby-fu-test-echo", #procedure name
   nil, #blurb
   nil, #help
   nil, #author
@@ -62,42 +62,42 @@ RubyFu.register(
   nil, #menupath
   nil, #image types
   [
-    RubyFu::ParamDef.INT32('int32', 'int32', 1),
-    RubyFu::ParamDef.INT16('int16', 'int16', 1),
-    RubyFu::ParamDef.INT8('int8', 'int8', 1),
-    RubyFu::ParamDef.FLOAT('float', 'float', 1.1),
-    RubyFu::ParamDef.STRING('string', 'string', 'hello'),
-    RubyFu::ParamDef.INT32('length1', 'length1', 1),
-    RubyFu::ParamDef.INT32ARRAY('int32array', 'int32array', [1, 2, 3]),
-    RubyFu::ParamDef.INT32('length2', 'length2', 1),
-    RubyFu::ParamDef.INT16ARRAY('int16array', 'int16array', [1, 2, 3]),
-    RubyFu::ParamDef.INT32('length3', 'length3', 1),
-    RubyFu::ParamDef.INT8ARRAY('int8array', 'int8array', 'abc'),
-    RubyFu::ParamDef.INT32('length4', 'length4', 1),
-    RubyFu::ParamDef.FLOATARRAY('floatarray', 'floatarray', [1.1, 2.2, 3.3]),
-    RubyFu::ParamDef.INT32('length5', 'length5', 1),
-    RubyFu::ParamDef.STRINGARRAY('stringarray', 'stringarray', ['one', 'two', 'three']),
-    RubyFu::ParamDef.COLOR('color', 'color', Gimp::Rgb.new(1.0, 1.0, 1.0)),
-    RubyFu::ParamDef.PARASITE('parasite', 'parasite', Gimp::Parasite.new('name', 999, 'data')),
+    RubyFu::ParamDef.INT32("int32", "int32", 1),
+    RubyFu::ParamDef.INT16("int16", "int16", 1),
+    RubyFu::ParamDef.INT8("int8", "int8", 1),
+    RubyFu::ParamDef.FLOAT("float", "float", 1.1),
+    RubyFu::ParamDef.STRING("string", "string", "hello"),
+    RubyFu::ParamDef.INT32("length1", "length1", 1),
+    RubyFu::ParamDef.INT32ARRAY("int32array", "int32array", [1, 2, 3]),
+    RubyFu::ParamDef.INT32("length2", "length2", 1),
+    RubyFu::ParamDef.INT16ARRAY("int16array", "int16array", [1, 2, 3]),
+    RubyFu::ParamDef.INT32("length3", "length3", 1),
+    RubyFu::ParamDef.INT8ARRAY("int8array", "int8array", "abc"),
+    RubyFu::ParamDef.INT32("length4", "length4", 1),
+    RubyFu::ParamDef.FLOATARRAY("floatarray", "floatarray", [1.1, 2.2, 3.3]),
+    RubyFu::ParamDef.INT32("length5", "length5", 1),
+    RubyFu::ParamDef.STRINGARRAY("stringarray", "stringarray", ["one", "two", "three"]),
+    RubyFu::ParamDef.COLOR("color", "color", Gimp::Rgb.new(1.0, 1.0, 1.0)),
+    RubyFu::ParamDef.PARASITE("parasite", "parasite", Gimp::Parasite.new("name", 999, "data")),
   ], #params
   [
-    Gimp::ParamDef.INT32('int32', 'int32'),
-    Gimp::ParamDef.INT16('int16', 'int16'),
-    Gimp::ParamDef.INT8('int8', 'int8'),
-    Gimp::ParamDef.FLOAT('float', 'float'),
-    Gimp::ParamDef.STRING('string', 'string'),
-    Gimp::ParamDef.INT32('length1', 'length1'),
-    Gimp::ParamDef.INT32ARRAY('int32array', 'int32array'),
-    Gimp::ParamDef.INT32('length2', 'length2'),
-    Gimp::ParamDef.INT16ARRAY('int16array', 'int16array'),
-    Gimp::ParamDef.INT32('length3', 'length3'),
-    Gimp::ParamDef.INT8ARRAY('int8array', 'int8array'),
-    Gimp::ParamDef.INT32('length4', 'length4'),
-    Gimp::ParamDef.FLOATARRAY('floatarray', 'floatarray'),
-    Gimp::ParamDef.INT32('length5', 'length5'),
-    Gimp::ParamDef.STRINGARRAY('stringarray', 'stringarray'),
-    Gimp::ParamDef.COLOR('color', 'color'),
-    Gimp::ParamDef.PARASITE('parasite', 'parasite'),
+    Gimp::ParamDef.INT32("int32", "int32"),
+    Gimp::ParamDef.INT16("int16", "int16"),
+    Gimp::ParamDef.INT8("int8", "int8"),
+    Gimp::ParamDef.FLOAT("float", "float"),
+    Gimp::ParamDef.STRING("string", "string"),
+    Gimp::ParamDef.INT32("length1", "length1"),
+    Gimp::ParamDef.INT32ARRAY("int32array", "int32array"),
+    Gimp::ParamDef.INT32("length2", "length2"),
+    Gimp::ParamDef.INT16ARRAY("int16array", "int16array"),
+    Gimp::ParamDef.INT32("length3", "length3"),
+    Gimp::ParamDef.INT8ARRAY("int8array", "int8array"),
+    Gimp::ParamDef.INT32("length4", "length4"),
+    Gimp::ParamDef.FLOATARRAY("floatarray", "floatarray"),
+    Gimp::ParamDef.INT32("length5", "length5"),
+    Gimp::ParamDef.STRINGARRAY("stringarray", "stringarray"),
+    Gimp::ParamDef.COLOR("color", "color"),
+    Gimp::ParamDef.PARASITE("parasite", "parasite"),
   ] #results
 ) do|int32, int16, int8, float, string,
      l1, int32array, l2, int16array, l3, int8array, l4, floatarray, l5, stringarray,
@@ -117,13 +117,13 @@ RubyFu.register(
 end
 
 RubyFu.register(
-  'ruby-fu-test-call-echo', #procedure name
-  'Check that parameter conversion is safe.', #blurb
+  "ruby-fu-test-call-echo", #procedure name
+  "Check that parameter conversion is safe.", #blurb
   nil, #help
   nil, #author
   nil, #copyright
   nil, #date
-  'Echo', #menupath
+  "Echo", #menupath
   nil, #image types
   [], #params
   [] #results
@@ -134,17 +134,17 @@ RubyFu.register(
     -1,
     129,
     123.123,
-    'stringing it',
+    "stringing it",
     3,
     [1, 2, 3],
     3,
     [1, 2, 3],
     3,
-    'abc',
+    "abc",
     3,
     [1.1, 2.2, 3.3],
     3,
-    ['one', 'two', 'three'],
+    ["one", "two", "three"],
     Gimp::Rgb.new(1.0, 1.0, 1.0),
     Gimp::Parasite.new("a rose", 12, "some data")
   ]
@@ -158,29 +158,29 @@ RubyFu.register(
   end
 end
 
-RubyFu.menu_register('ruby-fu-test-call-echo', TestMenu)
+RubyFu.menu_register("ruby-fu-test-call-echo", TestMenu)
 
 
 RubyFu.register(
-  'ruby-fu-test-shelf', #procedure name
-  'Test that the shelf works correctly.', #blurb
+  "ruby-fu-test-shelf", #procedure name
+  "Test that the shelf works correctly.", #blurb
   nil, #help
   nil, #author
   nil, #copyright
   nil, #date
-  'Shelf', #menupath
+  "Shelf", #menupath
   nil, #image types
   [], #params
   [] #results
 ) do|run_mode|
   def test_method
-    return false if Gimp::Shelf['badstring'] != nil
+    return false if Gimp::Shelf["badstring"] != nil
     
     Gimp.message "Previous value = #{Gimp::Shelf['goodstring'].inspect}"
     
-    obj = ['wow', 1]
-    Gimp::Shelf['goodstring'] = obj
-    return false if Gimp::Shelf['goodstring'] != obj
+    obj = ["wow", 1]
+    Gimp::Shelf["goodstring"] = obj
+    return false if Gimp::Shelf["goodstring"] != obj
     
     return true
   end
@@ -192,11 +192,11 @@ RubyFu.register(
   end
 end
 
-RubyFu.menu_register('ruby-fu-test-shelf', TestMenu)
+RubyFu.menu_register("ruby-fu-test-shelf", TestMenu)
 
 
 RubyFu.register(
-  'ruby-fu-test-crash', #procedure name
+  "ruby-fu-test-crash", #procedure name
   nil, #blurb
   nil, #help
   nil, #author
@@ -214,33 +214,33 @@ def test_exception(e)
    begin
     yield
   rescue e
-    puts 'Success!'
+    puts "Success!"
     return
   end
   
-  puts 'Failure'
+  puts "Failure"
   $failure = true
 end
 
 RubyFu.register(
-  'ruby-fu-test-call', #procedure name
-  'Check proper errors are raised when calling methods improperly.', #blurb
+  "ruby-fu-test-call", #procedure name
+  "Check proper errors are raised when calling methods improperly.", #blurb
   nil, #help
   nil, #author
   nil, #copyright
   nil, #date
-  'Call',
+  "Call",
   nil, #image types
   [], #params
   [] #results
 ) do|run_mode|
-  require 'stringio'
+  require "stringio"
   $stdout = StringIO.new
   
-  print 'Calling with bad params ... '
+  print "Calling with bad params ... "
   test_exception(TypeError){PDB.gimp_message(123)}
   
-  print 'Calling with too many params ... '
+  print "Calling with too many params ... "
   test_exception(ArgumentError){PDB.gimp_message(123, 123)}
   
   #THIS CRASHES HORRIBLY. NOT SURE IF IT'S MY FAULT OR NOT.
@@ -250,27 +250,27 @@ RubyFu.register(
   #  PDB.plug_in_script_fu_eval(Gimp::Interactive, '(ruby-fu-test-crash 123)')
   #end
 
-  printf 'Execution error ... '
+  printf "Execution error ... "
   test_exception(PDB::ExecutionError){PDB.ruby_fu_test_crash}
   
-  Gimp.message('Tests ' + ($failure ? 'failed' : 'successful') + ":\n" + $stdout.string)
+  Gimp.message("Tests " + ($failure ? "failed" : "successful") + ":\n" + $stdout.string)
   $stdout = STDOUT
 end
 
-RubyFu.menu_register('ruby-fu-test-call', TestMenu)
+RubyFu.menu_register("ruby-fu-test-call", TestMenu)
 
 
 RubyFu.register(
-  'ruby-fu-test-OO', #procedure name
-  'Test that the object functionality works', #blurb
+  "ruby-fu-test-OO", #procedure name
+  "Test that the object functionality works", #blurb
   nil, #help
   nil, #author
   nil, #copyright
   nil, #date
-  'OO', #menupath
+  "OO", #menupath
   nil, #image types
   [], #params
-  [Gimp::ParamDef.IMAGE('image', 'Image')] #results
+  [Gimp::ParamDef.IMAGE("image", "Image")] #results
 ) do|run_mode|
   PDB.verbose = true
   
@@ -305,66 +305,66 @@ RubyFu.register(
   img
 end
 
-RubyFu.menu_register('ruby-fu-test-OO', TestMenu)
+RubyFu.menu_register("ruby-fu-test-OO", TestMenu)
 
 
 RubyFu.register(
-  'ruby-fu-test-dialog', #procedure name
-  'runs dialog', #blurb
+  "ruby-fu-test-dialog", #procedure name
+  "runs dialog", #blurb
   nil, #help
   nil, #author
   nil, #copyright
   nil, #date
-  'Dialog', #menupath
+  "Dialog", #menupath
   nil, #image types
   [
-    RubyFu::ParamDef.INT32('int32', 'INT32', 32),
-    RubyFu::ParamDef.TOGGLE('toggle', 'TOGGLE', 1),
-    RubyFu::ParamDef.INT16('int16', 'INT16', 16),
-    RubyFu::ParamDef.INT8('int8', 'INT8', 8),
-    RubyFu::ParamDef.FLOAT('float', 'FLOAT', 123.4),
-    RubyFu::ParamDef.SPINNER('spinner', 'SPINNER', 6, (1.5..9.1), 0.01),
-    RubyFu::ParamDef.SLIDER('slider', 'SLIDER', 6, (1.5..9.1), 0.01),
-    RubyFu::ParamDef.STRING('string', 'STRING', 'string'),
-    RubyFu::ParamDef.TEXT('text', 'TEXT', "multi\nline\nstring"),
-    RubyFu::ParamDef.COLOR('color', 'COLOR', Gimp::Rgb.new(1.0, 0.0, 0.0, 0.0)),
-    RubyFu::ParamDef.ENUM('enum', 'ENUM', 0, 'GimpBlendMode')
+    RubyFu::ParamDef.INT32("int32", "INT32", 32),
+    RubyFu::ParamDef.TOGGLE("toggle", "TOGGLE", 1),
+    RubyFu::ParamDef.INT16("int16", "INT16", 16),
+    RubyFu::ParamDef.INT8("int8", "INT8", 8),
+    RubyFu::ParamDef.FLOAT("float", "FLOAT", 123.4),
+    RubyFu::ParamDef.SPINNER("spinner", "SPINNER", 6, (1.5..9.1), 0.01),
+    RubyFu::ParamDef.SLIDER("slider", "SLIDER", 6, (1.5..9.1), 0.01),
+    RubyFu::ParamDef.STRING("string", "STRING", "string"),
+    RubyFu::ParamDef.TEXT("text", "TEXT", "multi\nline\nstring"),
+    RubyFu::ParamDef.COLOR("color", "COLOR", Gimp::Rgb.new(1.0, 0.0, 0.0, 0.0)),
+    RubyFu::ParamDef.ENUM("enum", "ENUM", 0, "GimpBlendMode")
   ], #params
 	[] #results
 ) do|run_mode, *params|
   Gimp.message(params.join("\n"))
 end
 
-RubyFu.menu_register('ruby-fu-test-dialog', TestMenu)
+RubyFu.menu_register("ruby-fu-test-dialog", TestMenu)
 
 
 RubyFu.register(
-  'ruby-fu-test-dialog2', #procedure name
-  'runs dialog', #blurb
+  "ruby-fu-test-dialog2", #procedure name
+  "runs dialog", #blurb
   nil, #help
   nil, #author
   nil, #copyright
   nil, #date
-  'More dialog', #menupath
+  "More dialog", #menupath
   nil, #image types
   [
-    RubyFu::ParamDef.LIST('list', 'LIST', ['a', 'two', '3', 'IV']),
-    RubyFu::ParamDef.IMAGE('image', 'IMAGE'),
-    RubyFu::ParamDef.DRAWABLE('drawable', 'DRAWABLE'),
-    RubyFu::ParamDef.CHANNEL('channel', 'CHANNEL'),
-    RubyFu::ParamDef.LAYER('layer', 'LAYER'),
-    RubyFu::ParamDef.FONT('font', 'FONT', 'Monaco'),
-    RubyFu::ParamDef.FILE('file', 'FILE', '/usr/share/dict/words'),
-    RubyFu::ParamDef.DIR('dir', 'DIR', '/usr/share/dict/'),
-    RubyFu::ParamDef.PALETTE('palette','PALETTE', 'Lights'),
-    RubyFu::ParamDef.GRADIENT('gradient', 'GRADIENT', 'CD'),
-    RubyFu::ParamDef.PATTERN('pattern', 'PATTERN', 'Pine'),
-    RubyFu::ParamDef.BRUSH('brush', 'BRUSH', 'Circle (11)'),
+    RubyFu::ParamDef.LIST("list", "LIST", ["a", "two", "3", "IV"]),
+    RubyFu::ParamDef.IMAGE("image", "IMAGE"),
+    RubyFu::ParamDef.DRAWABLE("drawable", "DRAWABLE"),
+    RubyFu::ParamDef.CHANNEL("channel", "CHANNEL"),
+    RubyFu::ParamDef.LAYER("layer", "LAYER"),
+    RubyFu::ParamDef.FONT("font", "FONT", "Monaco"),
+    RubyFu::ParamDef.FILE("file", "FILE", "/usr/share/dict/words"),
+    RubyFu::ParamDef.DIR("dir", "DIR", "/usr/share/dict/"),
+    RubyFu::ParamDef.PALETTE("palette","PALETTE", "Lights"),
+    RubyFu::ParamDef.GRADIENT("gradient", "GRADIENT", "CD"),
+    RubyFu::ParamDef.PATTERN("pattern", "PATTERN", "Pine"),
+    RubyFu::ParamDef.BRUSH("brush", "BRUSH", "Circle (11)"),
   ], #params
 	[] #results
 ) do|run_mode, *params|
   Gimp.message(params.join("\n"))
 end
 
-RubyFu.menu_register('ruby-fu-test-dialog2', TestMenu)
+RubyFu.menu_register("ruby-fu-test-dialog2", TestMenu)
 

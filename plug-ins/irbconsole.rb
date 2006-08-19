@@ -18,27 +18,27 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor,Boston, MA
 # 02110-1301, USA.
 
-require 'rubyfu'
+require "rubyfu"
 
 RubyFu.register(
-  'ruby-fu-console', #procedure name
-  _('Starts an irb session in a console.'), #blurb
+  "ruby-fu-console", #procedure name
+  _("Starts an irb session in a console."), #blurb
   nil, #help
   nil, #author
   nil, #copyright
   nil, #date
-  _('Irb Console'), #menupath
+  _("Irb Console"), #menupath
   nil, #image types
   nil, #params
   nil #results
 ) do
-  require 'irb'
+  require "irb"
   
   include Gimp
   include PDB::Access
 
-  console = File.join(GIMP_PLUG_IN_DIRECTORY, 'ruby', 'ruby-fu-console')
-  $stdin = $stdout = open("|#{console}", 'w+')
+  console = File.join(GIMP_PLUG_IN_DIRECTORY, "ruby", "ruby-fu-console")
+  $stdin = $stdout = open("|#{console}", "w+")
 
   puts _("Interactive Gimp-Ruby Console")
   puts _("Ruby version #{RUBY_VERSION}")
@@ -58,4 +58,4 @@ RubyFu.register(
   end
 end
 
-RubyFu.menu_register('ruby-fu-console', RubyFu::RubyFuMenu)
+RubyFu.menu_register("ruby-fu-console", RubyFu::RubyFuMenu)

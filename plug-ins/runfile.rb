@@ -18,7 +18,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor,Boston, MA
 # 02110-1301, USA.
 
-require 'rubyfu'
+require "rubyfu"
 
 include Gimp
 include RubyFu
@@ -47,56 +47,56 @@ module RubyFu
 end
 
 help_string = _(
-  'The procedure argument should be the name of the ' +
-  'procedure defined in the file you wish to run. ' +
-  'The drawable argument is only needed if the procedure '+
-  'is image based.'
+  "The procedure argument should be the name of the " +
+  "procedure defined in the file you wish to run. " +
+  "The drawable argument is only needed if the procedure "+
+  "is image based."
 )
 
 register(
-  'ruby-fu-run-file', #procedure name
-  _('Runs a Ruby-Fu script without requiring you to install it.'), #blurb
+  "ruby-fu-run-file", #procedure name
+  _("Runs a Ruby-Fu script without requiring you to install it."), #blurb
   help_string, #help
-  'Scott Lembcke', #author
-  'Scott Lembcke', #copyright
-  '2006', #date
-  _('Run File'), #menupath
+  "Scott Lembcke", #author
+  "Scott Lembcke", #copyright
+  "2006", #date
+  _("Run File"), #menupath
   nil, #image types
   [
-    ParamDef.FILE('file', _('File')),
-    ParamDef.STRING('procedure', _('Procedure name'), 'ruby-fu-'),
-    ParamDef.DRAWABLE('drawable', _('Drawable (if needed)')),
+    ParamDef.FILE("file", _("File")),
+    ParamDef.STRING("procedure", _("Procedure name"), "ruby-fu-"),
+    ParamDef.DRAWABLE("drawable", _("Drawable (if needed)")),
   ], #params
   [] #results
 ) do|run_mode, filename, procname, drawable|
-  Shelf['ruby-fu-last-run-file'] = [filename, procname, drawable]
+  Shelf["ruby-fu-last-run-file"] = [filename, procname, drawable]
 
   load(filename)
   RubyFu.test_proc(procname, drawable)
 end
 
-menu_register('ruby-fu-run-file', RubyFuMenu)
+menu_register("ruby-fu-run-file", RubyFuMenu)
 
 
 register(
-  'ruby-fu-rerun-file', #procedure name
-  _('Reruns the last file ran using Runfile'), #blurb
+  "ruby-fu-rerun-file", #procedure name
+  _("Reruns the last file ran using Runfile"), #blurb
   nil, #help
-  'Scott Lembcke', #author
-  'Scott Lembcke', #copyright
-  '2006', #date
-  _('Rerun File'), #menupath
+  "Scott Lembcke", #author
+  "Scott Lembcke", #copyright
+  "2006", #date
+  _("Rerun File"), #menupath
   nil, #image types
   [], #params
   [] #results
 ) do|run_mode, filename, procname|
-  last = Shelf['ruby-fu-last-run-file']
+  last = Shelf["ruby-fu-last-run-file"]
   
   if last
     PDB.ruby_fu_run_file(*last)
   else
-    Gimp.message _('No previous file to run')
+    Gimp.message _("No previous file to run")
   end
 end
 
-menu_register('ruby-fu-rerun-file', RubyFuMenu)
+menu_register("ruby-fu-rerun-file", RubyFuMenu)

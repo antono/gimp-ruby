@@ -18,8 +18,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor,Boston, MA
 # 02110-1301, USA.
 
-require 'rubyfu'
+require "rubyfu"
 include RubyFu
 
-rfu_menu = menu_branch_register('<Toolbox>/Xtns/Languages/', 'Ruby-Fu')
-menu_branch_register(rfu_menu, _('Examples'))
+rfu_menu = menu_branch_register("<Toolbox>/Xtns/Languages/", "Ruby-Fu")
+menu_branch_register(rfu_menu, _("Examples"))
