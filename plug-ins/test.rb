@@ -20,6 +20,8 @@
 
 require 'rubyfu'
 
+TestMenu = RubyFu.menu_branch_register(RubyFu::RubyFuMenu, 'Test')
+
 RubyFu.register(
   'ruby-fu-test1', #procedure name
   nil, #blurb
@@ -121,7 +123,7 @@ RubyFu.register(
   nil, #author
   nil, #copyright
   nil, #date
-  '<Toolbox>/Xtns/Languages/Ruby-Fu/Test/Echo', #menupath
+  'Echo', #menupath
   nil, #image types
   [], #params
   [] #results
@@ -154,9 +156,10 @@ RubyFu.register(
   else
     Gimp.message "Failure"
   end
-		
-	nil
 end
+
+RubyFu.menu_register('ruby-fu-test-call-echo', TestMenu)
+
 
 RubyFu.register(
   'ruby-fu-test-shelf', #procedure name
@@ -165,7 +168,7 @@ RubyFu.register(
   nil, #author
   nil, #copyright
   nil, #date
-  '<Toolbox>/Xtns/Languages/Ruby-Fu/Test/Shelf', #menupath
+  'Shelf', #menupath
   nil, #image types
   [], #params
   [] #results
@@ -187,9 +190,10 @@ RubyFu.register(
   else
     Gimp.message "Failure"
   end
-
-	nil
 end
+
+RubyFu.menu_register('ruby-fu-test-shelf', TestMenu)
+
 
 RubyFu.register(
   'ruby-fu-test-crash', #procedure name
@@ -204,8 +208,6 @@ RubyFu.register(
   [] #results
 ) do||
   raise "This is a test exception"
-  
-  nil
 end
 
 def test_exception(e)
@@ -227,7 +229,7 @@ RubyFu.register(
   nil, #author
   nil, #copyright
   nil, #date
-  '<Toolbox>/Xtns/Languages/Ruby-Fu/Test/Call', #menupath
+  'Call',
   nil, #image types
   [], #params
   [] #results
@@ -253,9 +255,10 @@ RubyFu.register(
   
   Gimp.message('Tests ' + ($failure ? 'failed' : 'successful') + ":\n" + $stdout.string)
   $stdout = STDOUT
-  
-  nil
 end
+
+RubyFu.menu_register('ruby-fu-test-call', TestMenu)
+
 
 RubyFu.register(
   'ruby-fu-test-OO', #procedure name
@@ -264,7 +267,7 @@ RubyFu.register(
   nil, #author
   nil, #copyright
   nil, #date
-  '<Toolbox>/Xtns/Languages/Ruby-Fu/Test/OO', #menupath
+  'OO', #menupath
   nil, #image types
   [], #params
   [Gimp::ParamDef.IMAGE('image', 'Image')] #results
@@ -302,6 +305,9 @@ RubyFu.register(
   img
 end
 
+RubyFu.menu_register('ruby-fu-test-OO', TestMenu)
+
+
 RubyFu.register(
   'ruby-fu-test-dialog', #procedure name
   'runs dialog', #blurb
@@ -309,7 +315,7 @@ RubyFu.register(
   nil, #author
   nil, #copyright
   nil, #date
-  '<Toolbox>/Xtns/Languages/Ruby-Fu/Test/dialog', #menupath
+  'Dialog', #menupath
   nil, #image types
   [
     RubyFu::ParamDef.INT32('int32', 'INT32', 32),
@@ -326,11 +332,11 @@ RubyFu.register(
   ], #params
 	[] #results
 ) do|run_mode, *params|
-  
   Gimp.message(params.join("\n"))
-
-  nil
 end
+
+RubyFu.menu_register('ruby-fu-test-dialog', TestMenu)
+
 
 RubyFu.register(
   'ruby-fu-test-dialog2', #procedure name
@@ -339,7 +345,7 @@ RubyFu.register(
   nil, #author
   nil, #copyright
   nil, #date
-  '<Toolbox>/Xtns/Languages/Ruby-Fu/Test/more dialog', #menupath
+  'More dialog', #menupath
   nil, #image types
   [
     RubyFu::ParamDef.LIST('list', 'LIST', ['a', 'two', '3', 'IV']),
@@ -357,8 +363,8 @@ RubyFu.register(
   ], #params
 	[] #results
 ) do|run_mode, *params|
-  
   Gimp.message(params.join("\n"))
-
-  nil
 end
+
+RubyFu.menu_register('ruby-fu-test-dialog2', TestMenu)
+

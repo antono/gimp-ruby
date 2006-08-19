@@ -493,56 +493,6 @@ rb2GimpRGB (VALUE color)
 }
 
 VALUE
-GimpHSV2rb (const GimpHSV *color)
-{
-  GimpHSV *tmp = ALLOC(GimpHSV);
-  *tmp = *color;
-  return Data_Wrap_Struct(cGimpHSV, NULL, free, tmp);
-}
-
-GimpHSV *
-rb2GimpHSVPtr (VALUE color)
-{
-  if (!rb_obj_is_kind_of(color, cGimpHSV))
-   rb_raise(rb_eTypeError, "Object %s is not a Gimp::HSV", StringValuePtr(color));
-
-  GimpHSV *tmp;
-  Data_Get_Struct(color, GimpHSV, tmp);
-  return tmp;
-}
-
-GimpHSV
-rb2GimpHSV (VALUE color)
-{
-  return *rb2GimpHSVPtr(color);
-}
-
-VALUE
-GimpCMYK2rb (const GimpCMYK *color)
-{
-  GimpCMYK *tmp = ALLOC(GimpCMYK);
-  *tmp = *color;
-  return Data_Wrap_Struct(cGimpCMYK, NULL, free, tmp);
-}
-
-GimpCMYK *
-rb2GimpCMYKPtr (VALUE color)
-{
-  if (!rb_obj_is_kind_of(color, cGimpCMYK))
-   rb_raise(rb_eTypeError, "Object %s is not a Gimp::CMYK", StringValuePtr(color));
-
-  GimpCMYK *tmp;
-  Data_Get_Struct(color, GimpCMYK, tmp);
-  return tmp;
-}
-
-GimpCMYK
-rb2GimpCMYK (VALUE color)
-{
-  return *rb2GimpCMYKPtr(color);
-}
-
-VALUE
 GimpParasite2rb (GimpParasite leech)
 {
   volatile VALUE name = rb_str_new2(leech.name);

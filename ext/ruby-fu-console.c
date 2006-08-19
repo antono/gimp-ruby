@@ -17,7 +17,14 @@
  * 02110-1301, USA.
  */
  
+/* This file isn't actually part of the extension, but a helper
+ * program used by the Ruby-Fu console. Hopefully this will be a
+ * temporary solution. It simply uses the standard streams to
+ * communicate with the console plugin.
+ */
+ 
 #include <string.h>
+#include <libintl.h>
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
@@ -68,16 +75,21 @@ read_func (GIOChannel   *stream,
 
       if (status == G_IO_STATUS_EOF)
         {
-          break;
+          /* If the plugin closes, we should quit too. */
+           
+          gtk_main_quit();
+          return TRUE;
         }
       else if (status == G_IO_STATUS_AGAIN)
         {
+          /* If we reach the end of the stream
+           * scroll to the end and wait for more data */
+           
           scroll_end_add();
           return TRUE;
         }
     }
-
-  gtk_main_quit();
+    
   return TRUE;
 }
 
@@ -86,6 +98,7 @@ key_function (GtkWidget   *widget,
               GdkEventKey *event,
               gpointer     ptr)
 {
+  /* Catch the return key and process accordingly */
   if (event->keyval == GDK_Return)
     {
       GtkEntry *entry = ptr;
@@ -111,7 +124,7 @@ int main(int argc, char **argv)
 
   /* make window */
   GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title(GTK_WINDOW(window), "Ruby Fu Console");
+  gtk_window_set_title(GTK_WINDOW(window), gettext("Ruby-Fu Console"));
   gtk_window_set_default_size(GTK_WINDOW(window), WIDTH, HEIGHT);
   g_signal_connect(window, "destroy", G_CALLBACK(window_destroy), NULL);
 
@@ -156,7 +169,7 @@ int main(int argc, char **argv)
                    G_CALLBACK(key_function), entry);
   gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
 
-  /* open stdin */
+  /* open stdin in non-blocking mode */
   GError *err = NULL;
   GIOChannel *stream = g_io_channel_unix_new(0);
   GIOFlags flags = g_io_channel_get_flags(stream);

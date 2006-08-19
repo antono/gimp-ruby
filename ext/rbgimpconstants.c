@@ -31,6 +31,7 @@ void register_enums(void)
   g_type_init();
   gimp_enums_init();
   
+  VALUE mEnum = rb_define_module_under(mGimp, "EnumNames");
   enum_type_names = gimp_enums_get_type_names (&n_enum_type_names);
   for (i = 0; i < n_enum_type_names; i++)
     {
@@ -39,20 +40,22 @@ void register_enums(void)
       GEnumClass  *enum_class = g_type_class_ref (enum_type);
       GEnumValue  *value;
       
-      VALUE mEnum = rb_define_module_under(mGimp, "EnumNames");
+      /* Create and add the new name hash */
       volatile VALUE hash = rb_hash_new();
       rb_define_const(mEnum, enum_name + 4, hash);
 
+      /* Iterate over the enums */
       for (value = enum_class->values; value->value_name; value++)
-        if (!strncmp ("GIMP_", value->value_name, 5))
-          {
-            gchar *name = value->value_name + 5;
-            volatile VALUE rbname = rb_str_new2(name);
-            VALUE num = INT2NUM(value->value);
-            
-            rb_hash_aset(hash, num, rbname);
-            rb_define_const(mGimp, name, num);
-          }
+        {
+          gchar *name = value->value_name + 5;
+          volatile VALUE rbname = rb_str_new2(name);
+          VALUE num = INT2NUM(value->value);
+          
+          /* Add the enum and name to the name hash */
+          rb_hash_aset(hash, num, rbname);
+          /* Add the enum to the Gimp module */
+          rb_define_const(mGimp, name, num);
+        }
 
       g_type_class_unref (enum_class);
     }
@@ -78,4 +81,10 @@ Init_gimpconstants (void)
   rb_define_const(mGimp, "CHECK_SIZE_SM", INT2NUM(GIMP_CHECK_SIZE_SM));
   rb_define_const(mGimp, "CHECK_DARK", INT2NUM(GIMP_CHECK_DARK));
   rb_define_const(mGimp, "CHECK_LIGHT", INT2NUM(GIMP_CHECK_LIGHT));
+  
+  rb_define_const(mGimp, "GIMP_DIRECTORY", rb_str_new2(gimp_directory()));
+  rb_define_const(mGimp, "GIMP_DATA_DIRECTORY", rb_str_new2(gimp_data_directory()));
+  rb_define_const(mGimp, "GIMP_PLUG_IN_DIRECTORY", rb_str_new2(gimp_plug_in_directory()));
+  rb_define_const(mGimp, "GIMP_LOCALE_DIRECTORY", rb_str_new2(gimp_locale_directory()));
+  rb_define_const(mGimp, "GIMP_SYSCONF_DIRECTORY", rb_str_new2(gimp_sysconf_directory()));
 }

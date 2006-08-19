@@ -137,26 +137,29 @@ module RubyFu
       @author, @copyright, *rem = *rem
       @date, *rem = *rem
       
-      menupath,*rem = *rem
-      if menupath.empty?
-        @menulabel = @name
-        @type = :internal
-      else
-        @type = case menupath
+      menulabel,*rem = *rem
+      @menulabel = (menulabel.empty?) ? @name : menulabel
+      @menupaths = []
+      
+      @imagetypes, *rem = *rem
+      @params, @results, *rem = *rem
+            
+      @function = func
+    end
+    
+    def add_menupath(path)
+        type = case path
         when /<Image>/: :image
         when /<Toolbox>/: :toolbox
         end
         
-        @menubasepath = File.dirname menupath
-        @menulabel = File.basename menupath
-      end
-      
-      @imagetypes, *rem = *rem
-      @params, @results, *rem = *rem
-      
-      @fullparams = preparams + @params
-      
-      @function = func
+        if @type and @type != type
+          raise "Install locations don't match"
+        else
+          @type = type
+        end
+        
+        @menupaths << path
     end
     
     def preparams
@@ -173,8 +176,12 @@ module RubyFu
         []
       end
     end
+    
+    def fullparams
+      @fullparams ||= preparams + @params
+    end
         
-    def query      
+    def query
       Gimp.install_procedure(
         @name,
         @blurb,
@@ -185,13 +192,13 @@ module RubyFu
         @menulabel,
         @imagetypes,
         Gimp::PLUGIN,
-        (@fullparams.empty? ? nil : @fullparams),
+        (fullparams.empty? ? nil : fullparams),
         (@results.empty? ? nil : @results)
       )
       
-    	if @menubasepath
-    	  PDB.gimp_plugin_menu_register(@name, @menubasepath)
-    	end
+      @menupaths.each do|menupath|
+        PDB.gimp_plugin_menu_register(@name, menupath)
+      end
     end
     
     def default_args
@@ -222,16 +229,17 @@ module RubyFu
     
     def run_with_args(args)
       nargs = args.length
-      nparams = @fullparams.length
+      nparams = fullparams.length
       unless nargs == nparams
-        raise(CallError, "Wrong number of arguments. (#{nargs} for #{nparams})")
+        message = "Wrong number of arguments. (#{nargs} for #{nparams})"
+        raise(CallError, message)
       end
-              
+      
       return @function.call(*args)
     end
     
     def run(*args)
-      if @fullparams.length > 0 and @fullparams[0].name == 'run-mode'
+      if @type
         runMode = args[0].data
       else
         runMode = Gimp::RUN_NONINTERACTIVE
@@ -243,7 +251,7 @@ module RubyFu
       else []
       end
       
-      args = args.zip(@fullparams).collect do|arg, param|
+      args = args.zip(fullparams).collect do|arg, param|
         raise(CallError, "Bad argument") unless arg.type == param.type
         next arg.transform
       end
@@ -279,6 +287,7 @@ module RubyFu
   end
   
   @@procedures = {}
+  @@menubranches = []
   
   def register(
     name,
@@ -311,8 +320,23 @@ module RubyFu
   end
   module_function :register
   
+  def menu_register(name, path)
+    proc = @@procedures[name]
+    proc.add_menupath(path)
+  end
+  module_function :menu_register
+  
+  def menu_branch_register(path, name)
+    @@menubranches << [path, name]
+    File.join(path, name)
+  end
+  module_function :menu_branch_register
+  
   def self.query
     @@procedures.each_value{|proc| proc.query}
+    @@menubranches.each do|path, name|
+      PDB.gimp_plugin_menu_branch_register(path, name)
+    end
   end
   
   def self.run(name, *args)
@@ -329,7 +353,8 @@ module RubyFu
     rescue Cancel
       return [Gimp::Param.STATUS(Gimp::PDB_CANCEL)]
     rescue Exception
-      PDB.gimp_message "A #{$!.class} has occured: #{$!.message}\n#{$@.join("\n")}"
+      message = "A #{$!.class} has occured: #{$!.message}\n#{$@.join("\n")}"
+      PDB.gimp_message message
       return [Gimp::Param.STATUS(Gimp::PDB_EXECUTION_ERROR)]
     end
   end
@@ -344,6 +369,9 @@ module RubyFu
   def self.main
     Gimp.main(PLUG_IN_INFO)
   end
+  
+  RubyFuMenu = '<Toolbox>/Xtns/Languages/Ruby-Fu'
+  ExamplesMenu = '<Toolbox>/Xtns/Languages/Ruby-Fu/Examples'
 end
 
 END {

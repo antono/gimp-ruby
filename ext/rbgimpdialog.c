@@ -29,10 +29,11 @@
 
 VALUE mRubyFu;
 
+/* struct used to retrieve return values */
 typedef struct
 {
-  gpointer ptr;
-  VALUE (*func)(gpointer ptr);
+  gpointer ptr; /* Data to be passed to the function */
+  VALUE (*func)(gpointer ptr); /* Function to convert to Ruby values */
 } Result;
 
 static VALUE
@@ -209,13 +210,6 @@ brush_select (const gchar *name,
   *str = g_strdup(name);
 }
 
-/*TODO remove this function*/
-static VALUE
-nothing (gpointer ptr)
-{
-  return Qnil;
-}
-
 static GtkWidget *
 make_spinner (gdouble min,
               gdouble max,
@@ -327,7 +321,6 @@ handle_string_types (VALUE param,
                      Result *result)
 {
   GtkWidget *widget;
-  gpointer data;
   
   gchar *defstr;
   if (deflt == Qnil)
@@ -376,7 +369,7 @@ handle_string_types (VALUE param,
   else if (subtypeid == rb_intern("palette"))
     {
       widget = gimp_palette_select_widget_new("Ruby-Fu", defstr,
-                                              &palette_select, data);
+                                              &palette_select, NULL);
       
       result->ptr = wrap_string(defstr);
       result->func = &get_string_from_pointer;
@@ -384,7 +377,7 @@ handle_string_types (VALUE param,
   else if (subtypeid == rb_intern("gradient"))
     {
       widget = gimp_gradient_select_widget_new("Ruby-Fu", defstr,
-                                               &gradient_select, data);
+                                               &gradient_select, NULL);
       
      result->ptr = wrap_string(defstr);
      result->func = &get_string_from_pointer;
@@ -392,7 +385,7 @@ handle_string_types (VALUE param,
   else if (subtypeid == rb_intern("pattern"))
     {
       widget = gimp_pattern_select_widget_new("Ruby-Fu", defstr,
-                                              &pattern_select, data);
+                                              &pattern_select, NULL);
   
       result->ptr = wrap_string(defstr);
       result->func = &get_string_from_pointer;
@@ -401,7 +394,7 @@ handle_string_types (VALUE param,
     {
       widget = gimp_brush_select_widget_new("Ruby-Fu", defstr,
                                             100, -1, GIMP_NORMAL_MODE,
-                                            &brush_select, data);
+                                            &brush_select, NULL);
       
       result->ptr = wrap_string(defstr);
       result->func = &get_string_from_pointer;
@@ -629,7 +622,7 @@ make_table (VALUE    params,
         rb_raise(rb_eArgError, "Parameters must be of type Gimp::ParamDef");
 
       VALUE rbdscr = rb_struct_aref(param, ID2SYM(id_dscr));
-      gchar *dscr = g_strdup_printf("%s:", gettext(StringValuePtr(rbdscr)));
+      gchar *dscr = g_strdup_printf("%s:", StringValuePtr(rbdscr));
       
       GtkWidget *label = gtk_label_new(dscr);
       g_free(dscr);
@@ -678,7 +671,7 @@ show_dialog (VALUE self,
   GtkWidget *dialog, *table;
   gchar *procname = StringValuePtr(rbprocname);
   gchar *title = g_strdup_printf("Ruby Fu: %s",
-                                 gettext(StringValuePtr(rbtitle)));
+                                 StringValuePtr(rbtitle));
 
   int num_results;
   Result *results;

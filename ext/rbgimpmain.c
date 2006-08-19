@@ -23,12 +23,15 @@
 #include <ruby.h>
 #include <libgimp/gimp.h>
 
+/* It seems that ruby has it's own config.h file that it includes.
+ * We have to undef some things so we don't get name collisions */
 #undef PACKAGE_NAME
 #undef PACKAGE_STRING
 #undef PACKAGE_TARNAME
 #undef PACKAGE_VERSION
 
 #include <libintl.h>
+/* including "config.h" would include Ruby's config.h */
 #include "../config.h"
 
 #include "rbgimp.h"
@@ -78,8 +81,7 @@ VALUE plug_in_callbacks[4];
 static VALUE
 init_protect (VALUE unused)
 {
-	VALUE cback = plug_in_callbacks[0];
-	if (cback == Qnil) return Qnil;
+  VALUE cback = plug_in_callbacks[0];
 	
   if (!rb_respond_to(cback, id_call))
     rb_raise(rb_eTypeError, "The init callback does not respond to #call");
@@ -101,8 +103,7 @@ init_callback (void)
 static VALUE
 quit_protect (VALUE unused)
 {
-	VALUE cback = plug_in_callbacks[1];
-	if (cback == Qnil) return Qnil;
+  VALUE cback = plug_in_callbacks[1];
 	
   if (!rb_respond_to(cback, id_call))
     rb_raise(rb_eTypeError, "The quit callback does not respond to #call");
@@ -124,7 +125,8 @@ quit_callback (void)
 static VALUE
 query_protect (VALUE unused)
 {
-	VALUE cback = plug_in_callbacks[2];
+  VALUE cback = plug_in_callbacks[2];
+  
   if (!rb_respond_to(cback, id_call))
     rb_raise(rb_eTypeError, "The query callback does not respond to #call");
 
@@ -181,23 +183,21 @@ run_callback (const gchar      *name,
   gc_register_params(*return_vals, *n_return_vals);
 }
 
-GimpPlugInInfo PLUG_IN_INFO = {
-  init_callback,
-  quit_callback,
-  query_callback,
-  run_callback
-};
-
 static VALUE
 rb_gimp_main (VALUE self,
              VALUE plug_in_info)
 {
-  plug_in_callbacks[0] = rb_struct_aref(plug_in_info, ID2SYM(id_init_proc));
-  plug_in_callbacks[1] = rb_struct_aref(plug_in_info, ID2SYM(id_quit_proc));
-  plug_in_callbacks[2] = rb_struct_aref(plug_in_info, ID2SYM(id_query_proc));
-  plug_in_callbacks[3] = rb_struct_aref(plug_in_info, ID2SYM(id_run_proc));
+  VALUE init_proc = rb_struct_aref(plug_in_info, ID2SYM(id_init_proc));
+  VALUE quit_proc = rb_struct_aref(plug_in_info, ID2SYM(id_quit_proc));
+  VALUE query_proc = rb_struct_aref(plug_in_info, ID2SYM(id_query_proc));
+  VALUE run_proc = rb_struct_aref(plug_in_info, ID2SYM(id_run_proc));
   
-  /*build argv*/
+  plug_in_callbacks[0] = init_proc;
+  plug_in_callbacks[1] = quit_proc;
+  plug_in_callbacks[2] = query_proc;
+  plug_in_callbacks[3] = run_proc;
+  
+  /* build argv */
   VALUE *arr = RARRAY(rb_argv)->ptr;
   gint argc = RARRAY(rb_argv)->len;
   gchar *argv[argc + 1];
@@ -209,8 +209,15 @@ rb_gimp_main (VALUE self,
   for (i=0; i<argc; i++)
           argv[i + 1] = StringValuePtr(arr[i]);
   
-  /*call gimp_main*/
-  gint rstatus = gimp_main(&PLUG_IN_INFO, argc + 1, argv);
+  /* call gimp_main */
+  GimpPlugInInfo plug_in_info_struct = {
+    (init_proc != Qnil) ? init_callback : NULL,
+    (quit_proc != Qnil) ? quit_callback : NULL,
+    query_callback,
+    run_callback
+  };
+  
+  gint rstatus = gimp_main(&plug_in_info_struct, argc + 1, argv);
   return INT2NUM(rstatus);
 }
 
@@ -263,9 +270,6 @@ rb_gimp_install_procedure (VALUE self,
   return Qnil;
 }
 
-/*TODO temp proc functions
-Are they needed?*/
-
 static VALUE
 rb_gimp_run_procedure (VALUE self,
                        VALUE name,
@@ -295,11 +299,7 @@ Init_gimpmain (void)
 {
   gc_array = rb_ary_new();
   rb_gc_register_address(&gc_array);
-  
-/*  setlocale(LC_ALL, "");
-  bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
-  textdomain(GETTEXT_PACKAGE); */
-  
+    
   bindtextdomain(GETTEXT_PACKAGE, gimp_locale_directory());
   bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
   textdomain(GETTEXT_PACKAGE);

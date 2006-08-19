@@ -17,6 +17,8 @@
  * 02110-1301, USA.
  */
 
+#include <libintl.h>
+
 #include <ruby.h>
 #include <libgimp/gimp.h>
 
@@ -139,7 +141,7 @@ rb_gimp_gettext(VALUE self, VALUE rbstr)
 void
 Init_gimpext (void)
 {
-	mGimp = rb_define_module("Gimp");
+  mGimp = rb_define_module("Gimp");
   rb_define_module_function(mGimp, "getpid",           rb_gimp_getpid,           0);
   rb_define_module_function(mGimp, "tile_width",       rb_gimp_tile_width,       0);
   rb_define_module_function(mGimp, "tile_height",      rb_gimp_tile_height,      0);
@@ -158,16 +160,13 @@ Init_gimpext (void)
   
   rb_define_module_function(mGimp, "gettext", rb_gimp_gettext, 1);
   
-  Init_structures();
-  Init_ids();
+  Init_definitions();
 
   Init_gimpconstants();
   Init_gimpmain();
   Init_gimpproceduraldb();
 
   Init_gimpcolorrgb();
-  Init_gimpcolorhsv();
-  Init_gimpcolorcmyk();
-  Init_gimpcolorspace();
+  /*Init_gimpcolorspace();*/
   Init_rubyfudialog();
 }

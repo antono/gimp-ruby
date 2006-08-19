@@ -33,9 +33,17 @@ ID id_run_proc;
 ID id_call;
 ID id_flags;
 
+VALUE sGimpParamDef;
+VALUE sGimpParam;
+VALUE sGimpPlugInInfo;
+VALUE sGimpParamRegion;
+VALUE sGimpParasite;
+
+
 void
-Init_ids (void)
+Init_definitions (void)
 {
+  /* Define the id's */
   id_type = rb_intern("type");
   id_name = rb_intern("name");
   id_dscr = rb_intern("dscr");
@@ -46,4 +54,24 @@ Init_ids (void)
   id_run_proc = rb_intern("run_proc");
   id_call = rb_intern("call");
   id_flags = rb_intern("flags");
+
+  /* Define the structures */
+  sGimpParamDef = rb_struct_define("GimpParamDef", "type", "name", "dscr", NULL);
+  rb_define_const(mGimp, "ParamDef", sGimpParamDef);
+
+  sGimpParam = rb_struct_define("GimpParam", "type", "data", NULL);
+  rb_define_const(mGimp, "Param", sGimpParam);
+
+  sGimpPlugInInfo = rb_struct_define("GimpPlugInInfo",
+                                     "init_proc",
+                                     "quit_proc",
+                                     "query_proc",
+                                     "run_proc", NULL);
+  rb_define_const(mGimp, "PlugInInfo", sGimpPlugInInfo);
+  
+  sGimpParasite = rb_struct_define("GimpParasite",
+                                   "name",
+                                   "flags",
+                                   "data", NULL);
+  rb_define_const(mGimp, "Parasite", sGimpParasite);
 }

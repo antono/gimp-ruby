@@ -1,4 +1,59 @@
-2006-08-14  Scott Lembcke <lemb0029@cvs.gnome.org>
+2006-08-14  Scott Lembcke <slembcke@cvs.gnome.org>
+
+        * ChangeLog: Fixed my email address.
+        
+        * ext/: Merged ids.c and structures.c into definitions.c. Removed
+          rbgimpcolorcmyk.c and rbgimpcolorhsv.c. 
+        
+        * ext/Makefile.am: Changes to reflect changes in ext/. Disabled
+          rbgimpcolorspace.c.
+          
+        * ext/conversion.c: Removed conversions for the Gimp::HSV and
+          Gimp::CMYK classes.
+          
+        * ext/rbgimp.*: Minor formating changes. Removed init functions for
+          removed/disabled modules.
+          
+        * ext/rbgimpconstants.c: Moved the line that defines the 
+          Gimp::EnumNames module outside the loop. Removed the check for the
+          "GIMP_" prefix. Added directory constants.
+          
+        * ext/rbgimpdialog.c: Removed the nothing() function. In
+          handle_string_types() removed the 'data' variable and replaced it
+          with NULL. Removed gettext() calls as it can now be called
+          dynamically from Ruby.
+          
+        * Changed the way that rb_gimp_main() is used so that plugins that
+          don't use an init or quit callback don't define empty callbacks.
+          
+        * ext/rub-fu-console.c: Added a gettext() call for the window name.
+          Added some commenting and rearranged some code for readability. 
+        
+        * gimp-lib/rubyfu.rb: Menu items are now registered using
+          RubyFu.menu_register(). Added some constants for common RubyFu
+          menupaths. Minor readability changes.
+          
+        * Added plug-ins/rubyfu_menu.rb to define the Ruby-Fu menu subpaths.
+        
+        * Removed plug-ins/coolmetal-logo.rb. It's outlived it's usefulness
+          for testing.
+          
+        * plug-ins/Makefile.am: Changes to reflect changes in plug-ins/
+        
+        * plug-ins/*.rb: Got all non-test plugins gettext ready. Changed all
+          to use the new menu registering scheme.
+          
+        * plug-ins/runfile.rb: Some fixes were needed due to changes in
+          gimp-lib/rubyfu.rb.
+          
+        * plug-ins/sphere.rb: Reconverted so that it uses more of the newer
+          features.
+          
+        * plug-ins/sunset.rb: Changed not to use Context.push/pop. There 
+          seems to be a bug that prevents custom mode from working correctly
+          after the context has been pushed.
+          
+2006-08-14  Scott Lembcke <slembcke@cvs.gnome.org>
 
         * gimp-lib/gimp.rb: Renamed bool2int_filter() to ruby2int_filter() and
           added support for nil values. Added Drawables to the
@@ -39,7 +94,7 @@
           Minor reformatting and updates to reflect changes in
           gimp-lib/pdb.rb.
 
-2006-08-08  Scott Lembcke <lemb0029@gnome.org>
+2006-08-08  Scott Lembcke <slembcke@cvs.gnome.org>
 
         * gimp-lib/gimp_oo.rb: Moved OO type class definitions to gimp.rb.
         
@@ -86,20 +141,20 @@
 	* todo.txt: Removed some completed items. Reordered some items
 	and added a couple of new items.
 
-2006-08-04  Scott Lembcke <lemb0029@gnome.org>
+2006-08-04  Scott Lembcke <slembcke@cvs.gnome.org>
 
         * ext/rbgimp.c: Added a Gimp.gettext() method.
         
         * gimp-lib/gimp.rb: Added _() and N_() methods.
 
-2006-08-04  Scott Lembcke <lemb0029@gnome.org>
+2006-08-04  Scott Lembcke <slembcke@cvs.gnome.org>
 
         * ext/ruby-fu-dialog.c: Added a '>>' prompt in front of the entry box.
           Changed default size for the console window.
         
         * plug-ins/irbconsole.rb: Added a ruby version notification.
 
-2006-08-04  Scott Lembcke <lemb0029@gnome.org>
+2006-08-04  Scott Lembcke <slembcke@cvs.gnome.org>
 
         * ext/rbgimpdialog.c: Added a list and multiline text widget. Some
           minor simplifications to other parts of the code.
@@ -108,7 +163,7 @@
         
         * plug-ins/test.rb: Added new widgets to the test dialogs.
         
-2006-08-04  Scott Lembcke <lemb0029@gnome.org>
+2006-08-04  Scott Lembcke <slembcke@cvs.gnome.org>
         
         * Added the GPL notification to all source files.
         
@@ -136,7 +191,7 @@
 
 	* ext/ruby-fu-console.c: Added support file needed by irbconsole.rb
 
-2006-08-03  Scott Lembcke <lemb0029@gnome.org>
+2006-08-03  Scott Lembcke <slembcke@cvs.gnome.org>
 
         * gimp-lib/gimp.rb: Now sets $KCODE to UTF8. Removed rubyfu.rb from
           list of loaded modules.
@@ -159,7 +214,7 @@
         
         * ext/rbgimpmain.c: Added Gettext initialization calls.
 
-2006-07-28  Scott Lembcke <lemb0029@gnome.org>
+2006-07-28  Scott Lembcke <slembcke@cvs.gnome.org>
 
         * Added plug-ins/irbconsole.rb.
         
@@ -171,7 +226,7 @@
 	version). Added macros that use the minor version number to set
 	GIMPRUBY_UNSTABLE properly.
 
-2006-07-28  Scott Lembcke <lemb0029@gnome.org>
+2006-07-28  Scott Lembcke <slembcke@cvs.gnome.org>
 
         * gimp-lib/gimp_oo.rb: Added the Drawable class and made Layer and
           Channel inherit from it.
@@ -187,7 +242,7 @@
 	* plug-ins/coolmetal-logo.rb.c: Use ParamDef.FONT instead of
 	ParamDef.STRING to specify the default font to be used.
 
-2006-07-21  Scott Lembcke <lemb0029@gnome.org>
+2006-07-21  Scott Lembcke <slembcke@cvs.gnome.org>
 
         * gimp-lib/rubyfu.rb: Removed some unnecesary code. Clicking 'cancel' 
           in the dialog will now work correctly. Interactive procedures that 
@@ -200,7 +255,7 @@
           
         * plug-ins/test.rb: Added the new parameter type.
 
-2006-07-21  Scott Lembcke <lemb0029@gnome.org>
+2006-07-21  Scott Lembcke <slembcke@cvs.gnome.org>
 
         * ext/rbgimpdialog.c: Changed spacing, padding and alignment of the
           widgets. Also fixed some memory leaks where the dialog was not
@@ -210,7 +265,7 @@
         * plug-ins/test.rb: Filled in parameter descriptions for dialog
           functions.
           
-2006-07-20  Scott Lembcke <lemb0029@gnome.org>
+2006-07-20  Scott Lembcke <slembcke@cvs.gnome.org>
 
         * ext/rbgimpdialog.c: Even more parameter types added.
         
@@ -224,14 +279,14 @@
         
         * plug-ins/sphere.rb: Updated to use OO types and new parameter types.
 
-2006-07-19  Scott Lembcke <lemb0029@gnome.org>
+2006-07-19  Scott Lembcke <slembcke@cvs.gnome.org>
 
         * ext/rbgimpdialog.c: More parameter types added.
         
         * plug-ins/test.rb: Added more parameter types to the dialog test
           procedure.
 
-2006-07-19  Scott Lembcke <lemb0029@gnome.org>
+2006-07-19  Scott Lembcke <slembcke@cvs.gnome.org>
 
         * ext/rbgimpdialog.c: More parameter types added.
         
@@ -245,7 +300,7 @@
 
 	* ext/rbgimpdialog.c: Added missing declaration for mRubyFu.
 
-2006-07-18  Scott Lembcke <lemb0029@gnome.org>
+2006-07-18  Scott Lembcke <slembcke@cvs.gnome.org>
 
         * ext/Makefile.am: Added ext/rbgimpdialog.c.
         
@@ -259,11 +314,11 @@
         
         * plug-ins/test.rb: Added a procedure to run the dialog.
         
-2006-07-10  Scott Lembcke <lemb0029@gnome.org>
+2006-07-10  Scott Lembcke <slembcke@cvs.gnome.org>
 
         * ext/*.c: Style fixes. Swapped stdlib functions for glib ones.
         
-2006-07-08  Scott Lembcke <lemb0029@gnome.org>
+2006-07-08  Scott Lembcke <slembcke@cvs.gnome.org>
 
         * Added plug-in/test.rb.
         
@@ -280,7 +335,7 @@
         * gimp-lib/gimp.rb: Changes in error handling to reflect
           gimp-lib/pdb.rb.
         
-2006-07-05  Scott Lembcke <lemb0029@gnome.org>
+2006-07-05  Scott Lembcke <slembcke@cvs.gnome.org>
 
         * ext/conversion.c: Finished conversion for parasite parameters.
         
@@ -297,7 +352,7 @@
 	* plug-ins/Makefile.am: Renamed RUBYGIMP_UNSTABLE to GIMPRUBY_UNSTABLE
 	  to match project name. Set its value to 'yes' in configure.in file.
 
-2006-07-01  Scott Lembcke <lemb0029@gnome.org>
+2006-07-01  Scott Lembcke <slembcke@cvs.gnome.org>
 
 	* ext/ids.c: Added an id for 'flags'.
 
@@ -329,7 +384,7 @@
 	* plug-ins/Makefile.am: Moved hello.rb to the list of test scripts.
 	  Changed a tab to spaces.
 
-2006-06-30  Scott Lembcke <lemb0029@gnome.org>
+2006-06-30  Scott Lembcke <slembcke@cvs.gnome.org>
 
 	* ext/: Removed all references to array stubs. Arrays are now 
 	  converted in place.
@@ -346,7 +401,7 @@
 	
 	* ext/: Removed Gimp::ParamRegion structs.
 
-2006-06-27  Scott Lembcke <lemb0029@gnome.org>
+2006-06-27  Scott Lembcke <slembcke@cvs.gnome.org>
 
 	* gimp-lib/gimp.rb: Added #to_proc to PDB::Procedure.
 	
@@ -357,7 +412,7 @@
 	* plug-ins/*: Minor changes to reflect the changes applied to 
 	  rubyfu.rb.
 	
-2006-06-24  Scott Lembcke <lemb0029@gnome.org>
+2006-06-24  Scott Lembcke <slembcke@cvs.gnome.org>
 
 	* ext/Makefile.am: Added ext/arraytypes.c.
 

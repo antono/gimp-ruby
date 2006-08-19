@@ -16,18 +16,16 @@ lib_LTLIBRARIES = gimpext.la
 
 gimpext_la_SOURCES = \
     conversion.c         \
-    ids.c                \
+    definitions.c        \
     rbgimp.c             \
-    rbgimpcolorcmyk.c    \
-    rbgimpcolorhsv.c     \
     rbgimpcolorrgb.c     \
-    rbgimpcolorspace.c   \
     rbgimpconstants.c    \
     rbgimpdialog.c       \
     rbgimp.h             \
     rbgimpmain.c         \
-    rbgimpproceduraldb.c \
-    structures.c
+    rbgimpproceduraldb.c 
+    
+#    rbgimpcolorspace.c
 
 gimpext_la_LDFLAGS = -module -avoid-version -shrext $(RUBY_DLEXT) \
     $(no_undefined)

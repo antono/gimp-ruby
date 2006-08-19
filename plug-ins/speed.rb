@@ -34,7 +34,7 @@ register(
   nil, #author
   nil, #copyright
   nil, #date
-  '<Toolbox>/Xtns/Languages/Ruby-Fu/Test/Speed', #menupath
+  'Speed', #menupath
   nil,
   nil, #params
   nil #results
@@ -43,3 +43,5 @@ register(
   
   nil
 end
+
+menu_register('ruby-fu-speed', '<Toolbox>/Xtns/Languages/Ruby-Fu/Test')
