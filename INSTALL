@@ -1,0 +1,24 @@
+To install Gimp-Ruby you need to have GIMP 2.3 installed. Other than Ruby 1.8
+and irb, Gimp-Ruby has no additional requirements that are not met by
+installing GIMP 2.3. 
+
+Assuming that provided an install prefix when building GIMP 2.3 to avoid
+overwriting your 2.2 installation, you would do something like the following
+to before building Gimp-Ruby.
+
+  PREFIX=/your/gimp2.3/prefix
+  PATH=$PREFIX/bin:$PATH
+  export LD_LIBRARY_PATH=$PREFIX/lib:$LD_LIBRARY_PATH
+  export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
+  export ACLOCAL_FLAGS="-I $PREFIX"
+
+  ./autogen.sh --prefix=$PREFIX
+  
+If you didn't provide an install prefix for GIMP 2.3, simply run:
+
+  ./autogen.sh
+  
+Then to build Gimp-Ruby:
+
+  make
+  make install
