@@ -1,6 +1,5 @@
-To install Gimp-Ruby you need to have GIMP 2.3 installed. Other than Ruby 1.8
-and irb, Gimp-Ruby has no additional requirements that are not met by
-installing GIMP 2.3. 
+To install Gimp-Ruby you must have GIMP 2.3 installed. Other than Ruby v1.8
+and irb v0.9.5, Gimp-Ruby has no additional requirements. 
 
 Assuming that provided an install prefix when building GIMP 2.3 to avoid
 overwriting your 2.2 installation, you would do something like the following
