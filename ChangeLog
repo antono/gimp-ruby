@@ -1,9 +1,15 @@
 2006-08-19  Scott Lembcke <slembcke@cvs.gnome.org>
 
+        * gimp-ruby/gimp_oo_image.rb: Changed the name of
+          Gimp::Image.undo_group to Gimp::Image.undo_group_start for
+          consistency.
+
+2006-08-19  Scott Lembcke <slembcke@cvs.gnome.org>
+
         * plug-ins/*.rb: Changed all single quotes to double quotes.
         
-        * ext/rbgimpdialog.c: Added an exception when using non-dialog
-          friendly types.
+        * ext/rbgimpdialog.c: Added an exception when using non
+          dialog-friendly types.
 
 2006-08-19  Scott Lembcke <slembcke@cvs.gnome.org>
 

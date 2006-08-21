@@ -36,7 +36,7 @@ module Gimp
     add_class_method('list', 'gimp-image-list')
   
     alias_method :old_undo_group_start, :undo_group_start
-    def undo_group
+    def undo_group_start
       old_undo_group_start
       if block_given?
         begin
