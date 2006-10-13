@@ -71,8 +71,6 @@ AM_DISABLE_STATIC
 AC_LIBTOOL_WIN32_DLL
 AM_PROG_LIBTOOL
 
-AM_PROG_AS
-
 dnl Initialize maintainer mode
 AM_MAINTAINER_MODE
 
@@ -385,6 +383,8 @@ m4_define([rg_check_error], [
 dnl check for Ruby
 AM_CHECK_RUBY(1.8.4,,
 [AC_MSG_ERROR([rg_check_error([Ruby 1.8.4 or better], [it])])])
+AM_CHECK_RUBY_IRB(0.9.0,,
+[AC_MSG_ERROR([rg_check_error([irb 0.9.0 or better], [it])])])
 
 
 #########################################
@@ -443,6 +443,7 @@ Building $plugin_name with prefix=$prefix
 
 Ruby settings:
   RUBY_BIN:         $RUBY_BIN
+  RUBY_IRB:         $RUBY_IRB
   RUBY_CFLAGS:      $RUBY_CFLAGS
   RUBY_LIBS:        $RUBY_LIBS
   RUBY_DLEXT:       $RUBY_DLEXT
@@ -453,8 +454,8 @@ Ruby settings:
   ruby_sitearchdir: $ruby_sitearchdir
 
 GIMP directories:
-  GIMP_DATADIR:   $GIMP_DATADIR
-  GIMP_LIBDIR:    $GIMP_LIBDIR
-  GIMP_PLUGINDIR: $GIMP_PLUGINDIR
-  GIMP_LOCALEDIR: $GIMP_LOCALEDIR
+  GIMP_DATADIR:     $GIMP_DATADIR
+  GIMP_LIBDIR:      $GIMP_LIBDIR
+  GIMP_PLUGINDIR:   $GIMP_PLUGINDIR
+  GIMP_LOCALEDIR:   $GIMP_LOCALEDIR
 ]);

@@ -6,7 +6,7 @@ dnl AM_CHECK_RUBY([MINIMUM-VERSION [, ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
 dnl Test for Ruby, and define RUBY_CFLAGS, RUBY_LIBS, RUBY_LDSHARED, RUBY_DLEXT,
 dnl ruby_libdir, ruby_archdir, ruby_sitelibdir and ruby_sitearchdir
 dnl
-AC_DEFUN(AM_CHECK_RUBY,
+AC_DEFUN([AM_CHECK_RUBY],
 [dnl
 dnl Get the cflags and libraries from the rbconfig.rb
 dnl
@@ -79,4 +79,62 @@ dnl
   AC_SUBST(ruby_archdir)
   AC_SUBST(ruby_sitelibdir)
   AC_SUBST(ruby_sitearchdir)
+])
+
+
+dnl AM_CHECK_RUBY_IRB([MINIMUM-VERSION [, ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND]]])
+dnl Test for Interactive Ruby and define RUBY_IRB.
+dnl
+AC_DEFUN([AM_CHECK_RUBY_IRB],
+[
+  AC_PATH_PROG(RUBY_IRB, irb, no)
+  if test "$RUBY_IRB" = "no"; then
+    AC_MSG_ERROR([*** Could not find Interactive Ruby (irb).])
+  fi
+  HAS_RUBY_IRB=yes
+
+  minimum_version=ifelse([$1], ,0.9.0, $1)
+  RUBY_IRB_VERSION=`$RUBY_IRB --version | \
+           sed -e 's/irb //' | sed -e 's/[(].*[)]//'`
+
+  AC_MSG_CHECKING([for irb - version >= $minimum_version])
+
+  min_major_version=`echo $minimum_version | \
+           sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\1/'`
+  min_minor_version=`echo $minimum_version | \
+           sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\2/'`
+  min_micro_version=`echo $minimum_version | \
+           sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\3/'`
+
+  ruby_irb_major_version=`echo $RUBY_IRB_VERSION | \
+           sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\1/'`
+  ruby_irb_minor_version=`echo $RUBY_IRB_VERSION | \
+           sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\2/'`
+  ruby_irb_micro_version=`echo $RUBY_IRB_VERSION | \
+           sed 's/\([[0-9]]*\).\([[0-9]]*\).\([[0-9]]*\)/\3/'`
+
+  if expr "$ruby_irb_major_version" = "$min_major_version" > /dev/null; then
+      if expr "$ruby_irb_minor_version" \> "$min_minor_version" > /dev/null; then
+         echo "yes (version $RUBY_IRB_VERSION)"
+      elif expr "$ruby_irb_minor_version" = "$min_minor_version" > /dev/null; then
+          if expr "$ruby_irb_micro_version" \>= "$min_micro_version" > /dev/null; then
+             echo "yes (version $RUBY_IRB_VERSION)"
+          else
+              AC_MSG_WARN([Too old (version $RUBY_IRB_VERSION)])
+              echo "Too old (version $RUBY_IRB_VERSION)"
+              DIE=1
+          fi
+      else
+          AC_MSG_WARN([Too old (version $RUBY_IRB_VERSION)])
+          DIE=1
+      fi
+  elif expr "$ruby_irb_major_version" \> "$min_major_version" > /dev/null; then
+        AC_MSG_WARN([version might be too new ($RUBY_IRB_VERSION)])
+  else
+    AC_MSG_RESULT([no])
+    AC_MSG_ERROR([*** Interactive Ruby version is too old.])
+  fi
+
+  AC_SUBST(RUBY_IRB)
+  AC_SUBST(HAS_RUBY_IRB)
 ])

@@ -1,3 +1,10 @@
+2006-10-12  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* configure.in: Added checks for Interactive Ruby.
+
+	* acinclude.m4: Added AM_CHECK_RUBY_IRB. Eliminated warnings about
+	"underquoted definition".
+
 2006-08-21  Scott Lembcke <slembcke@cvs.gnome.org>
 
         * Updated the INSTALL file with Kevins suggestions.
