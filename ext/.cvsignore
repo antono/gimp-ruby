@@ -1,7 +1,0 @@
-.deps
-.libs
-*.lo
-Makefile.in
-Makefile
-gimpext.la
-ruby-fu-console
