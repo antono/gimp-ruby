@@ -3,57 +3,84 @@
 # This file is distributed under the same license as the gimp-ruby package.
 # Kevin Cozens <kcozens@cvs.gnome.org>, 2006.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-ruby\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-04 23:48-0400\n"
-"PO-Revision-Date: 2006-08-04 23:48-0400\n"
-"Last-Translator: Kevin Cozens <kcozens@cvs.gnome.org>\n"
+"POT-Creation-Date: 2007-03-12 00:40+0000\n"
+"PO-Revision-Date: 2007-03-12 00:40-0000\n"
+"Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/coolmetal-logo.rb:155
-#, fuzzy
-msgid "Effect Size (pixels)"
-msgstr "Effect Size (pixels)"
+#: ../ext/ruby-fu-console.c:127
+msgid "Ruby-Fu Console"
+msgstr "Ruby-Fu Console"
 
-#: ../plug-ins/coolmetal-logo.rb:156 ../plug-ins/coolmetal-logo.rb:201
-#: ../plug-ins/sphere.rb:57
-msgid "Background Color"
-msgstr "Background Colour"
+#: ../plug-ins/irbconsole.rb:25
+msgid "Starts an irb session in a console."
+msgstr "Starts an irb session in a console."
 
-#: ../plug-ins/coolmetal-logo.rb:157 ../plug-ins/coolmetal-logo.rb:202
-msgid "Gradient"
-msgstr "Gradient"
+#: ../plug-ins/irbconsole.rb:30
+msgid "Irb Console"
+msgstr "Irb Console"
 
-#: ../plug-ins/coolmetal-logo.rb:198
-msgid "Text"
-msgstr "Text"
+#: ../plug-ins/irbconsole.rb:43
+msgid "Interactive Gimp-Ruby Console"
+msgstr "Interactive Gimp-Ruby Console"
 
-#: ../plug-ins/coolmetal-logo.rb:199
-msgid "Font Size (pixels)"
-msgstr "Font Size (pixels)"
+#: ../plug-ins/irbconsole.rb:44
+msgid "Ruby version #{RUBY_VERSION}"
+msgstr "Ruby version #{RUBY_VERSION}"
 
-#: ../plug-ins/coolmetal-logo.rb:200
-msgid "Font"
-msgstr "Font"
+#: ../plug-ins/sphere.rb:33
+#: ../plug-ins/sphere.rb:34
+msgid "Simple sphere with a drop shadow"
+msgstr "Simple sphere with a drop shadow"
 
-#: ../plug-ins/sphere.rb:54
-msgid "Radius"
-msgstr "Radius"
+#: ../plug-ins/sphere.rb:38
+msgid "Sphere"
+msgstr "Sphere"
 
-#: ../plug-ins/sphere.rb:55
-msgid "Lighting Degrees"
-msgstr "Lighting Degrees"
+#: ../plug-ins/sphere.rb:41
+msgid "Radius (pixels)"
+msgstr "Radius (pixels)"
 
-#: ../plug-ins/sphere.rb:56
+#: ../plug-ins/sphere.rb:42
+msgid "Lighting (degrees)"
+msgstr "Lighting (degrees)"
+
+#: ../plug-ins/sphere.rb:43
 msgid "Shadow"
 msgstr "Shadow"
 
-#: ../plug-ins/sphere.rb:58
+#: ../plug-ins/sphere.rb:44
+msgid "Background Color"
+msgstr "Background Colour"
+
+#: ../plug-ins/sphere.rb:45
 msgid "Sphere Color"
 msgstr "Sphere Colour"
+
+#: ../plug-ins/sphere.rb:47
+msgid "Sphere Image"
+msgstr "Sphere Image"
+
+#: ../plug-ins/sphere.rb:68
+msgid "Sphere Layer"
+msgstr "Sphere Layer"
+
+#, fuzzy
+#~ msgid "Effect Size (pixels)"
+#~ msgstr "Effect Size (pixels)"
+#~ msgid "Gradient"
+#~ msgstr "Gradient"
+#~ msgid "Text"
+#~ msgstr "Text"
+#~ msgid "Font"
+#~ msgstr "Font"
+#~ msgid "Radius"
+#~ msgstr "Radius"
+

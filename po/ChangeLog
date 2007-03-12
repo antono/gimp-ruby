@@ -1,3 +1,8 @@
+2007-03-12  David Lodge <dave@cirt.net>
+
+	* en_GB.po: Updated English (British) translation
+	* POTFILES.in: Removed files that don't exists (following the parent ChangeLog)
+
 2006-08-05  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* en_CA.po

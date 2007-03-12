@@ -2,10 +2,7 @@
 # been marked to allow runtime translation of messages
 
 ext/conversion.c
-ext/ids.c
 ext/rbgimp.c
-ext/rbgimpcolorcmyk.c
-ext/rbgimpcolorhsv.c
 ext/rbgimpcolorrgb.c
 ext/rbgimpcolorspace.c
 ext/rbgimpconstants.c
@@ -13,14 +10,12 @@ ext/rbgimpdialog.c
 ext/rbgimpmain.c
 ext/rbgimpproceduraldb.c
 ext/ruby-fu-console.c
-ext/structures.c
 
 gimp-lib/gimp_oo.rb
 gimp-lib/gimp.rb
 gimp-lib/pdb.rb
 gimp-lib/rubyfu.rb
 
-plug-ins/coolmetal-logo.rb
 plug-ins/irbconsole.rb
 plug-ins/sphere.rb
 plug-ins/test.rb
