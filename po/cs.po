@@ -1,0 +1,74 @@
+# translation of cs.po to Czech
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Jakub Friedl <jfriedl@suse.cz>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: cs\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-03-12 17:18+0100\n"
+"PO-Revision-Date: 2007-03-12 17:17+0100\n"
+"Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: ../ext/ruby-fu-console.c:127
+msgid "Ruby-Fu Console"
+msgstr "Konzole Ruby-Fu"
+
+#: ../plug-ins/irbconsole.rb:25
+msgid "Starts an irb session in a console."
+msgstr "Spustí sezení irb v konzoli."
+
+#: ../plug-ins/irbconsole.rb:30
+msgid "Irb Console"
+msgstr "Irb konzole"
+
+#: ../plug-ins/irbconsole.rb:43
+msgid "Interactive Gimp-Ruby Console"
+msgstr "Interaktivní konzole Gimp-Ruby"
+
+#: ../plug-ins/irbconsole.rb:44
+msgid "Ruby version #{RUBY_VERSION}"
+msgstr "Verze Ruby #{RUBY_VERSION}"
+
+#: ../plug-ins/sphere.rb:33 ../plug-ins/sphere.rb:34
+msgid "Simple sphere with a drop shadow"
+msgstr "Jednoduchá koule se stínem"
+
+#: ../plug-ins/sphere.rb:38
+msgid "Sphere"
+msgstr "Koule"
+
+#: ../plug-ins/sphere.rb:41
+msgid "Radius (pixels)"
+msgstr "Poloměr (pixely)"
+
+#: ../plug-ins/sphere.rb:42
+msgid "Lighting (degrees)"
+msgstr "Osvětlení (stupně)"
+
+#: ../plug-ins/sphere.rb:43
+msgid "Shadow"
+msgstr "Stín"
+
+#: ../plug-ins/sphere.rb:44
+msgid "Background Color"
+msgstr "Barva pozadí"
+
+#: ../plug-ins/sphere.rb:45
+msgid "Sphere Color"
+msgstr "Barva koule"
+
+#: ../plug-ins/sphere.rb:47
+msgid "Sphere Image"
+msgstr "Obrázek koule"
+
+#: ../plug-ins/sphere.rb:68
+msgid "Sphere Layer"
+msgstr "Vrstva koule"
