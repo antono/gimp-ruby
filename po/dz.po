@@ -1,0 +1,1390 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: drival.head.pot\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-03-18 03:45+0000\n"
+"PO-Revision-Date: 2007-03-19 13:59+0530\n"
+"Last-Translator: sonam pelden <sonaa_peldn@yahoo.com>\n"
+"Language-Team: Dzongkha <pgeyleg@dit.gov.bt>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Poedit-Language: Dzongkha\n"
+"X-Poedit-Country: Bhutan\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: ../data/drivel.schemas.in.h:1
+msgid "A list of every journal username previously used on this machine."
+msgstr "འཕྲུལ་ཆས་འདི་གུ་ཧེ་མ་ལག་ལེན་འཐབ་ཡོད་པའི་ གསར་དེབ་ལག་ལེན་པའི་མིང་གི་ཐོ་ཡིག།"
+
+#: ../data/drivel.schemas.in.h:2
+msgid "A list of moods for the GtkCombo menu."
+msgstr "ཇི་ཊི་ཀེ་ཀོམ་བོ་དཀར་ཆག་གི་དོན་ལུ་ཚོར་ཉམས་ཀྱི་ཐོ་ཡིག།"
+
+#: ../data/drivel.schemas.in.h:3
+msgid "The currently logged-in user."
+msgstr "ད་ལྟོ་ནང་བསྐྱོད་འབད་ཡོད་པའི་ལག་ལེན་པ།"
+
+#: ../data/drivel.schemas.in.h:4
+msgid "The number of moods stored locally."
+msgstr "ཉེ་གནས་ལུ་གསོག་འཇོག་འབད་ཡོད་པའི་ཚོར་ཉམས་ཀྱི་ཨང་གྲངས།"
+
+#.
+#.
+#. %post
+#. export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source`
+#. SCHEMAS="drivel.schemas"
+#. for S in $SCHEMAS; do
+#. gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/$S > /dev/null
+#. done
+#. if (update-mime-database -v &> /dev/null); then
+#. update-mime-database "%{_datadir}/mime" > /dev/null
+#. fi
+#. if which scrollkeeper-update > /dev/null 2>&1; then
+#. scrollkeeper-update -q -o %{_datadir}/omf/drivel
+#. fi
+#. if (update-desktop-database -v &> /dev/null); then
+#. update-desktop-database > /dev/null
+#. fi
+#.
+#. %postun
+#. if (update-mime-database -v &> /dev/null); then
+#. update-mime-database "%{_datadir}/mime" > /dev/null
+#. fi
+#. if which scrollkeeper-update > /dev/null 2>&1; then
+#. scrollkeeper-update -q
+#. fi
+#. if (update-desktop-database -v &> /dev/null); then
+#. update-desktop-database > /dev/null
+#. fi
+#. /bin/true ## for rpmlint, -p requires absolute path and is just dumb
+#.
+#. %files
+#. %defattr(-, root, root)
+#. %doc AUTHORS COPYING COPYING-DOCS ChangeLog NEWS README TODO
+#. %{_bindir}/drivel
+#. %{_datadir}/applications/gnome-drivel.desktop
+#. %{_datadir}/application-registry/drivel.applications
+#. %{_datadir}/drivel/glade/drivel.glade
+#. %{_datadir}/drivel/languages/livejournal.lang
+#. %{_datadir}/gnome/help/drivel/*
+#. %{_datadir}/icons/gnome/48x48/mimetypes/gnome-mime-application-x-drivel.png
+#. %{_datadir}/locale/*
+#. %{_datadir}/mime/packages/drivel.xml
+#. %{_datadir}/mime-info/drivel.keys
+#. %{_datadir}/mime-info/drivel.mime
+#. %{_datadir}/omf/drivel/drivel-C.omf
+#. %{_datadir}/pixmaps/drivel-48.png
+#. %{_datadir}/pixmaps/drivel/*.png
+#. %{_datadir}/pixmaps/drivel/*.xpm
+#. %config %{_sysconfdir}/gconf/schemas/*
+#.
+#. %changelog
+#.
+#. * Sun Jun 5 2005 Todd Kulesza <todd@dropline.net>
+#. - Update for Drivel 2.0.
+#.
+#. * Sun Jan 9 2005 Todd Kulesza <todd@dropline.net>
+#. - Don't run ldconfig after install, Drivel doesn't include libraries.
+#.
+#. * Sat Jan 8 2005 Todd Kulesza <todd@dropline.net>
+#. - Use the new --disable-mime-update and --disable-desktop-update parameters.
+#.
+#. * Mon Jan 3 2005 Todd Kulesza <todd@dropline.net>
+#. - Run update-desktop-database after installation.
+#. - Renamed the MIME icon and desktop entry.
+#.
+#. * Thu Nov 25 2004 Todd Kulesza <todd@dropline.net>
+#. - Fixed up the scrollkeeper install/uninstall code.
+#.
+#. * Sat Aug 28 2004 Todd Kulesza <todd@dropline.net>
+#. - Add a user manual.
+#.
+#. * Sat Jul 31 2004 Todd Kulesza <todd@dropline.net>
+#. - Add Shared MIME Database support.
+#: ../data/gnome-drivel.desktop.in.h:1
+#: ../src/main.c:936
+msgid "Drivel Journal Editor"
+msgstr "ཌི་བལ་གསར་དེབ་ཞུན་དགཔ་"
+
+#: ../data/gnome-drivel.desktop.in.h:2
+msgid "Journal Editor"
+msgstr "གསར་དེབ་ཞུན་དགཔ་"
+
+#: ../data/gnome-drivel.desktop.in.h:3
+msgid "Update and manage your online journal"
+msgstr "ཁྱོད་རའི་གློག་ཐོག་གསར་དེབ་འདི་དུས་མཐུན་བཟོ་ནི་དང་འཛིན་སྐྱོང་འཐབ་"
+
+#: ../data/mime/drivel.xml.in.h:1
+msgid "Draft journal entry"
+msgstr "གསར་དེབ་ཐོ་བཀོད་ཟིན་བྲིས་"
+
+#.
+#. * Translators should localize the following string
+#. * which will give them credit in the About box.
+#. * E.g. "Fulano de Tal <fulano@detal.com>"
+#: ../src/about.c:63
+msgid "translator-credits"
+msgstr "སྐད་བསྒྱུར་པའི་-ངོ་བསྟོད་ཚུ་"
+
+#: ../src/about.c:80
+msgid "With help from:"
+msgstr "གྲོགས་རམ་དང་བཅས:"
+
+#: ../src/about.c:85
+msgid "And many others--thank you, all!"
+msgstr "གཞན་ཡང་ལེ་ཤ་རང་-- ཆ་མཉམ་བཀྲིན་ཆེ! "
+
+#: ../src/about.c:93
+msgid "A journal client for the GNOME desktop."
+msgstr "GNOMEཌེཀསི་ཊོཔ་གི་དོན་ལུ་གསར་དེབ་ཞབས་ཏོག།"
+
+#: ../src/blog_atom.c:308
+#: ../src/network.c:311
+#: ../src/network.c:317
+#: ../src/network.c:332
+msgid "Server error"
+msgstr "སར་བར་འཛོལ་བ་"
+
+#: ../src/blog_atom.c:309
+msgid "The server did not return a valid Atom response."
+msgstr "སར་བར་དེ་གིས་ནུས་ཅན་ཨེ་ཊོམ་ལན་གཅིག་སླར་ལོག་མ་འབད་བས།"
+
+#: ../src/blog_atom.c:420
+msgid "Unknown error"
+msgstr "མ་ཤེས་པའི་འཛོལ་བ་"
+
+#: ../src/blog_atom.c:423
+msgid "Error Posting Entry"
+msgstr "ཐོ་བཀོད་གནས་བསྐྱོད་འཛོལ་བ་"
+
+#: ../src/blog_lj.c:281
+msgid "default"
+msgstr "སྔོན་སྒྲིག་"
+
+#: ../src/blog_mt.c:132
+#: ../src/insert_poll_dialog.c:172
+#: ../src/main.c:782
+#: ../src/main.c:784
+msgid "None"
+msgstr "ཅི་མེད་"
+
+#: ../src/blog_offline.c:39
+msgid "Offline"
+msgstr "གློག་ལམ་མེད་པའི་"
+
+#: ../src/dialogs.c:319
+#: ../src/dialogs.c:673
+msgid "[No journal entries]"
+msgstr "[གསར་དེབ་འཛུལ་ཞུགས་མེད་]"
+
+#. Context: Spell check dictionary
+#: ../src/dialogs.c:385
+msgid "System default"
+msgstr "རིམ་ལུགས་སྔོན་སྒྲིག་"
+
+#: ../src/dialogs.c:417
+msgid "Missing username"
+msgstr "ལག་ལེན་པའི་མིང་བརླག་སྟོར་ཞུགས་ཡོདཔ་"
+
+#: ../src/dialogs.c:418
+msgid "Please enter a username to add."
+msgstr "ཁ་སྐོང་བརྐྱབ་ནི་ལུ་ལག་ལེན་པའི་མིང་གཅིག་ཐོ་བཀོད་འབད།"
+
+#: ../src/dialogs.c:609
+#: ../src/main.c:342
+#: ../src/utils.c:579
+msgid "Public"
+msgstr "མི་མང་"
+
+#: ../src/dialogs.c:614
+#: ../src/main.c:346
+#: ../src/utils.c:573
+msgid "Private"
+msgstr "སྒེར་སྡེ་"
+
+#: ../src/dialogs.c:768
+msgid "Community"
+msgstr "མི་སྡེ་"
+
+#: ../src/dialogs.c:770
+msgid "Syndicated Feed"
+msgstr "མཉམ་རུབ་ཚོགས་པའི་མཁོ་སྤྲོད་འབད་ནི་"
+
+#: ../src/dialogs.c:772
+msgid "User"
+msgstr "ལག་ལེན་པ་"
+
+#: ../src/dialogs.c:826
+msgid "Add Friend"
+msgstr "ཆ་རོགས་ཁ་སྐོང་བརྐྱབ་"
+
+#: ../src/dialogs.c:854
+msgid "_Friend's username:"
+msgstr "ཆ་རོགས་ཀྱི་ལག་ལེན་པའི་མིང་: (_F)"
+
+#: ../src/dialogs.c:873
+msgid "_Text color:"
+msgstr "ཚིག་ཡིག་ཚོས་གཞི: (_T)"
+
+#: ../src/dialogs.c:888
+msgid "_Background color:"
+msgstr "རྒྱབ་གཞི་ཚོས་གཞི: (_B)"
+
+#: ../src/dialogs.c:1220
+msgid "Could not perform the file operation"
+msgstr "ཡིག་སྣོད་བཀོལ་སྤྱོདཔ་ལཱ་འགན་འགྲུབ་མ་ཚུགས་"
+
+#: ../src/dialogs.c:1234
+msgid "Could not open the selected file"
+msgstr "སེལ་འཐུ་འབད་ཡོད་པའི་ཡིག་སྣོད་ཁ་ཕྱེ་མ་ཚུགས་"
+
+#: ../src/dialogs.c:1282
+msgid "Save changes to this journal entry before proceeding?"
+msgstr "བྱ་རིམ་མ་འབད་བའི་ཧེ་མར་གསར་དེབ་འདི་ལུ་བསྒྱུར་བཅོས་སྲུང་ག?"
+
+#: ../src/dialogs.c:1283
+#: ../src/dialogs.c:1319
+msgid "If you don't save, changes to this entry will be discarded."
+msgstr "ཁྱོད་ཀྱིས་མ་སྲུང་པ་ཅིན་  ཐོ་བཀོད་འདི་ལུ་བསྒྱུར་བཅོས་ཚུ་བཏོན་བཀོག་ནི་ཨིན།"
+
+#: ../src/dialogs.c:1318
+msgid "Save changes to this journal entry before closing?"
+msgstr "ཁ་མ་བསྡམ་པའི་ཧེ་མར་གསར་དེབ་ཐོ་བཀོད་འདི་ལུ་བསྒྱུར་བཅོས་ཚུ་སྲུང་ག?"
+
+#: ../src/dialogs.c:1401
+#: ../src/libegg/egg-datetime.c:485
+#: ../src/libegg/egg-datetime.c:2160
+msgid "Time"
+msgstr "ཐེངས་"
+
+#: ../src/dialogs.c:1409
+msgid "Journal Entry"
+msgstr "གསར་དེབ་ཐོ་བཀོད་"
+
+#: ../src/dialogs.c:1485
+#: ../src/insert_poll_dialog.c:190
+msgid "Type"
+msgstr "དབྱེ་བ་"
+
+#: ../src/dialogs.c:1493
+msgid "Link"
+msgstr "འབྲེལ་ལམ་"
+
+#: ../src/dialogs.c:1501
+msgid "Username"
+msgstr "ལག་ལེན་པའི་མིང་"
+
+#: ../src/dialogs.c:1511
+msgid "Name"
+msgstr "མིང་"
+
+#: ../src/dialogs.c:1754
+#: ../src/dialogs.c:1761
+msgid "Available"
+msgstr "ཐོབ་ཚུགསཔ་"
+
+#: ../src/dialogs.c:1768
+msgid "In Group"
+msgstr "སྡེ་ཚན་ནང་"
+
+#: ../src/drivel.glade.h:1
+msgid "<b>Attributes</b> <i>(Optional)</i>"
+msgstr "<b>ཁྱད་ཆོས</b> <i>(གདམ་ཁ་ཅན་)</i>"
+
+#: ../src/drivel.glade.h:2
+msgid "<b>Create a link to...</b>"
+msgstr "<b>འབྲེལ་ལམ་གཅིག་གསར་བསྐྲུན་འབད...</b>"
+
+#: ../src/drivel.glade.h:3
+msgid "<b>Default Post Options</b>"
+msgstr "<b>སྔོན་སྒྲིག་གནས་བསྐྱོད་གདམ་ཁ་ཚུ་</b>"
+
+#: ../src/drivel.glade.h:4
+msgid "<b>Details</b>"
+msgstr "<b>རྒྱས་བཤད་ཚུ་</b>"
+
+#: ../src/drivel.glade.h:5
+msgid "<b>Entry Behavior</b>"
+msgstr "<b>ཐོ་བཀོད་སྤྱོད་ལམ་</b>"
+
+#: ../src/drivel.glade.h:6
+msgid "<b>Group Details</b>"
+msgstr "<b>སྡེ་ཚན་རྒྱས་བཤད་ཚུ་</b>"
+
+#: ../src/drivel.glade.h:7
+msgid "<b>Groups</b>"
+msgstr "<b>སྡེ་ཚན་ཚུ་</b>"
+
+#: ../src/drivel.glade.h:8
+msgid "<b>Image</b>"
+msgstr "<b>གཟུགས་བརྙན་</b>"
+
+#: ../src/drivel.glade.h:9
+msgid "<b>Link</b>"
+msgstr "<b>འབྲེལ་ལམ་</b>"
+
+#: ../src/drivel.glade.h:10
+msgid "<b>Notification Area</b>"
+msgstr "<b>བརྡ་བསྐུལ་མངའ་ཁོངས་ཚུ་</b>"
+
+#: ../src/drivel.glade.h:11
+msgid "<b>Publication</b>"
+msgstr "<b>དཔེ་བསྐྲུན་</b>"
+
+#: ../src/drivel.glade.h:12
+msgid "<small><i><b>Example:</b> http://gnome.org/pic.png</i></small>"
+msgstr "<small><i><b>དཔེར་ན་:</b> http://gnome.org/pic.png</i></small>"
+
+#: ../src/drivel.glade.h:13
+msgid "<small><i><b>Example:</b> http://www.gnome.org</i></small>"
+msgstr "<small><i><b>དཔེར་ན:</b> http://www.gnome.org</i></small>"
+
+#: ../src/drivel.glade.h:14
+msgid "Alert the popular journal search engine Technorati of new entries"
+msgstr "འཛུལ་ཞུགས་གསརཔ་གི་ཡོངས་གྲགས་ཅན་གྱི་གསར་དེབ་འཚོལ་ཞིབ་མ་འཕྲུལ་ཊེཀ་ནོ་ར་ཊི་འདི་དྲན་བརྡ་འབད་"
+
+#: ../src/drivel.glade.h:15
+msgid "Ans_wer:"
+msgstr "ལན་གསལ: (_w)"
+
+#: ../src/drivel.glade.h:16
+msgid "Automatically minimize the journal window after logging in"
+msgstr "ནང་བསྐྱོད་འབད་ཚར་བའི་ཤུལ་ལུ་གསར་དེབ་སྒོ་སྒྲིག་འདི་རང་བཞིན་གྱིས་སྦེ་ཆུང་ཀུ་བཟོ་"
+
+#: ../src/drivel.glade.h:17
+msgid "Automatically minimize the journal window after posting an entry"
+msgstr "ཐོ་བཀོད་གཅིག་གནས་བསྐྱོད་འབད་ཞིནམ་ལས་  གསར་དེབ་སྒོ་སྒྲིག་འདི་རང་བཞིན་གྱིས་སྦེ་ཆུང་ཀུ་བཟོ་"
+
+#: ../src/drivel.glade.h:18
+msgid "Background color:"
+msgstr "རྒྱབ་གཞི་ཚོས་གཞི:"
+
+#: ../src/drivel.glade.h:19
+msgid "Ca_tegory:"
+msgstr "དབྱེ་རིམ: (_t)"
+
+#: ../src/drivel.glade.h:20
+msgid "Choose a background color"
+msgstr "རྒྱབ་གཞི་ཚོས་གཞི་གདམ་ཁ་བརྐྱབ་"
+
+#: ../src/drivel.glade.h:21
+msgid "Choose a text color"
+msgstr "ཚིག་ཡིག་ཚོས་གཞི་གདམ་ཁ་བརྐྱབ་"
+
+#: ../src/drivel.glade.h:22
+msgid "Display HTML keywords in different colors than normal text"
+msgstr "སྤྱིར་གཏང་ཚིག་ཡིག་ལས་ ཨེཆ་ཊི་ཨེམ་ཨེལ་གཙོ་ཚིག་ཚུ་ཚོས་གཞི་སོ་སོ་ནང་བཀྲམ་སྟོན་འབད་"
+
+#: ../src/drivel.glade.h:23
+msgid ""
+"Display an alert when your Friends Page is updated\n"
+"(Paid LiveJournal users only)"
+msgstr ""
+"ཁྱོད་རའི་ཆ་རོགས་ཀྱི་ཤོག་ལེབ་འདི་དུས་མཐུན་བཟོ་ཡོདཔ་ད་ དྲན་བརྡ་འདི་བཀྲམ་སྟོན་འབད\n"
+"(ཚེ་གསར་དེབ་ལག་ལེན་པ་རྐྱངམ་ཅིག་སྤྲོད་ཡོདཔ་)"
+
+#: ../src/drivel.glade.h:25
+msgid "Do not allow users to comment on this entry"
+msgstr "ལག་ལེན་པ་དེ་ཚུ་ཐོ་བཀོད་འདི་གུ་བསམ་བཀོད་འབད་མ་བཅུག་"
+
+#: ../src/drivel.glade.h:26
+msgid "Do not automatically parse line-breaks into HTML tags"
+msgstr "ཨེཆ་ཊི་ཨེམ་ཨེལ་ངོ་རྟགས་ནང་ལུ་  རང་བཞིན་གྱིས་སྦེ་གྲལ་ཐིག་ཆད་པ་ཚུ་མིང་དཔྱད་མ་འབད་"
+
+#: ../src/drivel.glade.h:27
+msgid "Do not automatically parse line-breaks or website links into HTML tags"
+msgstr "ཨེཆ་ཊི་ཨེམ་ཨེལ་ངོ་རྟགས་ནང་ལུ་གྲལ་ཐིག་ཆད་པ་ཡང་ན་ཝེབ་ས་ཁོངས་གྲལ་ལམ་ཚུ་རང་བཞིན་གྱིས་མིང་དཔྱད་མ་འབད་"
+
+#: ../src/drivel.glade.h:28
+msgid "Don't auto-format _text"
+msgstr "ཚིག་ཡིག་འདི་རང་བཞིན་རྩ་སྒྲིག་མ་འབད། (_t)"
+
+#: ../src/drivel.glade.h:29
+msgid "Drivel"
+msgstr "ཌི་བལ་"
+
+#: ../src/drivel.glade.h:30
+msgid "Drivel Preferences"
+msgstr "ཌི་བལ་དགའ་གདམ་ཚུ་"
+
+#: ../src/drivel.glade.h:31
+msgid "Edit Friends"
+msgstr "ཆ་རོགས་ཚུ་ཞུན་དག་འབད་"
+
+#: ../src/drivel.glade.h:32
+msgid "Edit History"
+msgstr "ལོ་རྒྱུས་ཞུན་དག་འབད་"
+
+#: ../src/drivel.glade.h:33
+msgid "Entry Defaults"
+msgstr "ཐོ་བཀོད་སྔོན་སྒྲིག་ཚུ་"
+
+#: ../src/drivel.glade.h:34
+msgid "General"
+msgstr "ཡོངས་ཁྱབ་"
+
+#: ../src/drivel.glade.h:35
+msgid "Highlight misspelled _words"
+msgstr "སྡེབ་འཛོལ་བའི་མིང་ཚིག་ཚུ་གཙོ་དམིགས་བཀོད། (_w)"
+
+#: ../src/drivel.glade.h:36
+msgid "Highlight words not found in your computer's dictionary"
+msgstr "ཁྱོད་རའི་གློག་རིག་ཚིག་མཛོད་ནང་མ་ཐོབ་མི་མིང་ཚིག་ཚུ་གཙོ་དམིགས་བཀོད་"
+
+#: ../src/drivel.glade.h:37
+msgid "Insert Image"
+msgstr "གཟུགས་བརྙན་བཙུགས་"
+
+#: ../src/drivel.glade.h:38
+msgid "Insert Link"
+msgstr "འབྲེལ་ལམ་བཙུགས་"
+
+#: ../src/drivel.glade.h:39
+msgid "Insert Poll"
+msgstr "པོལ་བཙུགས་"
+
+#: ../src/drivel.glade.h:40
+msgid "Journal Login"
+msgstr "གསར་དེབ་ནང་བསྐྱོད་"
+
+#: ../src/drivel.glade.h:41
+msgid "Journal Type:"
+msgstr "གསར་དེབ་དབྱེ་བ:"
+
+#: ../src/drivel.glade.h:42
+msgid "Journal _type:"
+msgstr "གསར་དེབ་དབྱེ་བ: (_t)"
+
+#: ../src/drivel.glade.h:43
+msgid "M_usic:"
+msgstr "སྙན་ཆ: (_u)"
+
+#: ../src/drivel.glade.h:44
+msgid "Mark entry as having been posted on the selected date"
+msgstr "ཐོ་བཀོད་འདི་སེལ་འཐུ་འབད་ཡོད་པའི་ཚེས་གྲངས་གུ་གནས་བསྐྱོད་འབད་ཡོདཔ་སྦེ་རྟགས་བཀལ་"
+
+#: ../src/drivel.glade.h:45
+msgid "Maximum text _length <i>(optional)</i>:"
+msgstr "ཚིག་ཡིག་མང་མཐའ་ _རིང་ཚད་ <i>(གདམ་ཁ་ཅན་)</i>:"
+
+#: ../src/drivel.glade.h:46
+msgid "Minimize after _logging in"
+msgstr "ནང་བསྐྱོད་འབད་ཚར་བའི་ཤུལ་ལུ་མར་ཕབ་འབད། (_l)"
+
+#: ../src/drivel.glade.h:47
+msgid "Minimize after _posting"
+msgstr "གནས་བསྐྱོད་འབད་བའི་ཤུལ་ལུ་ཆུང་ཀུ་བཟོ། (_p)"
+
+#: ../src/drivel.glade.h:48
+msgid "Notify _Technorati on updates"
+msgstr "དུས་མཐུན་བཟོ་ཟེར་མི་གུ་ ཊེཀ་ནོ་ར་ཊི་བརྡ་བསྐུལ་འབད། (_T)"
+
+#: ../src/drivel.glade.h:49
+msgid "Notify when _friends update"
+msgstr "ཆ་རོགས་ཚུ་དུས་མཐུན་བཟོཝ་ད་བརྡ་བསྐུལ་འབད། (_f)"
+
+#: ../src/drivel.glade.h:50
+msgid "Past d_ate:"
+msgstr "ཚེས་གྲངས་སྦྱར: (_a)"
+
+#: ../src/drivel.glade.h:51
+msgid "Pictu_re:"
+msgstr "པར: (_r)"
+
+#: ../src/drivel.glade.h:52
+msgid "Poll _name <i>(optional)</i>:"
+msgstr "པོལ་ _མིང་ <i>(གདམ་ཁ་ཅན་)</i>:"
+
+#: ../src/drivel.glade.h:53
+msgid "Qu_estion:"
+msgstr "དྲི་བ: (_e)"
+
+#: ../src/drivel.glade.h:54
+msgid "Questions:"
+msgstr "དྲི་བ་ཚུ:"
+
+#: ../src/drivel.glade.h:55
+msgid "Securit_y:"
+msgstr "སྲུང་སྐྱོབ: (_y)"
+
+#: ../src/drivel.glade.h:56
+#: ../src/journal.c:3375
+msgid "Security Groups"
+msgstr "སྲུང་སྐྱོབ་སྡེ་ཚན་ཚུ་"
+
+#: ../src/drivel.glade.h:57
+msgid "Show more _options"
+msgstr "གདམ་ཁ་ཧེང་བཀལ་ཚུ་སྟོན། (_o)"
+
+#: ../src/drivel.glade.h:58
+msgid "Text _field size <i>(optional)</i>:"
+msgstr "ཚིག་ཡིག་ _ས་སྒོའི་ཚད་ <i>(གདམ་ཁ་ཅན་)</i>:"
+
+#: ../src/drivel.glade.h:59
+msgid "Text color:"
+msgstr "ཚིག་ཡིག་ཚོས་གཞི:"
+
+#: ../src/drivel.glade.h:60
+msgid "To:"
+msgstr "ལུ:"
+
+#: ../src/drivel.glade.h:61
+msgid "Tur_n off comments"
+msgstr "བསམ་བཀོད་ཚུ་བསྒྱིར་གཏང་། (_n)"
+
+#: ../src/drivel.glade.h:62
+msgid "Up"
+msgstr "ཡར་"
+
+#: ../src/drivel.glade.h:63
+msgid "Username:"
+msgstr "ལག་ལེན་པའི་མིང་:"
+
+#: ../src/drivel.glade.h:64
+msgid "Voter_s:"
+msgstr "རྒྱན་ཤོག་བཙུགས་མི་ཚུ: (_s)"
+
+#: ../src/drivel.glade.h:65
+msgid "Work _Offline"
+msgstr "ལཱ་གློག་ཐོག་མེདཔ། (_O)"
+
+#: ../src/drivel.glade.h:66
+msgid "_Automatically login"
+msgstr "རང་བཞིན་གྱིས་སྦེ་ནང་བསྐྱོད་འབད། (_A)"
+
+#: ../src/drivel.glade.h:67
+msgid "_By:"
+msgstr "གིས: (_B)"
+
+#: ../src/drivel.glade.h:68
+msgid "_Description:"
+msgstr "འགྲེལ་བཤད: (_D)"
+
+#: ../src/drivel.glade.h:69
+msgid "_Dictionary:"
+msgstr "ཚིག་མཛོད: (_D)"
+
+#: ../src/drivel.glade.h:70
+msgid "_From:"
+msgstr "ལས: (_F)"
+
+#: ../src/drivel.glade.h:71
+msgid "_Height:"
+msgstr "མཐོ་ཚད: (_H)"
+
+#: ../src/drivel.glade.h:72
+msgid "_Highlight HTML in journal entry"
+msgstr "གསར་དེབ་ཐོ་བཀོད་ནང་ཨེཆ་ཊི་ཨེམ་ཨེལ་གཙོ་དམིགས་བཀོད། (_H)"
+
+#: ../src/drivel.glade.h:73
+msgid "_Location:"
+msgstr "གནས་ཁོངས: (_L)"
+
+#: ../src/drivel.glade.h:74
+msgid "_Mood:"
+msgstr "ཚོར་ཉམས: (_M)"
+
+#: ../src/drivel.glade.h:75
+msgid "_Name:"
+msgstr "མིང་: (_N)"
+
+#: ../src/drivel.glade.h:76
+msgid "_Order"
+msgstr "རིམ་པ། (_O)"
+
+#: ../src/drivel.glade.h:77
+msgid "_Password:"
+msgstr "ཆོག་ཡིག: (_P)"
+
+#: ../src/drivel.glade.h:78
+msgid "_Public"
+msgstr "མི་མང་། (_P)"
+
+#: ../src/drivel.glade.h:79
+msgid "_Remember password"
+msgstr "ཆོག་ཡིག་སེམས་ཁར་བཞག། (_R)"
+
+#: ../src/drivel.glade.h:80
+msgid "_Results visible to:"
+msgstr "མཐོང་ཚུགས་པའི་གྲུབ་འབྲས་ཚུ: (_R)"
+
+#: ../src/drivel.glade.h:81
+msgid "_Server address:"
+msgstr "སར་བར་ཁ་བྱང་: (_S)"
+
+#: ../src/drivel.glade.h:82
+msgid "_Subject:"
+msgstr "དོན་ཚན: (_S)"
+
+#: ../src/drivel.glade.h:83
+msgid "_Text:"
+msgstr "ཚིག་ཡིག: (_T)"
+
+#: ../src/drivel.glade.h:84
+msgid "_Type:"
+msgstr "དབྱེ་བ: (_T)"
+
+#: ../src/drivel.glade.h:85
+msgid "_Username:"
+msgstr "ལག་ལེན་པའི་མིང་: (_U)"
+
+#: ../src/drivel.glade.h:86
+msgid "_View journal"
+msgstr "གསར་དེབ་སྟོན། (_V)"
+
+#: ../src/drivel.glade.h:87
+msgid "_Width:"
+msgstr "རྒྱ་ཚད: (_W)"
+
+#: ../src/drivel.glade.h:88
+msgid "a _site on the Internet"
+msgstr "ཨིན་ཊར་ནེཊི་གུ་ས་ཁོངས་གཅིག། (_s)"
+
+#: ../src/drivel.glade.h:89
+msgid "another Live_Journal user"
+msgstr "མི་ཚེས་གསར་དེབ་ལག་ལེན་པ་གཞན། (_J)"
+
+#: ../src/drivel.glade.h:90
+msgid "px"
+msgstr "པི་ཨེགསི་"
+
+#: ../src/drivel.glade.h:91
+msgid "the _rest of this entry"
+msgstr "ཐོ་བཀོད་འདི་གི་ངལ་འཚོ། (_r)"
+
+#: ../src/insert_poll_dialog.c:152
+#: ../src/insert_poll_dialog.c:168
+msgid "All users"
+msgstr "ལག་ལེན་པ་ཆ་མཉམ་ཚུ་"
+
+#: ../src/insert_poll_dialog.c:154
+#: ../src/insert_poll_dialog.c:170
+msgid "Friends"
+msgstr "ཆ་རོགས་ཚུ་"
+
+#: ../src/insert_poll_dialog.c:194
+msgid "Text"
+msgstr "ཚིག་ཡིག་"
+
+#: ../src/insert_poll_dialog.c:217
+msgid "Dropdown selection"
+msgstr "གདམ་ཐོའི་སེལ་འཐུ་"
+
+#: ../src/insert_poll_dialog.c:219
+msgid "Radio selection"
+msgstr "རེ་ཌིའོ་སེལ་འཐུ་"
+
+#: ../src/insert_poll_dialog.c:221
+msgid "Checkbox selection"
+msgstr "ཞིབ་དཔྱད་སྒྲོམ་གྱི་སེལ་འཐུ་"
+
+#: ../src/insert_poll_dialog.c:223
+msgid "Text entry"
+msgstr "ཚིག་ཡིག་ཐོ་བཀོད་"
+
+#: ../src/insert_poll_dialog.c:225
+msgid "Scale"
+msgstr "ཆ་ཚད་"
+
+#: ../src/journal.c:302
+msgid "Open this entry for editing"
+msgstr "ཞུན་དག་འབད་ནི་ལུ་ཐོ་བཀོད་འདི་ཁ་ཕྱེ་"
+
+#: ../src/journal.c:318
+msgid "Refresh this list"
+msgstr "ཐོ་ཡིག་འདི་ཡང་སེལ་འབད་"
+
+#: ../src/journal.c:383
+#, c-format
+msgid "%s's Journal - Drivel"
+msgstr "%s's གསར་དེབ་-ཌི་བལ་"
+
+#: ../src/journal.c:386
+#, c-format
+msgid "The %s Community - Drivel"
+msgstr "%s མི་སྡེ་-ཌི་བལ་"
+
+#: ../src/journal.c:401
+msgid "Offline - Drivel"
+msgstr "གློག་ལམ་མེད་པའི་-ཌི་བལ་"
+
+#: ../src/journal.c:808
+msgid "Drivel - Open Draft"
+msgstr "ཌི་བལ་-ཟིན་བྲིས་ཁ་ཕྱེ་"
+
+#: ../src/journal.c:817
+#: ../src/journal.c:1087
+msgid "All XML Files"
+msgstr "ཨེགསི་ཨེམ་ཨེལ་ཡིག་སྣོད་ཚུ་ཆ་མཉམ་"
+
+#: ../src/journal.c:821
+#: ../src/journal.c:1091
+msgid "Drafts"
+msgstr "ཟིན་བྲིས་ཚུ་"
+
+#. FIXME: add something to override .drivel extension or something like that
+#: ../src/journal.c:1076
+msgid "Drivel - Save Draft"
+msgstr "ཌི་བལ་-ཟིན་བྲིས་སྲུང་"
+
+#: ../src/journal.c:2783
+msgid "Please select a journal account"
+msgstr "གསར་དེབ་ཁ་བྱང་གཅིག་སེལ་འཐུ་འབད་གནང་"
+
+#: ../src/journal.c:2784
+msgid "Preferences apply to each account separately, so you must select your account before you can edit its preferences."
+msgstr "ཁ་བྱང་རེ་རེ་ལུ་སོ་སོ་སྦེ་དགའ་གདམ་འཇུག་སྤྱོད་   དེ་འབད་བ་ཅིན་  ཁྱོད་ཀྱིས་དགའ་གདམ་འདི་ཞུན་དག་མ་འབད་བའི་ཧེ་མར་  ཁྱོད་ཀྱིས་ཁྱོད་རའི་ཁ་བྱང་འདི་སེལ་འཐུ་འབད།"
+
+#: ../src/journal.c:3072
+msgid "Select a journal to post to"
+msgstr "གནས་བསྐྱོད་འབད་ནི་ལུ་གསར་དེབ་གཅིག་སེལ་འཐུ་འབད་"
+
+#: ../src/journal.c:3347
+#: ../src/login.c:906
+msgid "_Journal"
+msgstr "གསར་དེབ། (_J)"
+
+#: ../src/journal.c:3348
+#: ../src/login.c:907
+msgid "_Edit"
+msgstr "ཞུན་དག་འབད། (_E)"
+
+#: ../src/journal.c:3349
+msgid "_View"
+msgstr "མཐོང་སྣང་། (_V)"
+
+#: ../src/journal.c:3350
+msgid "_Format"
+msgstr "རྩ་སྒྲིག། (_F)"
+
+#: ../src/journal.c:3351
+msgid "_Web Links"
+msgstr "ཝེབ་འབྲེལ་ལམ་ཚུ། (_W)"
+
+#: ../src/journal.c:3352
+#: ../src/login.c:908
+msgid "_Help"
+msgstr "གྲོགས་རམ། (_H)"
+
+#: ../src/journal.c:3353
+msgid "_Open Draft..."
+msgstr "ཟིན་བྲིས་ཁ་ཕྱེ... (_O)"
+
+#: ../src/journal.c:3353
+msgid "Open an unfinished journal entry"
+msgstr "མཇུག་མ་བསྡུ་བའི་གསར་དེབ་ཐོ་བཀོད་ཅིག་ཁ་ཕྱེ་"
+
+#: ../src/journal.c:3354
+#: ../src/main.c:620
+msgid "_Save Draft"
+msgstr "ཟིན་བྲིས་སྲུང་། (_S)"
+
+#: ../src/journal.c:3354
+#: ../src/journal.c:3355
+msgid "Save the current entry without adding it to your journal"
+msgstr "ཁྱོད་རའི་གསར་དེབ་ལུ་ཁ་སྐོང་མ་བརྐྱབ་པར་ད་ལྟོའི་ཐོ་བཀོད་འདི་སྲུང་"
+
+#: ../src/journal.c:3355
+msgid "Save Draft _as..."
+msgstr "ཟིན་བྲིས་དེ་སྦེ་སྲུང་... (_a)"
+
+#: ../src/journal.c:3356
+msgid "_Recent Entries"
+msgstr "འཕྲལ་གྱི་འཛུལ་ཞུགས་། (_R)"
+
+#: ../src/journal.c:3357
+msgid "Recent _Drafts"
+msgstr "འཕྲལ་གྱི་ཟིན་བྲིས་ཚུ། (_D)"
+
+#: ../src/journal.c:3358
+msgid "_Post Entry"
+msgstr "ཐོ་བཀོད་གནས་བསྐྱོད་འབད། (_P)"
+
+#: ../src/journal.c:3358
+msgid "Post the current entry to your journal"
+msgstr "ད་ལྟོའི་ཐོ་བཀོད་འདི་ཁྱོད་རའི་གསར་དེབ་ལུ་གནས་བསྐྱོད་འབད་"
+
+#. FIXME: make an icon for update-entry
+#: ../src/journal.c:3360
+msgid "_Update Entry"
+msgstr "ཐོ་བཀོད་དུས་མཐུན་བཟོ། (_U)"
+
+#: ../src/journal.c:3360
+msgid "Update the selected entry in your journal"
+msgstr "ཁྱོད་རའི་གསར་དེབ་ནང་ལུ་སེལ་འཐུ་འབད་ཡོད་པའི་ཐོ་བཀོད་འདི་དུས་མཐུན་བཟོ་"
+
+#: ../src/journal.c:3361
+msgid "_Delete Entry"
+msgstr "ཐོ་བཀོད་བཏོན་གཏང་། (_D)"
+
+#: ../src/journal.c:3361
+msgid "Delete the selected entry from your journal."
+msgstr "སེལ་འཐུ་འབད་ཡོད་པའི་ཐོ་བཀོད་འདི་ཁྱོད་རའི་གསར་དེབ་ལས་བཏོན་གཏང་།"
+
+#: ../src/journal.c:3362
+msgid "_Log Out"
+msgstr "ཕྱིར་བསྐྱོད་འབད། (_L)"
+
+#: ../src/journal.c:3362
+msgid "Switch usernames"
+msgstr "ལག་ལེན་པའི་མིང་ཚུ་གློག་རྟ་བཀལ་"
+
+#: ../src/journal.c:3369
+msgid "C_lear Entry"
+msgstr "ཐོ་བཀོད་བསལ། (_l)"
+
+#: ../src/journal.c:3370
+msgid "Select _All"
+msgstr "ཆ་མཉམ་སེལ་འཐུ་འབད། (_A)"
+
+#. FIXME: make an icon for edit-last-entry
+#: ../src/journal.c:3372
+msgid "Last _Entry"
+msgstr "མཇུག་གི་ཐོ་བཀོད། (_E)"
+
+#: ../src/journal.c:3372
+msgid "Edit the last entry you posted"
+msgstr "ཁྱོད་ཀྱིས་གནས་བསྐྱོད་འབད་ཡོད་པའི་མཇུག་གི་ཐོ་བཀོད་འདི་ཞུན་དག་འབད་"
+
+#: ../src/journal.c:3373
+msgid "_Friends"
+msgstr "ཆ་རོགས་ཚུ། (_F)"
+
+#: ../src/journal.c:3373
+msgid "Edit your friends list"
+msgstr "ཁྱོད་རའི་ཆ་རོགས་ཀྱི་ཐོ་ཡིག་ཞུན་དག་འབད་"
+
+#: ../src/journal.c:3374
+msgid "_History"
+msgstr "ལོ་རྒྱུས། (_H)"
+
+#: ../src/journal.c:3374
+msgid "View or edit a previous entry"
+msgstr "ཧེ་མའི་ཐོ་བཀོད་འདི་སྟོན་ནི་ཡང་ན་ཞུན་དག་འབད་"
+
+#: ../src/journal.c:3375
+msgid "Edit specific groups of people able to read your entries"
+msgstr "ཁྱོད་ཀྱི་འཛུལ་ཞུས་ཚུ་ལྷག་ཚུགས་མི་  དམིགས་བསལ་གྱི་མི་ཚན་ཞུན་དག་འབད་"
+
+#: ../src/journal.c:3376
+msgid "Active _Journal"
+msgstr "ཤུགས་ལྡན་གསར་དེབ། (_J)"
+
+#: ../src/journal.c:3382
+msgid "Supe_rscript"
+msgstr "སྟེང་ཡིག། (_r)"
+
+#: ../src/journal.c:3383
+msgid "Subs_cript"
+msgstr "མཁོ་མངགས་འབད་ནི། (_c)"
+
+#: ../src/journal.c:3384
+msgid "Lis_t"
+msgstr "ཐོ་ཡིག། (_t)"
+
+#: ../src/journal.c:3385
+msgid "List Ite_m"
+msgstr "ཐོ་ཡིག་རྣམ་གྲངས། (_m)"
+
+#: ../src/journal.c:3386
+msgid "I_ndent"
+msgstr "འགོ་མཚམས། (_n)"
+
+#: ../src/journal.c:3387
+msgid "Insert _Link..."
+msgstr "འབྲེལ་ལམ་བཙུགས... (_L)"
+
+#: ../src/journal.c:3387
+msgid "Create a link to a web page, livejournal user, or a long journal entry"
+msgstr "འབྲེལ་ལམ་འདི་  ཝེབ་ཀྱི་ཤོག་ལེབ་  མི་ཚེ་གསར་དེབ་ལག་ལེན་པ་ ཡང་ན་ གསར་དེབ་ཐོ་བཀོད་རིངམ་ཅིག་ལུ་གསར་བསྐྲུན་འབད་"
+
+#: ../src/journal.c:3388
+msgid "Insert Ima_ge..."
+msgstr "གཟུགས་བརྙན་བཙུགས... (_g)"
+
+#: ../src/journal.c:3388
+msgid "Insert an image into your journal entry"
+msgstr "གཟུགས་བརྙན་འདི་ཁྱོད་རའི་གསར་དེབ་ཐོ་བཀོད་ནང་ལུ་བཙུགས་"
+
+#: ../src/journal.c:3389
+msgid "Insert _Poll..."
+msgstr "པོལ་བཙུགས... (_P)"
+
+#: ../src/journal.c:3390
+#: ../src/login.c:913
+msgid "_Contents"
+msgstr "ནང་དོན་ཚུ། (_C)"
+
+#: ../src/journal.c:3391
+#: ../src/login.c:914
+msgid "_Frequently Asked Questions"
+msgstr "འཕྲལ་འཕྲལ་དྲི་ཡོད་པའི་དྲི་བ་ཚུ། (_F)"
+
+#: ../src/journal.c:3392
+#: ../src/login.c:915
+msgid "_About"
+msgstr "སྐོར་ལས། (_A)"
+
+#: ../src/journal.c:3396
+msgid "More Entry _Options"
+msgstr "ཐོ་བཀོད་གདམ་ཁ་ཧེང་བཀལ། (_O)"
+
+#: ../src/journal.c:3397
+msgid "Highlight _Spelling Errors"
+msgstr "ཡིག་སྡེབ་འཛོལ་བ་ཚུ་གཙོ་དམིགས་བཀོད། (_S)"
+
+#: ../src/journal.c:3398
+msgid "Highlight _HTML"
+msgstr "ཨེཆ་ཊི་ཨེམ་ཨེལ་གཙོ་དམིགས་བཀོད། (_H)"
+
+#: ../src/libegg/egg-datetime.c:281
+msgid "Display flags"
+msgstr "ཟུར་རྟགས་ཚུ་བཀྲམ་སྟོན་འབད་"
+
+#: ../src/libegg/egg-datetime.c:282
+msgid "Displayed date and/or time properties"
+msgstr "ཚེས་གྲངས་དང་/ཡང་ན་དུས་ཡུན་རྒྱུ་དངོས་བཀརམ་སྟོན་འབད་ཡོདཔ་"
+
+#: ../src/libegg/egg-datetime.c:287
+msgid "Lazy mode"
+msgstr "ལེ་ལོ་ཅན་ཐབས་ལམ་"
+
+#: ../src/libegg/egg-datetime.c:288
+msgid "Lazy mode doesn't normalize entered date and time values"
+msgstr "ལེ་ལོ་ཅན་ཐབས་ལམ་དེ་གིས་  ཐོ་བཀོད་འབད་ཡོད་པའི་ཚེས་གྲངས་དང་ཆུ་ཚོད་གནས་གོང་ཚུ་ཨ་རྟག་ཧ་ལུ་མི་བཟོ་"
+
+#: ../src/libegg/egg-datetime.c:293
+msgid "Year"
+msgstr "ལོ་"
+
+#: ../src/libegg/egg-datetime.c:294
+msgid "Displayed year"
+msgstr "བཀྲམ་སྟོན་འབད་ཡོད་པའི་ལོ་"
+
+#: ../src/libegg/egg-datetime.c:299
+msgid "Month"
+msgstr "ཟླཝ་"
+
+#: ../src/libegg/egg-datetime.c:300
+msgid "Displayed month"
+msgstr "བཀྲམ་སྟོན་འབད་ཡོད་པའི་ཟླཝ་"
+
+#: ../src/libegg/egg-datetime.c:305
+msgid "Day"
+msgstr "ཉིནམ་"
+
+#: ../src/libegg/egg-datetime.c:306
+msgid "Displayed day of month"
+msgstr "ཟླཝ་གི་བཀྲམ་སྟོན་འབད་ཡོད་པའི་ཉིནམ་"
+
+#: ../src/libegg/egg-datetime.c:311
+msgid "Hour"
+msgstr "ཆུ་ཚོད་"
+
+#: ../src/libegg/egg-datetime.c:312
+msgid "Displayed hour"
+msgstr "བཀྲམ་སྟོན་འབད་ཡོད་པའི་ཆུ་ཚོད་"
+
+#: ../src/libegg/egg-datetime.c:317
+msgid "Minute"
+msgstr "སྐར་མ་"
+
+#: ../src/libegg/egg-datetime.c:318
+msgid "Displayed minute"
+msgstr "བཀྲམ་སྟོན་འབད་ཡོད་པའི་སྐར་མ་"
+
+#: ../src/libegg/egg-datetime.c:323
+msgid "Second"
+msgstr "སྐར་ཆ་"
+
+#: ../src/libegg/egg-datetime.c:324
+msgid "Displayed second"
+msgstr "བཀྲམ་སྟོན་འབད་ཡོད་པའི་སྐར་ཆ་"
+
+#: ../src/libegg/egg-datetime.c:329
+msgid "Lower limit year"
+msgstr "འོག་གི་ཚད་ལོ་"
+
+#: ../src/libegg/egg-datetime.c:330
+msgid "Year part of the lower date limit"
+msgstr "འོག་གི་ཚེས་གྲངས་ཚད་ཀྱི་ལོའི་ཆ་ཤས་"
+
+#: ../src/libegg/egg-datetime.c:335
+msgid "Upper limit year"
+msgstr "ལྟག་གི་ལོ་ཚད་"
+
+#: ../src/libegg/egg-datetime.c:336
+msgid "Year part of the upper date limit"
+msgstr "ལྟག་གི་ཚེས་གྲངས་ཚད་ཀྱི་ལོའི་ཆ་ཤས་"
+
+#: ../src/libegg/egg-datetime.c:341
+msgid "Lower limit month"
+msgstr "འོག་གི་ཟླཝ་ཚད་"
+
+#: ../src/libegg/egg-datetime.c:342
+msgid "Month part of the lower date limit"
+msgstr "འོག་གི་ཚེས་གྲངས་ཚད་ཀྱི་ཟླཝ་ཆ་ཤས་"
+
+#: ../src/libegg/egg-datetime.c:347
+msgid "Upper limit month"
+msgstr "ལྟག་གི་ཟླཝ་ཚད་"
+
+#: ../src/libegg/egg-datetime.c:348
+msgid "Month part of the upper date limit"
+msgstr "ལྟག་གི་ཚེས་གྲངས་ཚད་ཀྱི་ཟླཝ་ཆ་ཤས་"
+
+#: ../src/libegg/egg-datetime.c:353
+msgid "Lower limit day"
+msgstr "འོག་གི་ཉིནམ་ཚད་"
+
+#: ../src/libegg/egg-datetime.c:354
+msgid "Day of month part of the lower date limit"
+msgstr "འོག་གི་ཚེས་གྲངས་ཚད་ཀྱི་ཟླཝ་ཆ་ཤས་ཀྱི་ཉིནམ་"
+
+#: ../src/libegg/egg-datetime.c:359
+msgid "Upper limit day"
+msgstr "ལྟག་གི་ཉིནམ་ཚད་"
+
+#: ../src/libegg/egg-datetime.c:360
+msgid "Day of month part of the upper date limit"
+msgstr "ལྟག་གི་ཚེས་གྲངས་ཚད་ཀྱི་ཟླཝ་ཆ་ཤས་ཀྱི་ཉིནམ་"
+
+#: ../src/libegg/egg-datetime.c:365
+msgid "Lower limit hour"
+msgstr "འོག་གི་ཆུ་ཚོད་ཚད་"
+
+#: ../src/libegg/egg-datetime.c:366
+msgid "Hour part of the lower time limit"
+msgstr "འོག་གི་ཆུ་ཚོད་ཚད་ཀྱི་ཆུ་ཚོད་ཆ་ཤས་"
+
+#: ../src/libegg/egg-datetime.c:371
+msgid "Upper limit hour"
+msgstr "ལྟག་གི་ཆུ་ཚོད་ཚད་"
+
+#: ../src/libegg/egg-datetime.c:372
+msgid "Hour part of the upper time limit"
+msgstr "ལྟག་གི་ཆུ་ཚོད་ཚད་ཀྱི་ཆུ་ཚོད་ཆ་ཤས།"
+
+#: ../src/libegg/egg-datetime.c:377
+msgid "Lower limit minute"
+msgstr "འོག་གི་སྐར་ཆའི་ཚད་"
+
+#: ../src/libegg/egg-datetime.c:378
+msgid "Minute part of the lower time limit"
+msgstr "འོག་གི་ཆུ་ཚོད་ཚད་ཀྱི་སྐར་ཆའི་ཆ་ཤས་"
+
+#: ../src/libegg/egg-datetime.c:383
+msgid "Upper limit minute"
+msgstr "ལྟག་གི་སྐར་ཆའི་ཚད་"
+
+#: ../src/libegg/egg-datetime.c:384
+msgid "Minute part of the upper time limit"
+msgstr "ལྟག་གི་ཆུ་ཚོད་ཚད་ཀྱི་སྐར་ཆའི་ཆ་ཤས་"
+
+#: ../src/libegg/egg-datetime.c:389
+msgid "Lower limit second"
+msgstr "འོག་གི་སྐར་ཆའི་ཚད་"
+
+#: ../src/libegg/egg-datetime.c:390
+msgid "Second part of the lower time limit"
+msgstr "འོག་གི་ཆུ་ཚོད་ཚད་ཀྱི་ཆ་ཤས་གཉིས་པ་"
+
+#: ../src/libegg/egg-datetime.c:395
+msgid "Upper limit second"
+msgstr "ལྟག་གི་སྐར་ཆའི་ཚད་"
+
+#: ../src/libegg/egg-datetime.c:396
+msgid "Second part of the upper time limit"
+msgstr "ལྟག་གི་ཆུ་ཚོད་ཚད་ཀྱི་ཆ་ཤས་གཉིས་པ་"
+
+#. Translate to calendar:week_start:1 if you want Monday to be the
+#. * first day of the week; otherwise translate to calendar:week_start:0.
+#. * Do *not* translate it to anything else, if it isn't calendar:week_start:1
+#. * or calendar:week_start:0 it will not work.
+#.
+#: ../src/libegg/egg-datetime.c:438
+msgid "calendar:week_start:0"
+msgstr "ཟླ་ཐོ་:བདུན་ཕྲག་འགོ་བཙུགས:0 (_s)"
+
+#: ../src/libegg/egg-datetime.c:460
+msgid "Date"
+msgstr "ཚེས་གྲངས་"
+
+#: ../src/libegg/egg-datetime.c:460
+msgid "Enter the date directly"
+msgstr "ཚེས་གྲངས་འདི་ཐད་ཀར་དུ་ཐོ་བཀོད་འབད་"
+
+#: ../src/libegg/egg-datetime.c:467
+msgid "Select Date"
+msgstr "ཚེས་གྲངས་སེལ་འཐུ་འབད་"
+
+#: ../src/libegg/egg-datetime.c:467
+msgid "Select the date from a calendar"
+msgstr "ཟླ་ཐོ་ལས་ཚེས་གྲངས་འདི་སེལ་འཐུ་འབད་"
+
+#: ../src/libegg/egg-datetime.c:485
+msgid "Enter the time directly"
+msgstr "ཐད་ཀར་དུ་ཆུ་ཚོད་ཐོ་བཀོད་འབད་"
+
+#: ../src/libegg/egg-datetime.c:492
+msgid "Select Time"
+msgstr "ཆུ་ཚོད་སེལ་འཐུ་འབད་"
+
+#: ../src/libegg/egg-datetime.c:492
+msgid "Select the time from a list"
+msgstr "ཐོ་ཡིག་ལས་ཆུ་ཚོད་སེལ་འཐུ་འབད་"
+
+#. Translators: set this to anything else if you want to use a
+#. * 24 hour clock.
+#.
+#: ../src/libegg/egg-datetime.c:759
+msgid "24hr: no"
+msgstr "24hr: no"
+
+#: ../src/libegg/egg-datetime.c:763
+#: ../src/libegg/egg-datetime.c:1221
+#: ../src/libegg/egg-datetime.c:1225
+msgid "AM"
+msgstr "དྲོ་པ་"
+
+#: ../src/libegg/egg-datetime.c:765
+#: ../src/libegg/egg-datetime.c:1222
+#: ../src/libegg/egg-datetime.c:1229
+msgid "PM"
+msgstr "ཕྱི་རུ་"
+
+#. Translators: This is hh:mm:ss AM/PM.
+#: ../src/libegg/egg-datetime.c:773
+#, c-format
+msgid "%02d:%02d:%02d %s"
+msgstr "%02d:%02d:%02d %s"
+
+#. Translators: This is hh:mm AM/PM.
+#: ../src/libegg/egg-datetime.c:776
+#, c-format
+msgid "%02d:%02d %s"
+msgstr "%02d:%02d %s"
+
+#. Translators: This is hh:mm:ss.
+#: ../src/libegg/egg-datetime.c:780
+#, c-format
+msgid "%02d:%02d:%02d"
+msgstr "%02d:%02d:%02d"
+
+#. Translators: This is hh:mm.
+#: ../src/libegg/egg-datetime.c:783
+#, c-format
+msgid "%02d:%02d"
+msgstr "%02d:%02d"
+
+#. TODO: should handle other display modes as well...
+#. Translators: This is yyyy-mm-dd.
+#: ../src/libegg/egg-datetime.c:1137
+#, c-format
+msgid "%04d-%02d-%02d"
+msgstr "%04d-%02d-%02d"
+
+#. Translators: This is hh:mm:ss AM/PM.
+#: ../src/libegg/egg-datetime.c:1202
+#, c-format
+msgid "%u:%u:%u"
+msgstr "%u:%u:%u"
+
+#: ../src/libegg/eggtrayicon.c:118
+msgid "Orientation"
+msgstr "ཕྱོགས་"
+
+#: ../src/libegg/eggtrayicon.c:119
+msgid "The orientation of the tray."
+msgstr "ཤོག་སྣོད་ཀྱི་ཕྱོགས།"
+
+#: ../src/login.c:498
+msgid "Bad username"
+msgstr "ལག་ལེན་པའི་མིང་བྱང་ཉེས་"
+
+#: ../src/login.c:499
+msgid "Username contains invalid characters."
+msgstr "ལག་ལེན་པའི་མིང་དེ་གིས་ནུས་ཅན་མེད་པའི་ཡིག་འབྲུ་ཚུ་ཡོདཔ་ཨིན།"
+
+#: ../src/login.c:910
+msgid "Remove Account"
+msgstr "རྩིས་ཐོ་རྩ་བསྐྲད་གཏང་"
+
+#: ../src/login.c:912
+msgid "_Preferences"
+msgstr "དགའ་གདམ་ཚུ། (_P)"
+
+#: ../src/main.c:55
+msgid "Error"
+msgstr "འཛོལ་བ་"
+
+#: ../src/main.c:61
+msgid "Oh bother, there's a server error.  Please try again later."
+msgstr "བུ་སྤུན་  དེ་ནང་སར་བར་འཛོལ་བ་འདུག།  ལོག་འབད་གནང་།"
+
+#: ../src/main.c:344
+msgid "Friends Only"
+msgstr "ཆ་རོགས་ཚུ་རྐྱངམ་ཅིག་"
+
+#: ../src/main.c:564
+msgid "_Post"
+msgstr "གནས་བསྐྱོད། (_P)"
+
+#: ../src/main.c:571
+msgid "U_pdate"
+msgstr "དུས་མཐུན་བཟོ། (_p)"
+
+#: ../src/main.c:578
+msgid "_Add..."
+msgstr "ཁ་སྐོང་བརྐྱབ... (_A)"
+
+#: ../src/main.c:585
+msgid "Add _Question"
+msgstr "དྲི་བ་ཁ་སྐོང་བརྐྱབ། (_Q)"
+
+#: ../src/main.c:592
+msgid "Add _Answer"
+msgstr "ལེན་ཁ་སྐོང་བརྐྱབ། (_A)"
+
+#: ../src/main.c:599
+msgid "_Insert"
+msgstr "བཙུགས། (_I)"
+
+#: ../src/main.c:606
+msgid "_Edit..."
+msgstr "ཞུན་དག་འབད... (_E)"
+
+#: ../src/main.c:613
+msgid "_Log In"
+msgstr "ནང་བསྐྱོད་འབད། (_L)"
+
+#: ../src/main.c:627
+msgid "Save _Draft"
+msgstr "ཟིན་བྲིས་སྲུང་། (_D)"
+
+#: ../src/main.c:634
+msgid "_Don't Save"
+msgstr "མ་སྲུང་། (_D)"
+
+#: ../src/main.c:641
+msgid "Insert Link..."
+msgstr "འབྲེལ་ལམ་བཙུགས..."
+
+#: ../src/main.c:648
+msgid "Insert Image..."
+msgstr "གཟུགས་བརྙན་བཙུགས..."
+
+#: ../src/main.c:925
+#, c-format
+msgid "GConf init failed: %s"
+msgstr "ཇི་རིམ་སྒྲིག་ཨིན་ཨའིཊི་འཐུས་ཤོར་བྱུང་ཡོདཔ: %s"
+
+#: ../src/main.c:931
+msgid "Could not initialize GnomeVFS!\n"
+msgstr "ཇི་ནོམ་ཝི་ཨེཕ་ཨེསི་འགོ་འབྱེད་འབད་མ་ཚུགས!\n"
+
+#: ../src/network.c:65
+msgid "Retrieving user information"
+msgstr "ལག་ལེན་པའི་བརྡ་དོན་སླར་འདྲེན་འབད་དོ་"
+
+#: ../src/network.c:70
+msgid "Downloading user pictures"
+msgstr "ལག་ལེན་པའི་པར་ཚུ་ཕབ་ལེན་འབད་དོ་"
+
+#: ../src/network.c:75
+msgid "Posting journal entry"
+msgstr "གསར་དེབ་ཐོ་བཀོད་གནས་བསྐྱོད་འབད་དོ་"
+
+#: ../src/network.c:80
+msgid "Updating journal entry"
+msgstr "གསར་དེབ་ཐོ་བཀོད་དུས་མཐུན་བཟོ་དོ་"
+
+#: ../src/network.c:85
+msgid "Retrieving journal entries"
+msgstr "གསར་དེབ་འཛུལ་ཞུགས་སླར་འདྲེན་འབད་དོ་"
+
+#: ../src/network.c:90
+msgid "Retrieving journal history"
+msgstr "གསར་དེབ་ལོ་རྒྱུས་སླར་འདྲེན་འབད་དོ་"
+
+#: ../src/network.c:95
+msgid "Updating Friends list"
+msgstr "ཆ་རོགས་ཚུ་གི་ཐོ་ཡིག་དུས་མཐུན་བཟོ་དོ་"
+
+#: ../src/network.c:100
+msgid "Retrieving Friends list"
+msgstr "ཆ་རོགས་ཀྱི་ཐོ་ཡིག་སླར་འདྲེན་འབད་དོ་"
+
+#: ../src/network.c:106
+msgid "Retrieving categories"
+msgstr "དབྱེ་རིམ་སླར་འདྲེན་འབད་དོ་"
+
+#: ../src/network.c:111
+msgid "Setting categories"
+msgstr "དབྱེ་རིམ་ཚུ་སྒྲིག་སྟངས་འབད་དོ་"
+
+#: ../src/network.c:116
+msgid "Publishing journal entry"
+msgstr "གསར་དེབ་ཐོ་བཀོད་དཔེ་བསྐྲུན་འབད་དོ་"
+
+#: ../src/network.c:121
+msgid "Deleting journal entry"
+msgstr "གསར་དེབ་ཐོ་བཀོད་བཏོན་གཏང་དོ་"
+
+#: ../src/network.c:126
+msgid "Notifying Technorati"
+msgstr "ཊེཀ་ནོ་ར་ཊི་བརྡ་བསྐུལ་འབད་དོ་"
+
+#: ../src/network.c:131
+msgid "Retrieving security groups"
+msgstr "སྲུང་སྐྱོབ་སྡེ་ཚན་སླར་འདྲེན་འབད་དོ་"
+
+#: ../src/network.c:136
+msgid "Updating security groups"
+msgstr "སྲུང་སྐྱོབ་སྡེ་ཚན་ཚུ་དུས་མཐུན་བཟོ་དོ་"
+
+#: ../src/network.c:141
+msgid "We're doing something, but I'm not sure what"
+msgstr "ང་བཅས་ཚུ་ག་ཅི་ཅིག་འབད་དོ་  དེ་འབདཝ་ད་ག་ཅི་ཨིན་ན་ང་གི་མི་ཤེས་བས་"
+
+#: ../src/network.c:148
+msgid "Sending / Receiving"
+msgstr "གཏང་དོ/ཐོབ་དོ་"
+
+#: ../src/network.c:311
+msgid "Network connection failed"
+msgstr "ཡོངས་འབྲེལ་མཐུད་མ་ཚུགས་"
+
+#: ../src/network.c:317
+msgid "Could not understand server response"
+msgstr "སར་བར་ལན་ཧ་དགོ་མ་ཚུགས་"
+
+#. FIXME:
+#. * I would like to make this menu item insensitive, however due to
+#. * an API issue in GTK, this will not be possible yet.
+#. * See GNOME bug #135875
+#.
+#: ../src/query_music_players.c:115
+msgid "No song playing"
+msgstr "ཞབས་ཁྲ་མི་གཏང་མ་ཚུགས་"
+
+#: ../src/tray.c:126
+msgid "_View Friends Page"
+msgstr "ཆ་རོགས་དག་པ་ཅིག་གི་ཤོགལེབ། (_V)"
+
+#: ../src/tray.c:132
+msgid "_Remove From Tray"
+msgstr "ཤོག་སྣོད་ལས་རྩ་བསྐྲད་གཏང་། (_R)"
+
+#: ../src/utils.c:596
+#: ../src/utils.c:643
+msgid "Untitled"
+msgstr "མགོ་མིང་མ་བཏགསཔ།"
+

@@ -1,3 +1,7 @@
+2007-03-19  Pema geyleg  <pema.geyleg@gmail.com>
+
+	* configure.in: Added 'dz' to ALL_LINGUAS.
+
 2006-10-12  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* acinclude.m4 (AM_CHECK_RUBY_IRB): Fixes display of test results.
