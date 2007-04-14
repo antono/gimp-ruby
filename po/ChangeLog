@@ -1,3 +1,8 @@
+2007-04-14  Djihed Afifi <djihed@gmail.com> 
+
+	* ar.po: Added Arabic Translation.
+	* LINGUAS: Added ar.
+
 2007-04-06  Claude Paroz  <claude@2xlibre.net>
 
 	* fr.po: Added French translation (by Damien Durand).

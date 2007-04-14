@@ -1,0 +1,76 @@
+# Arabic translations for PACKAGE package.
+# Copyright (C) 2007 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Automatically generated, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-ruby Arabic\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-04-14 18:08+0100\n"
+"PO-Revision-Date: 2007-04-14 18:32+0100\n"
+"Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
+"Language-Team: Arabeyes <doc@arabeyes.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n == 0 ? 0 : n == 1 ? 1 : n == 2 ? 2 : n >= 3 && n <= 10 ? 3 : n >= 11 && n <= 99 ? 4 : 5;\n"
+"X-Poedit-Language: Arabic\n"
+
+#: ../ext/ruby-fu-console.c:127
+msgid "Ruby-Fu Console"
+msgstr "كنسول روبي فو (Ruby-Fu)"
+
+#: ../plug-ins/irbconsole.rb:25
+msgid "Starts an irb session in a console."
+msgstr "بدأ جلسة irb في الكنسول"
+
+#: ../plug-ins/irbconsole.rb:30
+msgid "Irb Console"
+msgstr "كنسول Irb"
+
+#: ../plug-ins/irbconsole.rb:43
+msgid "Interactive Gimp-Ruby Console"
+msgstr "كنسول روبي"
+
+#: ../plug-ins/irbconsole.rb:44
+msgid "Ruby version #{RUBY_VERSION}"
+msgstr "اصدار روبي #{RUBY_VERSION}"
+
+#: ../plug-ins/sphere.rb:33
+#: ../plug-ins/sphere.rb:34
+msgid "Simple sphere with a drop shadow"
+msgstr "كرة بسيطة بظل"
+
+#: ../plug-ins/sphere.rb:38
+msgid "Sphere"
+msgstr "كرة"
+
+#: ../plug-ins/sphere.rb:41
+msgid "Radius (pixels)"
+msgstr "نصف القطر (بكسل)"
+
+#: ../plug-ins/sphere.rb:42
+msgid "Lighting (degrees)"
+msgstr "الضوء (درجات)"
+
+#: ../plug-ins/sphere.rb:43
+msgid "Shadow"
+msgstr "ظل"
+
+#: ../plug-ins/sphere.rb:44
+msgid "Background Color"
+msgstr "لون الخلفية"
+
+#: ../plug-ins/sphere.rb:45
+msgid "Sphere Color"
+msgstr "لون الكرة"
+
+#: ../plug-ins/sphere.rb:47
+msgid "Sphere Image"
+msgstr "صورة الكرة"
+
+#: ../plug-ins/sphere.rb:68
+msgid "Sphere Layer"
+msgstr "طبقة الكرة"
+
