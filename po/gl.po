@@ -1,0 +1,74 @@
+#
+# Ignacio Casal Quinteiro <icq@cvs.gnome.org>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: gl\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-03-14 19:11+0100\n"
+"PO-Revision-Date: 2006-07-01 11:24+0200\n"
+"Last-Translator: Ignacio Casal Quinteiro <nacho.resa@gmail.com>\n"
+"Language-Team: Galego <trasno@ceu.fi.udc.es>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.2\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+
+# (pofilter) untranslated: checks whether a string has been translated at all
+#: ../ext/ruby-fu-console.c:127
+msgid "Ruby-Fu Console"
+msgstr "Consola Ruby-Fu"
+
+#: ../plug-ins/irbconsole.rb:25
+msgid "Starts an irb session in a console."
+msgstr "Iniciar unha sesión IRB nunha consola."
+
+#: ../plug-ins/irbconsole.rb:30
+msgid "Irb Console"
+msgstr "Consola IRB"
+
+#: ../plug-ins/irbconsole.rb:43
+msgid "Interactive Gimp-Ruby Console"
+msgstr "Consola interactiva Gimp-Ruby"
+
+#: ../plug-ins/irbconsole.rb:44
+msgid "Ruby version #{RUBY_VERSION}"
+msgstr "Versión de Ruby #{RUBY_VERSION}"
+
+#: ../plug-ins/sphere.rb:33 ../plug-ins/sphere.rb:34
+msgid "Simple sphere with a drop shadow"
+msgstr "Esfera simple cunha sombra cada"
+
+#: ../plug-ins/sphere.rb:38
+msgid "Sphere"
+msgstr "Esfera"
+
+#: ../plug-ins/sphere.rb:41
+msgid "Radius (pixels)"
+msgstr "Raio (en píxeles)"
+
+#: ../plug-ins/sphere.rb:42
+msgid "Lighting (degrees)"
+msgstr "Brillo (en graos)"
+
+#: ../plug-ins/sphere.rb:43
+msgid "Shadow"
+msgstr "Sombra"
+
+#: ../plug-ins/sphere.rb:44
+msgid "Background Color"
+msgstr "Cor de fondo"
+
+#: ../plug-ins/sphere.rb:45
+msgid "Sphere Color"
+msgstr "Cor da esfera"
+
+#: ../plug-ins/sphere.rb:47
+msgid "Sphere Image"
+msgstr "Imaxe da esfera"
+
+#: ../plug-ins/sphere.rb:68
+msgid "Sphere Layer"
+msgstr "Capa da esfera"
+
