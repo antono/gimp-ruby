@@ -38,7 +38,7 @@ msgstr "Versión de Ruby #{RUBY_VERSION}"
 
 #: ../plug-ins/sphere.rb:33 ../plug-ins/sphere.rb:34
 msgid "Simple sphere with a drop shadow"
-msgstr "Esfera simple cunha sombra cada"
+msgstr "Esfera simple cunha sombra caída"
 
 #: ../plug-ins/sphere.rb:38
 msgid "Sphere"
