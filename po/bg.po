@@ -1,0 +1,74 @@
+# Bulgarian translation of gimp-ruby po-file.
+# # Copyright (C) 2007 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gimp ruby package.
+# Victor Dachev <vdachev@gmail.com>, 2007.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-ruby trunk\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-07-27 17:03+0300\n"
+"PO-Revision-Date: 2007-07-27 17:03+0300\n"
+"Last-Translator: Victor Dachev <vdachev@gmail.com>\n"
+"Language-Team: Bulgarian <dict@fsa-bg.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: ../ext/ruby-fu-console.c:127
+msgid "Ruby-Fu Console"
+msgstr "Ruby-Fu конзола"
+
+#: ../plug-ins/irbconsole.rb:25
+msgid "Starts an irb session in a console."
+msgstr "Стартира irb сесия в конзола."
+
+#: ../plug-ins/irbconsole.rb:30
+msgid "Irb Console"
+msgstr "Irb конзола"
+
+#: ../plug-ins/irbconsole.rb:43
+msgid "Interactive Gimp-Ruby Console"
+msgstr "Интерактивна Gimp-Ruby конзола"
+
+#: ../plug-ins/irbconsole.rb:44
+msgid "Ruby version #{RUBY_VERSION}"
+msgstr "Ruby версия #{RUBY_VERSION}"
+
+#: ../plug-ins/sphere.rb:33 ../plug-ins/sphere.rb:34
+msgid "Simple sphere with a drop shadow"
+msgstr "Проста сфера с хвърлена сянка"
+
+#: ../plug-ins/sphere.rb:38
+msgid "Sphere"
+msgstr "Сфера"
+
+#: ../plug-ins/sphere.rb:41
+msgid "Radius (pixels)"
+msgstr "Радиус (пиксели)"
+
+#: ../plug-ins/sphere.rb:42
+msgid "Lighting (degrees)"
+msgstr "Осветление (градуси)"
+
+#: ../plug-ins/sphere.rb:43
+msgid "Shadow"
+msgstr "Сянка"
+
+#: ../plug-ins/sphere.rb:44
+msgid "Background Color"
+msgstr "Цвят на фона"
+
+#: ../plug-ins/sphere.rb:45
+msgid "Sphere Color"
+msgstr "Цвят на сферата"
+
+#: ../plug-ins/sphere.rb:47
+msgid "Sphere Image"
+msgstr "Изображение на сферата"
+
+#: ../plug-ins/sphere.rb:68
+msgid "Sphere Layer"
+msgstr "Слой на сферата"
