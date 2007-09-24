@@ -1,0 +1,79 @@
+# Slovenian translation of gimp-ruby.
+# Copyright (C) 2007 THE GIMP'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the GIMP package.
+#
+# Martin Srebotnjak <miles@filmsi.net>, 2007.
+# Nedeljko Grabant <nedeljkograbant@gmail.com>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Gimp-ruby\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2007-09-23 22:08+0100\n"
+"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Slovenian\n"
+"X-Poedit-Country: SLOVENIA\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
+
+#: ../ext/ruby-fu-console.c:127
+msgid "Ruby-Fu Console"
+msgstr "Konzola Ruby-Fu"
+
+#: ../plug-ins/irbconsole.rb:25
+msgid "Starts an irb session in a console."
+msgstr "Zažene sejo irb v konzoli."
+
+#: ../plug-ins/irbconsole.rb:30
+msgid "Irb Console"
+msgstr "Konzola irb"
+
+#: ../plug-ins/irbconsole.rb:43
+msgid "Interactive Gimp-Ruby Console"
+msgstr "Interaktivna konzola Gimp-Ruby"
+
+#: ../plug-ins/irbconsole.rb:44
+msgid "Ruby version #{RUBY_VERSION}"
+msgstr "Ruby različice #{RUBY_VERSION}"
+
+#: ../plug-ins/sphere.rb:33
+#: ../plug-ins/sphere.rb:34
+msgid "Simple sphere with a drop shadow"
+msgstr "Enostavna krogla, ki meče senco"
+
+#: ../plug-ins/sphere.rb:38
+msgid "Sphere"
+msgstr "Krogla"
+
+#: ../plug-ins/sphere.rb:41
+msgid "Radius (pixels)"
+msgstr "Radij (slikovne točke)"
+
+#: ../plug-ins/sphere.rb:42
+msgid "Lighting (degrees)"
+msgstr "Osvetlitev (stopinje)"
+
+#: ../plug-ins/sphere.rb:43
+msgid "Shadow"
+msgstr "Senca"
+
+#: ../plug-ins/sphere.rb:44
+msgid "Background Color"
+msgstr "Barva ozadja"
+
+#: ../plug-ins/sphere.rb:45
+msgid "Sphere Color"
+msgstr "Barva krogle"
+
+#: ../plug-ins/sphere.rb:47
+msgid "Sphere Image"
+msgstr "Slika krogle"
+
+#: ../plug-ins/sphere.rb:68
+msgid "Sphere Layer"
+msgstr "Plast krogle"
+
