@@ -1,0 +1,73 @@
+# gimp-ruby's Portuguese translation
+# Copyright © 2007 gimp-ruby
+# This file is distributed under the same license as the gimp-ruby package.
+# 
+# Bruno Queiros <brunomiguelqueiros@sapo.pt>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-ruby\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-12-10 02:07+0000\n"
+"PO-Revision-Date: 2007-12-03 00:33+0000\n"
+"Last-Translator: Bruno Queiros <brunomiguelqueiros@sapo.pt>\n"
+"Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: ../ext/ruby-fu-console.c:127
+msgid "Ruby-Fu Console"
+msgstr "Consola Ruby-Fu"
+
+#: ../plug-ins/irbconsole.rb:25
+msgid "Starts an irb session in a console."
+msgstr "Inicia uma sessão irb numa consola."
+
+#: ../plug-ins/irbconsole.rb:30
+msgid "Irb Console"
+msgstr "Consola Irb"
+
+#: ../plug-ins/irbconsole.rb:43
+msgid "Interactive Gimp-Ruby Console"
+msgstr "Consola Gimp-Ruby Interactiva"
+
+#: ../plug-ins/irbconsole.rb:44
+msgid "Ruby version #{RUBY_VERSION}"
+msgstr "Versão Ruby #{RUBY_VERSION}"
+
+#: ../plug-ins/sphere.rb:33 ../plug-ins/sphere.rb:34
+msgid "Simple sphere with a drop shadow"
+msgstr "Esfera simples com uma sombra por baixo"
+
+#: ../plug-ins/sphere.rb:38
+msgid "Sphere"
+msgstr "Esfera"
+
+#: ../plug-ins/sphere.rb:41
+msgid "Radius (pixels)"
+msgstr "Radianos (pixeis)"
+
+#: ../plug-ins/sphere.rb:42
+msgid "Lighting (degrees)"
+msgstr "Iluminação (graus)"
+
+#: ../plug-ins/sphere.rb:43
+msgid "Shadow"
+msgstr "Sombra"
+
+#: ../plug-ins/sphere.rb:44
+msgid "Background Color"
+msgstr "Cor de Fundo"
+
+#: ../plug-ins/sphere.rb:45
+msgid "Sphere Color"
+msgstr "Cor da Esfera"
+
+#: ../plug-ins/sphere.rb:47
+msgid "Sphere Image"
+msgstr "Imagem da Esfera"
+
+#: ../plug-ins/sphere.rb:68
+msgid "Sphere Layer"
+msgstr "Camada da Esfera"
