@@ -1,0 +1,74 @@
+# translation of gimp-ruby.HEAD.po to Basque
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-ruby.HEAD\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-02-11 19:54+0100\n"
+"PO-Revision-Date: 2008-02-10 22:42+0100\n"
+"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
+"Language-Team: Basque <itzulpena@euskalgnu.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../ext/ruby-fu-console.c:127
+msgid "Ruby-Fu Console"
+msgstr "Ruby-Fu kontsola"
+
+#: ../plug-ins/irbconsole.rb:25
+msgid "Starts an irb session in a console."
+msgstr "'irb' saioa abiarazten du kontsola batean."
+
+#: ../plug-ins/irbconsole.rb:30
+msgid "Irb Console"
+msgstr "Irb kontsola"
+
+#: ../plug-ins/irbconsole.rb:43
+msgid "Interactive Gimp-Ruby Console"
+msgstr "Gimp-Ruby Elkarreragilea kontsola"
+
+#: ../plug-ins/irbconsole.rb:44
+msgid "Ruby version #{RUBY_VERSION}"
+msgstr "Ruby bertsioa: {RUBY_VERSION}."
+
+#: ../plug-ins/sphere.rb:33 ../plug-ins/sphere.rb:34
+msgid "Simple sphere with a drop shadow"
+msgstr "Esfera bakuna itzal jareginarekin"
+
+#: ../plug-ins/sphere.rb:38
+msgid "Sphere"
+msgstr "Esfera"
+
+#: ../plug-ins/sphere.rb:41
+msgid "Radius (pixels)"
+msgstr "Erradioa (pixelak)"
+
+#: ../plug-ins/sphere.rb:42
+msgid "Lighting (degrees)"
+msgstr "Argiztatzea (graduak)"
+
+#: ../plug-ins/sphere.rb:43
+msgid "Shadow"
+msgstr "Itzala"
+
+#: ../plug-ins/sphere.rb:44
+msgid "Background Color"
+msgstr "Atzeko planoko kolorea"
+
+#: ../plug-ins/sphere.rb:45
+msgid "Sphere Color"
+msgstr "Esferaren kolorea"
+
+#: ../plug-ins/sphere.rb:47
+msgid "Sphere Image"
+msgstr "Esfera irudia"
+
+#: ../plug-ins/sphere.rb:68
+msgid "Sphere Layer"
+msgstr "Esfera geruza"
