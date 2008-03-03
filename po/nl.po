@@ -1,0 +1,73 @@
+# Dutch translation of the GIMP's ruby strings
+# Copyright (C) 2007 Free Software Foundation, Inc.
+# Filip Vervloesem <filip.vervloesem@member.fsf.org>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: GIMP 2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-02-29 14:16+0000\n"
+"PO-Revision-Date: 2008-03-01 23:34+0100\n"
+"Last-Translator: Filip Vervloesem <filip.vervloesem@member.fsf.org>\n"
+"Language-Team: Dutch <vertaling@vrijschrift.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: ../ext/ruby-fu-console.c:127
+msgid "Ruby-Fu Console"
+msgstr "Ruby-Fu console"
+
+#: ../plug-ins/irbconsole.rb:25
+msgid "Starts an irb session in a console."
+msgstr "Een irb-sessie starten in een console."
+
+#: ../plug-ins/irbconsole.rb:30
+msgid "Irb Console"
+msgstr "Irb-console"
+
+#: ../plug-ins/irbconsole.rb:43
+msgid "Interactive Gimp-Ruby Console"
+msgstr "Interactieve Gimp-Ruby console"
+
+#: ../plug-ins/irbconsole.rb:44
+msgid "Ruby version #{RUBY_VERSION}"
+msgstr "Ruby-versie #{RUBY_VERSION}"
+
+#: ../plug-ins/sphere.rb:33
+#: ../plug-ins/sphere.rb:34
+msgid "Simple sphere with a drop shadow"
+msgstr "Eenvoudige bol met een slagschaduw"
+
+#: ../plug-ins/sphere.rb:38
+msgid "Sphere"
+msgstr "Bol"
+
+#: ../plug-ins/sphere.rb:41
+msgid "Radius (pixels)"
+msgstr "Straal (beeldpunten)"
+
+#: ../plug-ins/sphere.rb:42
+msgid "Lighting (degrees)"
+msgstr "Belichting (graden)"
+
+#: ../plug-ins/sphere.rb:43
+msgid "Shadow"
+msgstr "Schaduw"
+
+#: ../plug-ins/sphere.rb:44
+msgid "Background Color"
+msgstr "Achtergrondkleur"
+
+#: ../plug-ins/sphere.rb:45
+msgid "Sphere Color"
+msgstr "Bolkleur"
+
+#: ../plug-ins/sphere.rb:47
+msgid "Sphere Image"
+msgstr "Bolafbeelding"
+
+#: ../plug-ins/sphere.rb:68
+msgid "Sphere Layer"
+msgstr "Bollaag"
+
