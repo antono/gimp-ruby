@@ -1,0 +1,73 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp 2.4.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-05-16 05:21+0000\n"
+"PO-Revision-Date: 2008-05-17 07:52+0300\n"
+"Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
+"Language-Team: Belarusian <i18n@mova.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Poedit-Language: Belarusian\n"
+"X-Poedit-Country: BELARUS\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: ../ext/ruby-fu-console.c:127
+msgid "Ruby-Fu Console"
+msgstr "Кансоль Ruby-Fu"
+
+#: ../plug-ins/irbconsole.rb:25
+msgid "Starts an irb session in a console."
+msgstr "Пачынае ў кансолі сэсію irb"
+
+#: ../plug-ins/irbconsole.rb:30
+msgid "Irb Console"
+msgstr "Кансоль irb"
+
+#: ../plug-ins/irbconsole.rb:43
+msgid "Interactive Gimp-Ruby Console"
+msgstr "Інтэрактыўная кансоль  Gimp-Ruby"
+
+#: ../plug-ins/irbconsole.rb:44
+msgid "Ruby version #{RUBY_VERSION}"
+msgstr "Вэрсія Ruby #{RUBY_VERSION}"
+
+#: ../plug-ins/sphere.rb:33
+#: ../plug-ins/sphere.rb:34
+msgid "Simple sphere with a drop shadow"
+msgstr "Простая сфэра з падаючым ценем"
+
+#: ../plug-ins/sphere.rb:38
+msgid "Sphere"
+msgstr "Сфэра"
+
+#: ../plug-ins/sphere.rb:41
+msgid "Radius (pixels)"
+msgstr "Радыюс (у піксэлях)"
+
+#: ../plug-ins/sphere.rb:42
+msgid "Lighting (degrees)"
+msgstr "Асьвятленьне (ступень)"
+
+#: ../plug-ins/sphere.rb:43
+msgid "Shadow"
+msgstr "Цень"
+
+#: ../plug-ins/sphere.rb:44
+msgid "Background Color"
+msgstr "Колер асноведзі"
+
+#: ../plug-ins/sphere.rb:45
+msgid "Sphere Color"
+msgstr "Колер сфэры"
+
+#: ../plug-ins/sphere.rb:47
+msgid "Sphere Image"
+msgstr "Відарыс сфэры"
+
+#: ../plug-ins/sphere.rb:68
+msgid "Sphere Layer"
+msgstr "Пласт сфэры"
+
