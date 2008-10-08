@@ -1,3 +1,7 @@
+2008-10-08  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* configure.in: Added 'nb' to ALL_LINGUAS.
+
 2008-06-06   Clytie Siddall <clytie@riverland.net.au>
 
 	* configure.in: Added 'vi' to ALL_LINGUAS.
