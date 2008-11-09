@@ -281,7 +281,7 @@ AC_FUNC_ALLOCA
 ######################
 
 dnl Add the languages which your application supports here.
-ALL_LINGUAS="ar be ca de dz el en_CA en_GB eu fi fr gl nb oc pt pt_BR sl sv vi"
+ALL_LINGUAS="ar be ca da de dz el en_CA en_GB eu fi fr gl nb oc pt pt_BR sl sv vi"
 
 AC_PROG_INTLTOOL
 AM_GLIB_GNU_GETTEXT

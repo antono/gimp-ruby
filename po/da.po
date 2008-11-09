@@ -1,0 +1,74 @@
+# Danish translation for gimp-ruby.
+# Copyright (C) Scott Lembcke
+# This file is distributed under the same license as the gimp-ruby package.
+# Kris Hansen <mumien@yahoo.dk>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-ruby\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-09 21:52+0100\n"
+"PO-Revision-Date: 2008-11-07 12:33+0100\n"
+"Last-Translator: Kris Hansen <mumien@yahoo.dk>\n"
+"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Danish\n"
+"X-Poedit-Country: DENMARK\n"
+
+#: ../ext/ruby-fu-console.c:127
+msgid "Ruby-Fu Console"
+msgstr "Ruby-fu-konsol"
+
+#: ../plug-ins/irbconsole.rb:25
+msgid "Starts an irb session in a console."
+msgstr "Starter en irb-session i en konsol."
+
+#: ../plug-ins/irbconsole.rb:30
+msgid "Irb Console"
+msgstr "Irb-konsol"
+
+#: ../plug-ins/irbconsole.rb:43
+msgid "Interactive Gimp-Ruby Console"
+msgstr "Interaktiv Gimp-Ruby-konsol"
+
+#: ../plug-ins/irbconsole.rb:44
+msgid "Ruby version #{RUBY_VERSION}"
+msgstr "Ruby version #{RUBY_VERSION}"
+
+#: ../plug-ins/sphere.rb:33 ../plug-ins/sphere.rb:34
+msgid "Simple sphere with a drop shadow"
+msgstr "Simpel kugle med en skygge"
+
+#: ../plug-ins/sphere.rb:38
+msgid "Sphere"
+msgstr "Kugle"
+
+#: ../plug-ins/sphere.rb:41
+msgid "Radius (pixels)"
+msgstr "Radius (billedpunkter)"
+
+#: ../plug-ins/sphere.rb:42
+msgid "Lighting (degrees)"
+msgstr "Belysning (grader)"
+
+#: ../plug-ins/sphere.rb:43
+msgid "Shadow"
+msgstr "Skygge"
+
+#: ../plug-ins/sphere.rb:44
+msgid "Background Color"
+msgstr "Baggrundsfarve"
+
+#: ../plug-ins/sphere.rb:45
+msgid "Sphere Color"
+msgstr "Kuglefarve"
+
+#: ../plug-ins/sphere.rb:47
+msgid "Sphere Image"
+msgstr "Kuglebillede"
+
+#: ../plug-ins/sphere.rb:68
+msgid "Sphere Layer"
+msgstr "Kuglelag"
