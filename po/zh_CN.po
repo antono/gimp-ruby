@@ -1,73 +1,75 @@
-# Chinese translations for PACKAGE package
-# PACKAGE 软件包的简体中文翻译.
-# Copyright (C) 2008 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Chinese translations for gimp-gap package
+# gimp-gap 软件包的简体中文翻译.
+# Copyright (C) 2008 THE gimp-gap'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the gimp-gap package.
 # Aron Xu <aronmalache@163.com>, 2008.
-#
+# 
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: gimp-ruby HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-12 03:52+0000\n"
-"PO-Revision-Date: 2008-10-12 18:18+0800\n"
+"PO-Revision-Date: 2008-11-23 13:50+0800\n"
 "Last-Translator: Aron Xu <aronmalache@163.com>\n"
-"Language-Team: Chinese (simplified)\n"
+"Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: ../ext/ruby-fu-console.c:127
 msgid "Ruby-Fu Console"
-msgstr ""
+msgstr "Ruby-Fu 终端"
 
 #: ../plug-ins/irbconsole.rb:25
 msgid "Starts an irb session in a console."
-msgstr ""
+msgstr "在终端中开始一个 Irb 会话。"
 
 #: ../plug-ins/irbconsole.rb:30
 msgid "Irb Console"
-msgstr ""
+msgstr "Irb 控制台"
 
 #: ../plug-ins/irbconsole.rb:43
 msgid "Interactive Gimp-Ruby Console"
-msgstr ""
+msgstr "活动 Gimp-Ruby 终端"
 
 #: ../plug-ins/irbconsole.rb:44
 msgid "Ruby version #{RUBY_VERSION}"
-msgstr ""
+msgstr "Ruby 版本 #{RUBY_VERSION}"
 
 #: ../plug-ins/sphere.rb:33 ../plug-ins/sphere.rb:34
 msgid "Simple sphere with a drop shadow"
-msgstr ""
+msgstr "带有投影的简单球面"
 
 #: ../plug-ins/sphere.rb:38
 msgid "Sphere"
-msgstr ""
+msgstr "球面"
 
 #: ../plug-ins/sphere.rb:41
 msgid "Radius (pixels)"
-msgstr ""
+msgstr "半径 (像素)"
 
 #: ../plug-ins/sphere.rb:42
 msgid "Lighting (degrees)"
-msgstr ""
+msgstr "闪亮 (度)"
 
 #: ../plug-ins/sphere.rb:43
 msgid "Shadow"
-msgstr ""
+msgstr "阴影"
 
 #: ../plug-ins/sphere.rb:44
 msgid "Background Color"
-msgstr ""
+msgstr "背景颜色"
 
 #: ../plug-ins/sphere.rb:45
 msgid "Sphere Color"
-msgstr ""
+msgstr "球面颜色"
 
 #: ../plug-ins/sphere.rb:47
 msgid "Sphere Image"
-msgstr ""
+msgstr "球面图像"
 
 #: ../plug-ins/sphere.rb:68
 msgid "Sphere Layer"
-msgstr ""
+msgstr "球面图层"
+
