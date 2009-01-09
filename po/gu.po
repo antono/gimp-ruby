@@ -1,0 +1,75 @@
+# translation of gimp-ruby.HEAD.po to Gujarati
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Sweta Kothari <swkothar@redhat.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-ruby.HEAD\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp-ruby&amp;component=general\n"
+"POT-Creation-Date: 2008-11-23 05:51+0000\n"
+"PO-Revision-Date: 2009-01-09 11:33+0530\n"
+"Last-Translator: Sweta Kothari <swkothar@redhat.com>\n"
+"Language-Team: Gujarati\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: ../ext/ruby-fu-console.c:127
+msgid "Ruby-Fu Console"
+msgstr "Ruby-Fu કન્સોલ"
+
+#: ../plug-ins/irbconsole.rb:25
+msgid "Starts an irb session in a console."
+msgstr "કન્સોલ માં irb સત્ર ને શરૂ કરો."
+
+#: ../plug-ins/irbconsole.rb:30
+msgid "Irb Console"
+msgstr "Irb કન્સોલ"
+
+#: ../plug-ins/irbconsole.rb:43
+msgid "Interactive Gimp-Ruby Console"
+msgstr "અરસપરસ Gimp-Ruby કન્સોલ"
+
+#: ../plug-ins/irbconsole.rb:44
+msgid "Ruby version #{RUBY_VERSION}"
+msgstr "Ruby version #{RUBY_VERSION}"
+
+#: ../plug-ins/sphere.rb:33 ../plug-ins/sphere.rb:34
+msgid "Simple sphere with a drop shadow"
+msgstr "બિંદ છાયડાં સાથે સાદો ગોળો "
+
+#: ../plug-ins/sphere.rb:38
+msgid "Sphere"
+msgstr "ગોળો"
+
+#: ../plug-ins/sphere.rb:41
+msgid "Radius (pixels)"
+msgstr "ત્રિજ્યા (pixels)"
+
+#: ../plug-ins/sphere.rb:42
+msgid "Lighting (degrees)"
+msgstr "પ્રકાશ કરી રહ્યા છે (ડિગ્રીઓ)"
+
+#: ../plug-ins/sphere.rb:43
+msgid "Shadow"
+msgstr "છાંયડો"
+
+#: ../plug-ins/sphere.rb:44
+msgid "Background Color"
+msgstr "પૂર્વભૂમિકા રંગ"
+
+#: ../plug-ins/sphere.rb:45
+msgid "Sphere Color"
+msgstr "ગોળાનો રંગ"
+
+#: ../plug-ins/sphere.rb:47
+msgid "Sphere Image"
+msgstr "ગોળાની ઇમેજ"
+
+#: ../plug-ins/sphere.rb:68
+msgid "Sphere Layer"
+msgstr "ગોળાનું સ્તર"
+
