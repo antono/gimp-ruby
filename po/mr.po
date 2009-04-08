@@ -1,0 +1,75 @@
+# translation of gimp-ruby.HEAD.po to marathi
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Sandeep Shedmake <sandeep.shedmake@gmail.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-ruby.HEAD\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp-ruby&component=general\n"
+"POT-Creation-Date: 2009-01-09 06:11+0000\n"
+"PO-Revision-Date: 2009-03-30 17:55+0530\n"
+"Last-Translator: Sandeep Shedmake <sandeep.shedmake@gmail.com>\n"
+"Language-Team: marathi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: ../ext/ruby-fu-console.c:127
+msgid "Ruby-Fu Console"
+msgstr ""
+
+#: ../plug-ins/irbconsole.rb:25
+msgid "Starts an irb session in a console."
+msgstr ""
+
+#: ../plug-ins/irbconsole.rb:30
+msgid "Irb Console"
+msgstr ""
+
+#: ../plug-ins/irbconsole.rb:43
+msgid "Interactive Gimp-Ruby Console"
+msgstr ""
+
+#: ../plug-ins/irbconsole.rb:44
+msgid "Ruby version #{RUBY_VERSION}"
+msgstr ""
+
+#: ../plug-ins/sphere.rb:33 ../plug-ins/sphere.rb:34
+msgid "Simple sphere with a drop shadow"
+msgstr ""
+
+#: ../plug-ins/sphere.rb:38
+msgid "Sphere"
+msgstr "गोळा"
+
+#: ../plug-ins/sphere.rb:41
+msgid "Radius (pixels)"
+msgstr "त्रिज्या (पिक्सेल)"
+
+#: ../plug-ins/sphere.rb:42
+msgid "Lighting (degrees)"
+msgstr "विद्युत (अंश)"
+
+#: ../plug-ins/sphere.rb:43
+msgid "Shadow"
+msgstr "छाया"
+
+#: ../plug-ins/sphere.rb:44
+msgid "Background Color"
+msgstr "पार्श्वभूमी रंग"
+
+#: ../plug-ins/sphere.rb:45
+msgid "Sphere Color"
+msgstr ""
+
+#: ../plug-ins/sphere.rb:47
+msgid "Sphere Image"
+msgstr ""
+
+#: ../plug-ins/sphere.rb:68
+msgid "Sphere Layer"
+msgstr ""
+
