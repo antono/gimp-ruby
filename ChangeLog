@@ -1,3 +1,7 @@
+2009-04-08  Sandeep Shedmake  <sshedmak@redhat.com>
+
+	* configure.in: Added "mr" to ALL_LINGUAS
+
 2009-03-19  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
 
 	* configure.in: Added "es" to ALL_LINGUAS
