@@ -1,0 +1,75 @@
+# translation of or.po to Oriya
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Manoj Kumar Giri <mgiri@redhat.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: or\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp-ruby&component=general\n"
+"POT-Creation-Date: 2009-04-17 14:24+0000\n"
+"PO-Revision-Date: 2009-05-25 19:20+0530\n"
+"Last-Translator: Manoj Kumar Giri <mgiri@redhat.com>\n"
+"Language-Team: Oriya <oriya-it@googlegroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n!=1);\n\n"
+
+#: ../ext/ruby-fu-console.c:127
+msgid "Ruby-Fu Console"
+msgstr "Ruby-Fu କୋଲସଲ"
+
+#: ../plug-ins/irbconsole.rb:25
+msgid "Starts an irb session in a console."
+msgstr "ଗୋଟିଏ କୋନସୋଲରେ irb ଅଧିବେଶନ ଆରମ୍ଭ ହୋଇଥାଏ।"
+
+#: ../plug-ins/irbconsole.rb:30
+msgid "Irb Console"
+msgstr "Irb କୋନସଲ"
+
+#: ../plug-ins/irbconsole.rb:43
+msgid "Interactive Gimp-Ruby Console"
+msgstr "ପାରସ୍ପରିକ Gimp-Ruby କୋଲସଲ"
+
+#: ../plug-ins/irbconsole.rb:44
+msgid "Ruby version #{RUBY_VERSION}"
+msgstr "Ruby ସଂସ୍କରଣ #{RUBY_VERSION}"
+
+#: ../plug-ins/sphere.rb:33 ../plug-ins/sphere.rb:34
+msgid "Simple sphere with a drop shadow"
+msgstr "ଡ୍ରପ ଛାୟା ସହିତ ସରଳ ଗୋଲକ"
+
+#: ../plug-ins/sphere.rb:38
+msgid "Sphere"
+msgstr "ଗୋଲକ"
+
+#: ../plug-ins/sphere.rb:41
+msgid "Radius (pixels)"
+msgstr "ବ୍ୟାସାର୍ଦ୍ଧ (ପିକସେଲ)"
+
+#: ../plug-ins/sphere.rb:42
+msgid "Lighting (degrees)"
+msgstr "ଆଲୋକ (ଡ଼ିଗ୍ରୀ)"
+
+#: ../plug-ins/sphere.rb:43
+msgid "Shadow"
+msgstr "ଛାୟା"
+
+#: ../plug-ins/sphere.rb:44
+msgid "Background Color"
+msgstr "ପ୍ରଚ୍ଛଦଭୂମି ରଙ୍ଗ"
+
+#: ../plug-ins/sphere.rb:45
+msgid "Sphere Color"
+msgstr "ଗୋଲକ ରଙ୍ଗ"
+
+#: ../plug-ins/sphere.rb:47
+msgid "Sphere Image"
+msgstr "ଗୋଲକ ପ୍ରତିଛବି"
+
+#: ../plug-ins/sphere.rb:68
+msgid "Sphere Layer"
+msgstr "ଗୋଲକ ସ୍ତର"
+
