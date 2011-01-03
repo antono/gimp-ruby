@@ -54,21 +54,19 @@ help_string = _(
 )
 
 register(
-  "ruby-fu-run-file", #procedure name
-  _("Runs a Ruby-Fu script without requiring you to install it."), #blurb
-  help_string, #help
-  "Scott Lembcke", #author
-  "Scott Lembcke", #copyright
-  "2006", #date
-  _("Run File"), #menupath
-  nil, #image types
-  [
+  :name      => "ruby-fu-run-file",
+  :blurb     => _("Runs a Ruby-Fu script without requiring you to install it."), #blurb
+  :help      => help_string, #help
+  :athor     => "Scott Lembcke", #author
+  :copyright => "Scott Lembcke", #copyright
+  :date      => "2006", #date
+  :menupath  => _("Run File"), #menupath
+  :params    => [
     ParamDef.FILE("file", _("File")),
     ParamDef.STRING("procedure", _("Procedure name"), "ruby-fu-"),
     ParamDef.DRAWABLE("drawable", _("Drawable (if needed)")),
-  ], #params
-  [] #results
-) do|run_mode, filename, procname, drawable|
+  ]
+) do |run_mode, filename, procname, drawable|
   Shelf["ruby-fu-last-run-file"] = [filename, procname, drawable]
 
   load(filename)
@@ -79,17 +77,14 @@ menu_register("ruby-fu-run-file", RubyFuMenu)
 
 
 register(
-  "ruby-fu-rerun-file", #procedure name
-  _("Reruns the last file ran using Runfile"), #blurb
-  nil, #help
-  "Scott Lembcke", #author
-  "Scott Lembcke", #copyright
-  "2006", #date
-  _("Rerun File"), #menupath
-  nil, #image types
-  [], #params
-  [] #results
-) do|run_mode, filename, procname|
+  :name => "ruby-fu-rerun-file", #procedure name
+  :blurb => _("Reruns the last file ran using Runfile"), #blurb
+  :author => "Scott Lembcke", #author
+  :copyright => "Scott Lembcke", #copyright
+  :date => "2006", #date
+  :menupath => _("Rerun File")
+) do |run_mode, filename, procname|
+
   last = Shelf["ruby-fu-last-run-file"]
   
   if last

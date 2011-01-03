@@ -21,26 +21,26 @@
 require "rubyfu"
 
 include Gimp
-include RubyFu
 
-register(
-  "ruby-fu-gloom", #procedure name
-  _("Gives an image a darkened and softened cartoon look"), #blurb
-  _("Takes a radius and intensity for the effect"), #help
-  "Scott Lembcke", #author
-  "Scott Lembcke", #copyright
-  "2006", #date
-  _("Gloom"), #menupath
-  "*", #image types
-  [
-    ParamDef.SLIDER("radius", _("Radius"), 5.0, 0..50, 0.1),
-    ParamDef.SLIDER("amount", _("Amount"), 100, 0..100, 1),
-  ], #params
-  [] #results
-) do|run_mode, image, drawable, radius, amount|
+manifest = {
+  :name       => "ruby-fu-gloom",
+  :blurb      => _("Gives an image a darkened and softened cartoon look"),
+  :help       => _("Takes a radius and intensity for the effect"),
+  :author     => "Scott Lembcke",
+  :copyright  => "Scott Lembcke",
+  :date       => "2006",
+  :menupath   => _("Gloom"),
+  :imagetypes => "*",
+  :params => [
+    RubyFu::ParamDef.SLIDER("radius", _("Radius"), 5.0, 0..50, 0.1),
+    RubyFu::ParamDef.SLIDER("amount", _("Amount"), 100, 0..100, 1),
+  ]
+}
+
+RubyFu.register(manifest) do |run_mode, image, drawable, radius, amount|
   include PDB::Access
   
-  image.undo_group do
+  image.undo_group_start do
     gloom = Layer.new_from_drawable(drawable, image)
     image.add_layer(gloom, nil)
     gimp_drawable_set_name(gloom, _("gloom"))
@@ -49,7 +49,7 @@ register(
     plug_in_gauss_iir2(image, gloom, radius, radius)
   end
   
-  Display.flush
+  Gimp::Display.flush
 end
 
-menu_register("ruby-fu-gloom", "<Image>/Ruby-Fu/")
+RubyFu.menu_register("ruby-fu-gloom", "<Image>/Ruby-Fu/")

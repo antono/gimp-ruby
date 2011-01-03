@@ -21,17 +21,14 @@
 require "rubyfu"
 
 RubyFu.register(
-  "ruby-fu-console", #procedure name
-  _("Starts an irb session in a console."), #blurb
-  nil, #help
-  nil, #author
-  nil, #copyright
-  nil, #date
-  _("Irb Console"), #menupath
-  nil, #image types
-  nil, #params
-  nil #results
-) do
+  :name => "ruby-fu-console", #procedure name
+  :blurb => _("Starts an irb session in a console."), #blurb
+  :help => _("Starts an irb session in a console."), #help
+  :athor => "Scott Lembcke", #author
+  :copyright => "Scott Lembcke", #copyright
+  :date => "2006", #date
+  :menupath => _("Ruby Console")) do
+
   require "irb"
   
   include Gimp

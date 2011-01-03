@@ -24,22 +24,21 @@ include Gimp
 include RubyFu
 
 register(
-  "ruby-fu-sunset", #procedure name
-  _("Creates a nice sunset over water"), #blurb
-  _("Creates a new image of the given size of a sunset."), #help
-  "Scott Lembcke", #author
-  "Scott Lembcke", #copyright
-  "2006", #date
-  _("Sunset"), #menupath
-  nil, #image types
-  [
+  :name      => "ruby-fu-sunset", #procedure name
+  :blurb     => _("Creates a nice sunset over water"), #blurb
+  :help      => _("Creates a new image of the given size of a sunset."), #help
+  :auhor     => "Scott Lembcke", #author
+  :copyright => "Scott Lembcke", #copyright
+  :date      => "2006", #date
+  :menupath  => _("Sunset"), #menupath
+  :params    => [
     ParamDef.INT32("width", _("Width"), 640),
     ParamDef.INT32("height", _("Height"), 480),
-  ], #params
-  [
+  ],
+  :results => [
     ParamDef.IMAGE("image", _("Image")),
-  ] #results
-) do|run_mode, w, h|
+  ]
+) do |run_mode, w, h|
   include PDB::Access
 
   image = Image.new(w, h, RGB)
@@ -88,4 +87,3 @@ register(
 end
 
 menu_register("ruby-fu-sunset", ExamplesMenu)
-

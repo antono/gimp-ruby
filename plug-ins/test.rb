@@ -22,46 +22,17 @@ require "rubyfu"
 
 TestMenu = RubyFu.menu_branch_register(RubyFu::RubyFuMenu, "Test")
 
-RubyFu.register(
-  "ruby-fu-test1", #procedure name
-  nil, #blurb
-  nil, #help
-  nil, #author
-  nil, #copyright
-  nil, #date
-  nil, #menupath
-  nil, #image types
-  nil, #params
-  nil #results
-) do
+RubyFu.register(:name => "ruby-fu-test1") do
+  #nothing
+end
+
+RubyFu.register(:name => "ruby-fu-test2") do
   #nothing
 end
 
 RubyFu.register(
-  "ruby-fu-test2", #procedure name
-  nil, #blurb
-  nil, #help
-  nil, #author
-  nil, #copyright
-  nil, #date
-  nil, #menupath
-  nil, #image types
-  [], #params
-  [] #results
-) do
-  #nothing
-end
-
-RubyFu.register(
-  "ruby-fu-test-echo", #procedure name
-  nil, #blurb
-  nil, #help
-  nil, #author
-  nil, #copyright
-  nil, #date
-  nil, #menupath
-  nil, #image types
-  [
+  :name   => "ruby-fu-test-echo",
+  :params => [
     RubyFu::ParamDef.INT32("int32", "int32", 1),
     RubyFu::ParamDef.INT16("int16", "int16", 1),
     RubyFu::ParamDef.INT8("int8", "int8", 1),
@@ -79,8 +50,8 @@ RubyFu.register(
     RubyFu::ParamDef.STRINGARRAY("stringarray", "stringarray", ["one", "two", "three"]),
     RubyFu::ParamDef.COLOR("color", "color", Gimp::Rgb.new(1.0, 1.0, 1.0)),
     RubyFu::ParamDef.PARASITE("parasite", "parasite", Gimp::Parasite.new("name", 999, "data")),
-  ], #params
-  [
+  ],
+  :results => [
     Gimp::ParamDef.INT32("int32", "int32"),
     Gimp::ParamDef.INT16("int16", "int16"),
     Gimp::ParamDef.INT8("int8", "int8"),
@@ -98,10 +69,8 @@ RubyFu.register(
     Gimp::ParamDef.STRINGARRAY("stringarray", "stringarray"),
     Gimp::ParamDef.COLOR("color", "color"),
     Gimp::ParamDef.PARASITE("parasite", "parasite"),
-  ] #results
-) do|int32, int16, int8, float, string,
-     l1, int32array, l2, int16array, l3, int8array, l4, floatarray, l5, stringarray,
-     color, parasite|
+  ]
+) do |int32, int16, int8, float, string, l1, int32array, l2, int16array, l3, int8array, l4, floatarray, l5, stringarray, color, parasite|
      
   puts parasite
   
@@ -116,18 +85,9 @@ RubyFu.register(
   ]
 end
 
-RubyFu.register(
-  "ruby-fu-test-call-echo", #procedure name
-  "Check that parameter conversion is safe.", #blurb
-  nil, #help
-  nil, #author
-  nil, #copyright
-  nil, #date
-  "Echo", #menupath
-  nil, #image types
-  [], #params
-  [] #results
-) do|run_mode|
+RubyFu.register(:name => "ruby-fu-test-call-echo",
+  :blurb => "Check that parameter conversion is safe.",
+  :menupath => "Echo") do |run_mode|
 
   args = [
     123,
@@ -158,21 +118,15 @@ RubyFu.register(
   end
 end
 
+
 RubyFu.menu_register("ruby-fu-test-call-echo", TestMenu)
 
 
 RubyFu.register(
-  "ruby-fu-test-shelf", #procedure name
-  "Test that the shelf works correctly.", #blurb
-  nil, #help
-  nil, #author
-  nil, #copyright
-  nil, #date
-  "Shelf", #menupath
-  nil, #image types
-  [], #params
-  [] #results
-) do|run_mode|
+  :name  => "ruby-fu-test-shelf",
+  :blurb => "Test that the shelf works correctly.",
+  :menupath => "Shelf") do |run_mode|
+
   def test_method
     return false if Gimp::Shelf["badstring"] != nil
     
@@ -195,45 +149,27 @@ end
 RubyFu.menu_register("ruby-fu-test-shelf", TestMenu)
 
 
-RubyFu.register(
-  "ruby-fu-test-crash", #procedure name
-  nil, #blurb
-  nil, #help
-  nil, #author
-  nil, #copyright
-  nil, #date
-  nil, #menupath
-  nil, #image types
-  [], #params
-  [] #results
-) do||
+RubyFu.register(:name => "ruby-fu-test-crash") do
   raise "This is a test exception"
 end
 
 def test_exception(e)
-   begin
+  begin
     yield
   rescue e
     puts "Success!"
     return
   end
-  
+
   puts "Failure"
   $failure = true
 end
 
 RubyFu.register(
-  "ruby-fu-test-call", #procedure name
-  "Check proper errors are raised when calling methods improperly.", #blurb
-  nil, #help
-  nil, #author
-  nil, #copyright
-  nil, #date
-  "Call",
-  nil, #image types
-  [], #params
-  [] #results
-) do|run_mode|
+  :name  => "ruby-fu-test-call",
+  :blurb => "Check proper errors are raised when calling methods improperly.",
+  :menupath => "Call") do |run_mode|
+
   require "stringio"
   $stdout = StringIO.new
   
@@ -257,21 +193,16 @@ RubyFu.register(
   $stdout = STDOUT
 end
 
-RubyFu.menu_register("ruby-fu-test-call", TestMenu)
-
+# FIXME: RubyFu.menu_register("ruby-fu-test-call", TestMenu)
 
 RubyFu.register(
-  "ruby-fu-test-OO", #procedure name
-  "Test that the object functionality works", #blurb
-  nil, #help
-  nil, #author
-  nil, #copyright
-  nil, #date
-  "OO", #menupath
-  nil, #image types
-  [], #params
-  [Gimp::ParamDef.IMAGE("image", "Image")] #results
-) do|run_mode|
+  :name => "ruby-fu-test-OO",
+  :blurb => "Test that the object functionality works",
+  :menuath => "OO",
+  :results => [
+    Gimp::ParamDef.IMAGE("image", "Image")
+  ]) do |run_mode|
+
   PDB.verbose = true
   
   #force all classes and modules to load
@@ -309,15 +240,10 @@ RubyFu.menu_register("ruby-fu-test-OO", TestMenu)
 
 
 RubyFu.register(
-  "ruby-fu-test-dialog", #procedure name
-  "runs dialog", #blurb
-  nil, #help
-  nil, #author
-  nil, #copyright
-  nil, #date
-  "Dialog", #menupath
-  nil, #image types
-  [
+  :name => "ruby-fu-test-dialog",
+  :blurb => "runs dialog",
+  :menupath => "Dialog",
+  :params => [
     RubyFu::ParamDef.INT32("int32", "INT32", 32),
     RubyFu::ParamDef.TOGGLE("toggle", "TOGGLE", 1),
     RubyFu::ParamDef.INT16("int16", "INT16", 16),
@@ -329,9 +255,7 @@ RubyFu.register(
     RubyFu::ParamDef.TEXT("text", "TEXT", "multi\nline\nstring"),
     RubyFu::ParamDef.COLOR("color", "COLOR", Gimp::Rgb.new(1.0, 0.0, 0.0, 0.0)),
     RubyFu::ParamDef.ENUM("enum", "ENUM", 0, "GimpBlendMode")
-  ], #params
-	[] #results
-) do|run_mode, *params|
+  ]) do |run_mode, *params|
   Gimp.message(params.join("\n"))
 end
 
@@ -339,15 +263,10 @@ RubyFu.menu_register("ruby-fu-test-dialog", TestMenu)
 
 
 RubyFu.register(
-  "ruby-fu-test-dialog2", #procedure name
-  "runs dialog", #blurb
-  nil, #help
-  nil, #author
-  nil, #copyright
-  nil, #date
-  "More dialog", #menupath
-  nil, #image types
-  [
+  :name => "ruby-fu-test-dialog2",
+  :blurb => "runs dialog",
+  :menupath => "More dialog",
+  :params => [
     RubyFu::ParamDef.LIST("list", "LIST", ["a", "two", "3", "IV"]),
     RubyFu::ParamDef.IMAGE("image", "IMAGE"),
     RubyFu::ParamDef.DRAWABLE("drawable", "DRAWABLE"),
@@ -360,11 +279,8 @@ RubyFu.register(
     RubyFu::ParamDef.GRADIENT("gradient", "GRADIENT", "CD"),
     RubyFu::ParamDef.PATTERN("pattern", "PATTERN", "Pine"),
     RubyFu::ParamDef.BRUSH("brush", "BRUSH", "Circle (11)"),
-  ], #params
-	[] #results
-) do|run_mode, *params|
+  ]) do |run_mode, *params|
   Gimp.message(params.join("\n"))
 end
 
 RubyFu.menu_register("ruby-fu-test-dialog2", TestMenu)
-

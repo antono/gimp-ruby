@@ -22,26 +22,9 @@ tim = Time.now
 
 require "rubyfu"
 
-include Gimp
-include RubyFu
-
-include PDB::Access
-
-register(
-  "ruby-fu-speed", #procedure name
-  nil, #blurb
-  nil, #help
-  nil, #author
-  nil, #copyright
-  nil, #date
-  "Speed", #menupath
-  nil,
-  nil, #params
-  nil #results
-) do
+RubyFu.register(:name => "ruby-fu-speed", :menupath => "Speed") do
   Gimp.message "Plugin startup time is #{Time.now - tim} seconds."
-  
   nil
 end
 
-menu_register("ruby-fu-speed", "<Toolbox>/Xtns/Languages/Ruby-Fu/Test")
+RubyFu.menu_register("ruby-fu-speed", "<Toolbox>/Xtns/Languages/Ruby-Fu/Test")

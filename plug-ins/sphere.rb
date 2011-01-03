@@ -29,22 +29,22 @@ include PDB::Access
 # I didn't want Gimp-Ruby to feel left out.
 
 RubyFu.register(
-  "ruby-fu-sphere",
-  _("Simple sphere with a drop shadow"),
-  _("Simple sphere with a drop shadow"), 
-  "Spencer Kimball and Scott Lembcke",
-  "Spencer Kimball",
-  "1996",
-  _("Sphere"),
-  "",
-  [
+  :name       => "ruby-fu-sphere",
+  :blurb      => _("Simple sphere with a drop shadow"),
+  :help       => _("Simple sphere with a drop shadow"),
+  :author     => "Spencer Kimball and Scott Lembcke",
+  :copyright  => "Spencer Kimball",
+  :date       => "1996",
+  :menupath   => _("Sphere"),
+  :imagetypes => "",
+  :params     => [
     ParamDef.SPINNER("radius", _("Radius (pixels)"), 100, 0..1000, 1),
     ParamDef.SLIDER("lighting", _("Lighting (degrees)"), 45, 0..360, 1),
     ParamDef.TOGGLE("shadow", _("Shadow"), 1),
     ParamDef.COLOR("bg color", _("Background Color"), Color(1.0, 1.0, 1.0)),
     ParamDef.COLOR("color", _("Sphere Color"), Color(1.0, 0.0, 0.0)),
   ],
-  [ParamDef.IMAGE("image", _("Sphere Image"))]
+  :results => [ParamDef.IMAGE("image", _("Sphere Image"))]
 ) do |run_mode, radius, light, shadow, bg_color, sphere_color|
   shadow = (shadow == 1)
   

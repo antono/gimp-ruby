@@ -21,5 +21,5 @@
 require "rubyfu"
 include RubyFu
 
-rfu_menu = menu_branch_register("<Toolbox>/Xtns/Languages/", "Ruby-Fu")
+rfu_menu = menu_branch_register("<Toolbox>/Xtns/Languages/", "Ruby")
 menu_branch_register(rfu_menu, _("Examples"))
