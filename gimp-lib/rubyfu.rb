@@ -289,40 +289,25 @@ module RubyFu
   @@procedures = {}
   @@menubranches = []
   
-  def register(
-    name,
-    blurb,
-    help,
-    author,
-    copyright,
-    date,
-    menupath,
-    imagetypes,
-    params,
-    results,
-    &function
-  )
-    proc = Procedure.new(
-      String(name),
-      String(blurb),
-      String(help),
-      String(author),
-      String(copyright),
-      String(date),
-      String(menupath),
-      String(imagetypes),
-      Array(params),
-      Array(results),
-      &function
-    )
-    
-    @@procedures[name] = proc
+  def register(args, &block)
+    @@procedures[args[:name]] = Procedure.new(
+      String(args[:name]),
+      String(args[:blurb]),
+      String(args[:help]),
+      String(args[:author]),
+      String(args[:copyright]),
+      String(args[:date]),
+      String(args[:menupath]),
+      String(args[:imagetypes]),
+      Array(args[:params]),
+      Array(args[:results]),
+      &block)
   end
   module_function :register
   
   def menu_register(name, path)
-    proc = @@procedures[name]
-    proc.add_menupath(path)
+    procedure = @@procedures[name]
+    procedure.add_menupath(path)
   end
   module_function :menu_register
   
