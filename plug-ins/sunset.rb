@@ -27,7 +27,7 @@ register(
   :name      => "ruby-fu-sunset", #procedure name
   :blurb     => _("Creates a nice sunset over water"), #blurb
   :help      => _("Creates a new image of the given size of a sunset."), #help
-  :auhor     => "Scott Lembcke", #author
+  :author    => "Scott Lembcke", #author
   :copyright => "Scott Lembcke", #copyright
   :date      => "2006", #date
   :menupath  => _("Sunset"), #menupath

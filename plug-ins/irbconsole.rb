@@ -21,13 +21,13 @@
 require "rubyfu"
 
 RubyFu.register(
-  :name => "ruby-fu-console", #procedure name
-  :blurb => _("Starts an irb session in a console."), #blurb
-  :help => _("Starts an irb session in a console."), #help
-  :athor => "Scott Lembcke", #author
-  :copyright => "Scott Lembcke", #copyright
-  :date => "2006", #date
-  :menupath => _("Ruby Console")) do
+  :name      => "ruby-fu-console",
+  :blurb     => _("Starts an irb session in a console."),
+  :help      => _("Starts an irb session in a console."),
+  :author    => "Scott Lembcke",
+  :copyright => "Scott Lembcke",
+  :date      => "2006",
+  :menupath  => _("Ruby Console")) do
 
   require "irb"
   

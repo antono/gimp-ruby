@@ -57,7 +57,7 @@ register(
   :name      => "ruby-fu-run-file",
   :blurb     => _("Runs a Ruby-Fu script without requiring you to install it."), #blurb
   :help      => help_string, #help
-  :athor     => "Scott Lembcke", #author
+  :author    => "Scott Lembcke", #author
   :copyright => "Scott Lembcke", #copyright
   :date      => "2006", #date
   :menupath  => _("Run File"), #menupath
