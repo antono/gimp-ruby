@@ -93,8 +93,8 @@ module PDB
     
     def convert_return_values(values)
       case values.shift.data
-      when Gimp::PDB_CALLING_ERROR: raise(CallingError, @name)
-      when Gimp::PDB_EXECUTION_ERROR: raise(ExecutionError, @name)
+      when Gimp::PDB_CALLING_ERROR    then raise(CallingError, @name)
+      when Gimp::PDB_EXECUTION_ERROR  then raise(ExecutionError, @name)
       end
       
       values.collect{|param| param.transform}

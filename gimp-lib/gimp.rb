@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor,Boston, MA
 # 02110-1301, USA.
 
-$KCODE = "UTF8"
+$KCODE = "UTF8" unless RUBY_VERSION > "1.9.0"
 
 require 'gimpext'
 require 'pdb'
@@ -31,9 +31,9 @@ end
 
 def ruby2int_filter(value)
   case value
-  when true: 1
-  when false: 0
-  when nil: -1
+  when true   then 1
+  when false  then 0
+  when nil    then -1
   else value
   end
 end
@@ -81,8 +81,8 @@ module Gimp
       check = CheckType[sym]
       
       good_type = case check
-      when Class: data.is_a? check
-      when Symbol: data.respond_to? check
+      when Class  then data.is_a? check
+      when Symbol then data.respond_to? check
       end
       
       unless good_type
@@ -139,7 +139,7 @@ module Gimp
         Layer.create(data)
       when PDB_CHANNEL
         Channel.create(data)
-      when PDB_DRAWABLE:
+      when PDB_DRAWABLE
         Drawable.create(data)
       when PDB_VECTORS
         Vectors.create(data)

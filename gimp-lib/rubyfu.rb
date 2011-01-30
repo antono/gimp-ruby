@@ -149,8 +149,8 @@ module RubyFu
     
     def add_menupath(path)
         type = case path
-        when /<Image>/: :image
-        when /<Toolbox>/: :toolbox
+        when /<Image>/    then :image
+        when /<Toolbox>/  then :toolbox
         end
         
         if @type and @type != type
@@ -246,8 +246,8 @@ module RubyFu
       end
       
       extra_args = case runMode
-      when Gimp::RUN_INTERACTIVE: get_interactive_args
-      when Gimp::RUN_WITH_LAST_VALS: get_last_args
+      when Gimp::RUN_INTERACTIVE    then get_interactive_args
+      when Gimp::RUN_WITH_LAST_VALS then get_last_args
       else []
       end
       
