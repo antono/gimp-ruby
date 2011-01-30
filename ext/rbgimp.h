@@ -1,5 +1,6 @@
 /* GIMP-Ruby -- Allows GIMP plugins to be written in Ruby.
  * Copyright (C) 2006  Scott Lembcke
+ * Copyright (C) 2011  Antono Vasiljev
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

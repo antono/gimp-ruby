@@ -263,7 +263,7 @@ str2gint8 (VALUE rb_str)
   Check_Type(rb_str, T_STRING);
   struct RString *str = RSTRING(rb_str);
 
-  return g_memdup(RSTRING_PTR(str), RSTRING_PTR(str));
+  return g_memdup(RSTRING_PTR(str), RSTRING_LEN(str));
 }
 
 GimpParam

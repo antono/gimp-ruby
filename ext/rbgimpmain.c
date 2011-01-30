@@ -1,5 +1,6 @@
 /* GIMP-Ruby -- Allows GIMP plugins to be written in Ruby.
  * Copyright (C) 2006  Scott Lembcke
+ * Copyright (C) 2011  Antono Vasiljev
  * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -187,10 +188,10 @@ static VALUE
 rb_gimp_main (VALUE self,
              VALUE plug_in_info)
 {
-  VALUE init_proc = rb_struct_aref(plug_in_info, ID2SYM(id_init_proc));
-  VALUE quit_proc = rb_struct_aref(plug_in_info, ID2SYM(id_quit_proc));
-  VALUE query_proc = rb_struct_aref(plug_in_info, ID2SYM(id_query_proc));
-  VALUE run_proc = rb_struct_aref(plug_in_info, ID2SYM(id_run_proc));
+  VALUE init_proc  = rb_struct_aref (plug_in_info, ID2SYM(id_init_proc));
+  VALUE quit_proc  = rb_struct_aref (plug_in_info, ID2SYM(id_quit_proc));
+  VALUE query_proc = rb_struct_aref (plug_in_info, ID2SYM(id_query_proc));
+  VALUE run_proc   = rb_struct_aref (plug_in_info, ID2SYM(id_run_proc));
   
   plug_in_callbacks[0] = init_proc;
   plug_in_callbacks[1] = quit_proc;
@@ -198,8 +199,8 @@ rb_gimp_main (VALUE self,
   plug_in_callbacks[3] = run_proc;
   
   /* build argv */
-  VALUE *arr = RARRAY_LEN(RARRAY(rb_argv));
-  gint argc = RARRAY_PTR(RARRAY(rb_argv));
+  VALUE *arr = RARRAY_PTR(RARRAY(rb_argv));
+  gint argc = RARRAY_LEN(RARRAY(rb_argv));
   gchar *argv[argc + 1];
   
   VALUE name = rb_gv_get("$0");
