@@ -19,7 +19,6 @@
 # 02110-1301, USA.
 
 require "rubyfu"
-include RubyFu
 
-rfu_menu = menu_branch_register("<Toolbox>/Xtns/Languages/", "Ruby")
-menu_branch_register(rfu_menu, _("Examples"))
+menu = RubyFu.menu_branch_register("<Toolbox>/Xtns/Languages/", "Ruby")
+       RubyFu.menu_branch_register(menu, _("Examples"))

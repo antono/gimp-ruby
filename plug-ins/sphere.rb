@@ -21,8 +21,8 @@
 require "rubyfu"
 include Gimp
 include RubyFu
-
 include PDB::Access
+
 
 # converted from sphere.scm
 # Everyone else on the block had a sphere generator.
@@ -46,6 +46,8 @@ RubyFu.register(
   ],
   :results => [ParamDef.IMAGE("image", _("Sphere Image"))]
 ) do |run_mode, radius, light, shadow, bg_color, sphere_color|
+
+
   shadow = (shadow == 1)
   
   width  = radius * 3.75

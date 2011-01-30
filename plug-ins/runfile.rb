@@ -33,9 +33,9 @@ module RubyFu
     
     params = proc.fullparams
     case proc.type
-    when :toolbox:
+    when :toolbox
       proc.run(Param.INT32(RUN_INTERACTIVE))
-    when :image:
+    when :image
       image = Param.IMAGE(PDB.gimp_drawable_get_image(drawable))
       drawable = Param.DRAWABLE(drawable)
       proc.run(Param.INT32(RUN_INTERACTIVE), image, drawable)

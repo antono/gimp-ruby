@@ -18,12 +18,12 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor,Boston, MA
 # 02110-1301, USA.
 
-tim = Time.now
+time = Time.now
 
 require "rubyfu"
 
 RubyFu.register(:name => "ruby-fu-speed", :menupath => "Speed") do
-  Gimp.message "Plugin startup time is #{Time.now - tim} seconds."
+  Gimp.message "Plugin startup time is #{Time.now - time} seconds."
   nil
 end
 

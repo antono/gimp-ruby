@@ -27,7 +27,8 @@ RubyFu.register(
   :author    => "Scott Lembcke",
   :copyright => "Scott Lembcke",
   :date      => "2006",
-  :menupath  => _("Ruby Console")) do
+  :menupath  => _("Ruby Console")
+) do
 
   require "irb"
   
