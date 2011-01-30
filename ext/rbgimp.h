@@ -16,6 +16,26 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor,Boston, MA
  * 02110-1301, USA.
  */
+
+
+/* Ruby 1.8 -> 1.9.2 migration */
+
+#ifndef RSTRING_PTR
+#define RSTRING_PTR(x) (RSTRING(x)->ptr)
+#endif
+
+#ifndef RSTRING_LEN
+#define RSTRING_LEN(str) RSTRING(str)->len
+#endif
+
+#ifndef RARRAY_LEN
+#define RARRAY_LEN(x) (RARRAY(x)->len)
+#endif
+
+#ifndef RARRAY_PTR
+#define RARRAY_PTR(x) (RARRAY(x)->ptr)
+#endif
+
  
 /* modules */
 extern VALUE mGimp;

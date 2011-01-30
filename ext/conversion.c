@@ -222,8 +222,8 @@ rb2gimp_array (GimpPDBArgType type,
                VALUE          rbarr)
 {
   rbarr = rb_check_array_type(rbarr);
-  int count = RARRAY(rbarr)->len;
-  VALUE *arr = RARRAY(rbarr)->ptr;
+  int count = RARRAY_LEN(RARRAY(rbarr));
+  VALUE *arr = RARRAY_PTR(RARRAY(rbarr));
 
   int i;
   gint32  *int32arr;
@@ -263,7 +263,7 @@ str2gint8 (VALUE rb_str)
   Check_Type(rb_str, T_STRING);
   struct RString *str = RSTRING(rb_str);
 
-  return g_memdup(str->ptr, str->len);
+  return g_memdup(RSTRING_PTR(str), RSTRING_PTR(str));
 }
 
 GimpParam
@@ -385,8 +385,8 @@ rb2GimpParams (VALUE rbparams,
                gint  *count)
 {
   rbparams = rb_check_array_type(rbparams);
-  int num = RARRAY(rbparams)->len;
-  VALUE *arr = RARRAY(rbparams)->ptr;
+  int num = RARRAY_LEN(RARRAY(rbparams));
+  VALUE *arr = RARRAY_PTR(RARRAY(rbparams));
 
   GimpParam *params = g_new(GimpParam, num);
 
@@ -453,8 +453,8 @@ rb2GimpParamDefs (VALUE rbparamdefs,
     {
         Check_Type(rbparamdefs, T_ARRAY);
 
-      int num = RARRAY(rbparamdefs)->len;
-      VALUE *arr = RARRAY(rbparamdefs)->ptr;
+      int num = RARRAY_LEN(RARRAY(rbparamdefs));
+      VALUE *arr = RARRAY_PTR(RARRAY(rbparamdefs));
 
       GimpParamDef *gimpparamdefs = g_new(GimpParamDef, num);
 
@@ -516,8 +516,8 @@ rb2GimpParasite (VALUE leech)
   VALUE rbdata = rb_struct_aref(leech, ID2SYM(id_data));
   Check_Type(rbdata, T_STRING);
 
-  result.size = RSTRING(rbdata)->len;
-  result.data = g_memdup(RSTRING(rbdata)->ptr, result.size);
+  result.size = RSTRING_LEN(RSTRING(rbdata));
+  result.data = g_memdup(RSTRING_PTR(RSTRING(rbdata)), result.size);
 
   return result;
 }
