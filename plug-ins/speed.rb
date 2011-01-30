@@ -27,4 +27,4 @@ RubyFu.register(:name => "ruby-fu-speed", :menupath => "Speed") do
   nil
 end
 
-RubyFu.menu_register("ruby-fu-speed", "<Toolbox>/Xtns/Languages/Ruby-Fu/Test")
+RubyFu.menu_register("ruby-fu-test-dialog2", TestMenu)
