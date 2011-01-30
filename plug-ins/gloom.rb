@@ -52,4 +52,4 @@ RubyFu.register(manifest) do |run_mode, image, drawable, radius, amount|
   Gimp::Display.flush
 end
 
-RubyFu.menu_register("ruby-fu-gloom", "<Image>/Ruby-Fu/")
+RubyFu.menu_register("ruby-fu-gloom", "<Image>/Filters/Blur/")
