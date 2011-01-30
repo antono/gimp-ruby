@@ -355,8 +355,8 @@ module RubyFu
     Gimp.main(PLUG_IN_INFO)
   end
   
-  RubyFuMenu = '<Toolbox>/Xtns/Languages/Ruby-Fu'
-  ExamplesMenu = '<Toolbox>/Xtns/Languages/Ruby-Fu/Examples'
+  RubyFuMenu = '<Image>/Filters/Languages/Ruby-Fu'
+  ExamplesMenu = '<Image>/Filters/Languages/Ruby-Fu/Examples'
 end
 
 END {

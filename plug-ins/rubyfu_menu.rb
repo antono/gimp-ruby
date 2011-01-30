@@ -20,5 +20,5 @@
 
 require "rubyfu"
 
-menu = RubyFu.menu_branch_register("<Toolbox>/Xtns/Languages/", "Ruby")
+menu = RubyFu.menu_branch_register("<Image>/Filters/Languages/", "Ruby")
        RubyFu.menu_branch_register(menu, _("Examples"))
